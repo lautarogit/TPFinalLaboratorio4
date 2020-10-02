@@ -21,7 +21,6 @@
         public function ShowAddView()
         {
             require_once(VIEWS_PATH."validate-session.php");
-            require_once(VIEWS_PATH."add-cellphone.php");
         }
 
         /*public function Login($userName, $password)
@@ -36,6 +35,24 @@
             else
                 $this->Index("Usuario y/o Contraseña incorrectos");
         }*/
+
+        public function Login($userName, $password)
+        {
+            $userList = $this->userDAO->GetAll();
+
+            foreach($userList as $user)
+            {
+                if(($user->getUserName() === $userName) && ($user->getPassword() === $password))
+                {
+                    $_SESSION["loggedUser"] = $user;
+                    $this->ShowAddView();
+                }
+                else
+                {
+                    $this->Index("Usuario y/o Contraseña incorrectos");
+                }
+            }  
+        }
         
         public function Logout()
         {
