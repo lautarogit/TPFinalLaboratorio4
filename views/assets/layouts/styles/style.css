@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .l-n{
   font-family: "Lucida Console", Courier, monospace;
 	display: inline;
@@ -8,4 +9,20 @@ background: linear-gradient(0.5turn, red, black);
 }
 body{
 	background-color: black;
+=======
+.l-n
+{
+  	font-family: "Lucida Console", Courier, monospace;
+	display: inline;
+}
+
+nav
+{
+	background: linear-gradient(0.5turn, red, black);
+}
+
+body
+{
+	background-color: aquamarine;
+>>>>>>> lautaro
 }

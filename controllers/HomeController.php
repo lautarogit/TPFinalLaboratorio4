@@ -21,6 +21,7 @@
         public function ShowAddView()
         {
             require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."login.php");
         }
 
         /*public function Login($userName, $password)
@@ -36,13 +37,13 @@
                 $this->Index("Usuario y/o Contraseña incorrectos");
         }*/
 
-        public function Login($userName, $password)
+        public function Login()
         {
             $userList = $this->userDAO->GetAll();
 
             foreach($userList as $user)
             {
-                if(($user->getUserName() === $userName) && ($user->getPassword() === $password))
+                if(($user->getUserName() === $_POST['userName']) && ($user->getPassword() === $_POST['password']))
                 {
                     $_SESSION["loggedUser"] = $user;
                     $this->ShowAddView();
