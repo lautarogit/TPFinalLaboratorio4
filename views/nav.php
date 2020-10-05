@@ -24,6 +24,7 @@
                     <a href="<?php echo "views/login.php" ?>">LOGIN</a> 
                </li>
                <?php } ?>
+               hola
           </ul>
      </nav>
 </body>
