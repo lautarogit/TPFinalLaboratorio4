@@ -2,7 +2,7 @@
     namespace Config;
 
     define("ROOT", dirname(__DIR__) . "/");
-    define("FRONT_ROOT", "C:/xampp/htdocs/TPFinalMoviePass/");
+    define("FRONT_ROOT", "/TPFinalLaboratorio4/");
 
     define("VIEWS_PATH", "views/");
     define("IMG_PATH", VIEWS_PATH."assets/img/");
