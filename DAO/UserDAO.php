@@ -55,7 +55,7 @@
             }
 
             $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-            file_put_contents('../data/users.json', $jsonContent);
+            file_put_contents('../Data/users.json', $jsonContent);
         }
 
         private function retrieveData()
@@ -67,7 +67,7 @@
 
             foreach ($arrayToDecode as $arrayValue) 
             {
-                $user = new user(
+                $user = new User(
                 $arrayValue['userName'], 
                 $arrayValue['password'], 
                 $arrayValue['id'], 
@@ -82,7 +82,7 @@
 
         function GetJsonFilePath()
         {
-            $initialPath = "data/users.json";
+            $initialPath = "Data/users.json";
 
             if(file_exists($initialPath))
             {
