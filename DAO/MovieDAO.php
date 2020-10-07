@@ -50,7 +50,7 @@
             }
 
             $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-            file_put_contents('../data/movies.json', $jsonContent);
+            file_put_contents('../Data/movies.json', $jsonContent);
         }
 
         private function retrieveData()
@@ -70,7 +70,7 @@
 
         function GetJsonFilePath()
         {
-            $initialPath = "data/movies.json";
+            $initialPath = "Data/movies.json";
 
             if(file_exists($initialPath))
             {

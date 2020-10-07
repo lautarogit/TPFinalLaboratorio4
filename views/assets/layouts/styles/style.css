@@ -6,7 +6,7 @@
 
 nav
 {
-	background: linear-gradient(0.5turn, red, black);
+	background: linear-gradient(0.5turn, rgb(38, 38, 218), black);
 }
 header{
 	background: linear-gradient(0.5turn, red, black);
@@ -14,6 +14,7 @@ header{
 body
 {
 	background-color: aquamarine;
+
 
 }
 input{

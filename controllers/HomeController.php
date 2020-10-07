@@ -13,54 +13,49 @@
             $this->userDAO = new UserDAO();
         }
 
-        public function Index($message = "")
+        public function index($message = "")
         {
             require_once(VIEWS_PATH."home.php");
         }
 
-        public function ShowAddView()
+        public function showAddView()
         {
             require_once(VIEWS_PATH."validate-session.php");
-            require_once(VIEWS_PATH."login.php");
+            require_once(VIEWS_PATH."paginaNueva.php");
         }
 
-     /*   public function Login($userName, $password)
-        {
-            $user = $this->$userDAO->GetAll();
 
-            if(($user != null) && ($user->getPassword() === $password))
-            {
-                $_SESSION["loggedUser"] = $user;
-                $this->ShowAddView();
-            }
-            else
-                $this->Index("Usuario y/o Contraseña incorrectos");
-        }*/
-
-        public function Login()
+        public function login($userName, $password)
         {
             $userList = $this->userDAO->GetAll();
-   
+
+            
+
             foreach($userList as $user)
             {
-                if(($user->getUserName() === $_POST['userName']) && ($user->getPassword() === $_POST['password']))
+                if(($user->getUserName() === $userName) && ($user->getPassword() === $password))
                 {
 
                     $_SESSION["loggedUser"] = $user;
-                    $this->ShowAddView();
+                    $this->showAddView();
                 }
                 else
                 {
-                    $this->Index("Usuario y/o Contraseña incorrectos");
+                    $this->index("Usuario y/o Contraseña incorrectos");
                 }
             }  
         }
+
+        public function showLogin()
+        {
+            require_once(VIEWS_PATH."login.php");
+        }
         
-        public function Logout()
+        public function logout()
         {
             session_destroy();
 
-            $this->Index();
+            $this->index();
         }
     }
 ?>
