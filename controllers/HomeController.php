@@ -24,9 +24,9 @@
             require_once(VIEWS_PATH."login.php");
         }
 
-        /*public function Login($userName, $password)
+     /*   public function Login($userName, $password)
         {
-            $user = $this->userDAO->GetByUserName($userName);
+            $user = $this->$userDAO->GetAll();
 
             if(($user != null) && ($user->getPassword() === $password))
             {
@@ -40,11 +40,12 @@
         public function Login()
         {
             $userList = $this->userDAO->GetAll();
-
+   
             foreach($userList as $user)
             {
                 if(($user->getUserName() === $_POST['userName']) && ($user->getPassword() === $_POST['password']))
                 {
+
                     $_SESSION["loggedUser"] = $user;
                     $this->ShowAddView();
                 }

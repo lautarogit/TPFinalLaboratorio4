@@ -3,7 +3,7 @@
     
     use Models\User as User;
 
-    class UserDAO 
+    class UserDAO// implements IUserDao
     {
         private $userList = array();
 
@@ -20,22 +20,6 @@
             return $this->userList;
         }
 
-        /*public function delete($code)
-        {
-            $this->retrieveData();
-            $newList = array();
-
-            foreach ($this->userList as $user) 
-            {
-                if($user->getCode() != $code)
-                {
-                    array_push($newList, $user);
-                }
-            }
-
-            $this->userList = $newList;
-            $this->saveData();
-        }*/
 
         private function saveData()
         {

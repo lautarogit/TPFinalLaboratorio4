@@ -2,7 +2,7 @@
     namespace Config;
 
     define("ROOT", dirname(__DIR__) . "/");
-    define("FRONT_ROOT", "/TPFinalLaboratorio4/");
+    define("FRONT_ROOT", "/TPFinalMoviePass/");
 
     define("VIEWS_PATH", "views/");
     define("IMG_PATH", VIEWS_PATH."assets/img/");
