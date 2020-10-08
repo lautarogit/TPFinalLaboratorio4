@@ -18,26 +18,31 @@
             require_once(VIEWS_PATH."home.php");
         }
 
-        public function showAddView()
+        public function showAddView($message = "")
         {
             require_once(VIEWS_PATH."validate-session.php");
-            require_once(VIEWS_PATH."paginaNueva.php");
+            echo $message;
+           // require_once(VIEWS_PATH."paginaNueva.php");
         }
 
 
-        public function login($userName, $password)
+        public function login()
         {
+
+             require_once(VIEWS_PATH."login.php");
+             require_once(VIEWS_PATH."validate-session.php");
             $userList = $this->userDAO->GetAll();
 
             
 
             foreach($userList as $user)
             {
-                if(($user->getUserName() === $userName) && ($user->getPassword() === $password))
+                if(($user->getUserName() === $_POST["userName"]) && ($user->getPassword() === $_POST["password"]))
                 {
 
                     $_SESSION["loggedUser"] = $user;
-                    $this->showAddView();
+                    $message="hello";
+                    $this->showAddView($message);
                 }
                 else
                 {
@@ -49,7 +54,26 @@
         public function showLogin()
         {
             require_once(VIEWS_PATH."login.php");
+            if(isset($_POST["send"])){
+            require_once(VIEWS_PATH."validate-session.php");
+            $userList = $this->userDAO->GetAll();
+            foreach($userList as $user)
+            {
+                if(($user->getUserName() === $_POST["userName"]) && ($user->getPassword() === $_POST["password"]))
+                {
+
+                    $_SESSION["loggedUser"] = $user;
+                    $message="hello";
+                    $this->showAddView($message);
+                }
+                else
+                {
+                    $this->index("Usuario y/o Contraseña incorrectos");
+                }
+            }
+            }  
         }
+        
         
         public function logout()
         {

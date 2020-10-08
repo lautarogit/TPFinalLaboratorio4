@@ -3,7 +3,7 @@
     
     use Models\Person as Person;
 
-    class User extends Person
+    class User// extends Person
     {
         private $userName;
         private $password;

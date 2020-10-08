@@ -9,7 +9,9 @@
              <img src="<?php echo IMG_PATH."moviepass.png"; ?>">
           </span>
           <ul class="l-n">
-               <?php if($_SESSION['loggedUser']){ ?>
+               <?php if(!isset($_SESSION["loggedUser"])){ ?>
+               <li><a href="<?php echo FRONT_ROOT."User/signUP"?>">Sign-Up</a></li>
+               <?php if(!$_SESSION["loggedUser"]){ ?>
                <li class="l-n">
                     <a href="<?php echo FRONT_ROOT."Home/logout"?>">LOGOUT</a>
                </li>
@@ -17,7 +19,7 @@
                <li class="l-n">
                     <a href="<?php echo FRONT_ROOT."Home/showLogin";?>">LOGIN</a> 
                </li>
-               <?php } ?>
+               <?php }} ?>
           </ul>
      </nav>
 </body>

@@ -1,7 +1,7 @@
 <?php 
 namespace DAO;
 interface IUserDao{
-function add (User $user){}
+function add($newUser);
 function getAll();
 }
 

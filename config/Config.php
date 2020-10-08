@@ -4,7 +4,7 @@
     define("ROOT", dirname(__DIR__) . "/");
     define("FRONT_ROOT", "/TPFinalMoviePass/");
 
-    define("VIEWS_PATH", "views/");
+    define("VIEWS_PATH", "Views/");
     define("IMG_PATH", VIEWS_PATH."assets/img/");
     define("JS_PATH", VIEWS_PATH."assets/js/");
     define("CSS_PATH", VIEWS_PATH."assets/layouts/styles/");

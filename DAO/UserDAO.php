@@ -3,13 +3,13 @@
     
     use Models\User as User;
 
-    class UserDAO// implements IUserDao
+    class UserDAO implements IUserDAO
     {
         private $userList = array();
 
-        public function add(User $newUser)
+        public function add($newUser)
         {
-            $this->retrieveData();
+          $this->userList->getAll();
             array_push($this->userList, $newUser);
             $this->saveData();
         }
@@ -29,12 +29,7 @@
             {
                 $arrayValue['userName'] = $user->getUserName();
                 $arrayValue['password'] = $user->getPassword();
-                $arrayValue['id'] = $user->getId();
-                $arrayValue['firstName'] = $user->getFirstName();
-                $arrayValue['lastName'] = $user->getLastName();
-                $arrayValue['dni'] = $user->getDni();
-                $arrayValue['email'] = $user->getEmail();
-
+    
                 array_push($arrayToEncode, $arrayValue);
             }
 
@@ -46,6 +41,7 @@
         {
             $this->userList = array();
             $jsonPath = $this->GetJsonFilePath();
+            echo $this->GetJsonFilePath();
             $jsonContent = file_get_contents($jsonPath);
             $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
 
@@ -53,20 +49,15 @@
             {
                 $user = new User(
                 $arrayValue['userName'], 
-                $arrayValue['password'], 
-                $arrayValue['id'], 
-                $arrayValue['firstName'], 
-                $arrayValue['lastName'],
-                $arrayValue['dni'],
-                $arrayValue['email']);
-                
+                $arrayValue['password'] );
+       
                 array_push($this->userList, $user);
             }
         }
 
         function GetJsonFilePath()
         {
-            $initialPath = "Data/users.json";
+            $initialPath = "TPFinalMoviePass/Data/users.json";
 
             if(file_exists($initialPath))
             {
