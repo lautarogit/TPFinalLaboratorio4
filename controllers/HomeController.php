@@ -21,7 +21,7 @@
         public function showAddView()
         {
             require_once(VIEWS_PATH."validate-session.php");
-            require_once(VIEWS_PATH."paginaNueva.php");
+            require_once(VIEWS_PATH."cinema.php");
         }
 
         /*public function Login($userName, $password)

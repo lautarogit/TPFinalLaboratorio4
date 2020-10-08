@@ -1,24 +1,23 @@
 <?php 
      require_once("header.php");
-     
+     $_SESSION['loggedUser'] = null;
 ?>
 
 <body>
-     <nav>
-          <span class="l-n">
+     <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+          <span class="navbar-text">
              <img src="<?php echo IMG_PATH."moviepass.png"; ?>">
           </span>
-          <ul class="l-n">
+          <ul class="navbar-nav ml-auto">
                <?php if($_SESSION['loggedUser']){ ?>
-               <li class="l-n">
+               <li class="nav-item">
                     <a href="<?php echo FRONT_ROOT."Home/logout"?>">LOGOUT</a>
                </li>
                <?php }else{ ?>
-               <li class="l-n">
+               <li class="nav-item">
                     <a href="<?php echo FRONT_ROOT."Home/showLogin";?>">LOGIN</a> 
                </li>
                <?php } ?>
           </ul>
      </nav>
 </body>
-</html>
