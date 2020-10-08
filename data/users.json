@@ -1,8 +1,11 @@
 [
     {
         "userName": "root",
-        "password": "root"
-    
-
+        "password": "root",
+        "id": "1", 
+        "firstName": "admin", 
+        "lastName": "admin2",
+        "dni": "123456789",
+        "email": "admin@admin"
     }
 ]

@@ -3,14 +3,16 @@
     
     use Models\Person as Person;
 
-    class User// extends Person
+    class User extends Person
     {
         private $userName;
         private $password;
 
-        public function __construct()
+        public function __construct ($userName = ' ', $password = ' ', $id = ' ', $firstName = ' ', $lastName = ' ', $dni = ' ', $email = ' ')
         {
-          
+            parent::__construct($id, $firstName, $lastName, $dni, $email);
+            $this->userName = $userName;
+            $this->password = $password;
         }
  
         public function getUserName ()
