@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "Cinema1",
+        "location": "Mar del Plata",
+        "capacity": "150"
+    },
+    {
+        "id": 2,
+        "name": "CinemaTwo",
+        "location": "La Plata",
+        "capacity": "200"
+    },
+    {
+        "id": 3,
+        "name": "CinemaTres",
+        "location": "BsAs",
+        "capacity": "400"
+    },
+    {
+        "id": 4,
+        "name": "Cinema4",
+        "location": "BsAs2",
+        "capacity": "50"
+    }
+]

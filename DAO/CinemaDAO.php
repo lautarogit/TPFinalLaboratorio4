@@ -1,23 +1,23 @@
 <?php
     namespace DAO;
     
-    use Models\User as User;
+    use Models\Cinema as Cinema;
 
-    class UserDAO 
+    class CinemaDAO 
     {
-        private $userList = array();
+        private $cinemaList = array();
 
-        public function add(User $newUser)
+        public function add(Cinema $newCinema)
         {
             $this->retrieveData();
-            array_push($this->userList, $newUser);
+            array_push($this->cinemaList, $newCinema);
             $this->saveData();
         }
 
         public function getAll()
         {
             $this->retrieveData();
-            return $this->userList;
+            return $this->cinemaList;
         }
 
         /*public function delete($code)
@@ -25,15 +25,15 @@
             $this->retrieveData();
             $newList = array();
 
-            foreach ($this->userList as $user) 
+            foreach ($this->cinemaList as $cinema) 
             {
-                if($user->getCode() != $code)
+                if($cinema->getCode() != $code)
                 {
-                    array_push($newList, $user);
+                    array_push($newList, $cinema);
                 }
             }
 
-            $this->userList = $newList;
+            $this->cinemaList = $newList;
             $this->saveData();
         }*/
 
@@ -42,15 +42,12 @@
             $arrayToEncode = array();
             $jsonPath = $this->GetJsonFilePath();
 
-            foreach ($this->userList as $user) 
+            foreach ($this->cinemaList as $cinema) 
             {
-                $arrayValue['userName'] = $user->getUserName();
-                $arrayValue['password'] = $user->getPassword();
-                $arrayValue['id'] = $user->getId();
-                $arrayValue['firstName'] = $user->getFirstName();
-                $arrayValue['lastName'] = $user->getLastName();
-                $arrayValue['dni'] = $user->getDni();
-                $arrayValue['email'] = $user->getEmail();
+                $arrayValue['id'] = $cinema->getId();
+                $arrayValue['name'] = $cinema->getName();
+                $arrayValue['location'] = $cinema->getLocation();
+                $arrayValue['capacity'] = $cinema->getCapacity();
 
                 array_push($arrayToEncode, $arrayValue);
             }
@@ -61,29 +58,22 @@
 
         private function retrieveData()
         {
-            $this->userList = array();
+            $this->cinemaList = array();
             $jsonPath = $this->GetJsonFilePath();
             $jsonContent = file_get_contents($jsonPath);
             $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
 
             foreach ($arrayToDecode as $arrayValue) 
             {
-                $user = new User(
-                $arrayValue['userName'], 
-                $arrayValue['password'], 
-                $arrayValue['id'], 
-                $arrayValue['firstName'], 
-                $arrayValue['lastName'],
-                $arrayValue['dni'],
-                $arrayValue['email']);
+                $cinema = new Cinema($arrayValue['id'], $arrayValue['name'], $arrayValue['location'], $arrayValue['capacity']);
                 
-                array_push($this->userList, $user);
+                array_push($this->cinemaList, $cinema);
             }
         }
-        
+
         function GetJsonFilePath()
         {
-            $initialPath = "Data/users.json";
+            $initialPath = "Data/cinemas.json";
 
             if(file_exists($initialPath))
             {
