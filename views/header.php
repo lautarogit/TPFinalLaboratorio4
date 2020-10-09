@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,4 +7,4 @@
      <link rel="stylesheet" href="<?php echo CSS_PATH."bootstrap.min.css";?>">
 </head>
 
-</html>
+
