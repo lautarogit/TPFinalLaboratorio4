@@ -16,6 +16,9 @@
                <?php }else{ ?>
                <li class="nav-item">
                     <a href="<?php echo FRONT_ROOT."Home/showLogin";?>">LOGIN</a> 
+               </li>    
+               <li class="nav-item">
+                    <a href="<?php echo FRONT_ROOT."User/ShowSignUp";?>">Sign-Up</a> 
                </li>
                <?php } ?>
           </ul>
