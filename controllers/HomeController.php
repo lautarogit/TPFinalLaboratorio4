@@ -18,10 +18,10 @@
             require_once(VIEWS_PATH."home.php");
         }
 
-        public function showAddView()
+        public function showCinemaDashboard()
         {
-            require_once(VIEWS_PATH."validate-session.php");
-            require_once(VIEWS_PATH."cinema.php");
+            require_once(VIEWS_PATH."cinema-dashboard.php");
+
         }
 
         /*public function Login($userName, $password)
@@ -45,25 +45,32 @@
             {
                 if(($user->getUserName() === $userName) && ($user->getPassword() === $password))
                 {
-                    $_SESSION["loggedUser"] = $user;
-                    $this->showAddView();
+
+                    $_SESSION["loggedUser"] = true;
+                    $this->showCinemaDashboard();
+
                 }
                 else
-                {
-                    $this->index("Usuario y/o Contraseña incorrectos");
+                { 
+                    $this->showLoginView(); 
+                ?> 
+                    <div class="alert alert-danger d-flex justify-content-center" role="alert">
+                    Usuario y/o contraseña incorrectos
+                    </div>
+                <?php 
                 }
             }  
         }
 
-        public function showLogin()
+        public function showLoginView()
         {
             require_once(VIEWS_PATH."login.php");
         }
         
         public function logout()
         {
+            $_SESSION['loggedUser'] = false;
             session_destroy();
-
             $this->index();
         }
     }

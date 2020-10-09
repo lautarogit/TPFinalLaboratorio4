@@ -6,14 +6,21 @@
      <div class="content">
           <form action="<?php echo FRONT_ROOT."Home/login";?>" method="post" class="login-form bg-dark-alpha p-5 text-white">
                <div class="form-group">
-                    <label for="username">Usuario</label>
+                    <label for="username"><h5>Usuario</h5></label>
                     <input class="form-control form-control-lg" type="text" name="userName" placeholder="Ingresar usuario">
                </div>
+
                <div class="form-group">
-                    <label for="password">Contraseña</label>
+                    <label for="password"><h5>Contraseña</h5></label>
                     <input class="form-control form-control-lg" type="text" name="password" placeholder="Ingresar constraseña">
                </div>
-               <button class="btn btn-dark btn-block btn-lg" type="submit">Iniciar Sesión</button>
+
+               <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="loggedUserCheck">
+                    <label class="form-check-label" for="loggedUserCheck">Recordar datos</label>
+               </div>
+
+               <button class="btn btn-primary btn-block btn-lg" type="submit">Iniciar sesion</button>
           </form>
      </div>
 </main>
