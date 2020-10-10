@@ -2,22 +2,17 @@
     namespace DAO;
     
     use Models\Movie as Movie;
+    use DAO\MovieAPI_DAO as MovieAPI_DAO;
 
     class MovieDAO 
     {
+        private $movieAPI_DAO = new MovieAPI_DAO();
         private $movieList = array();
 
-        public function add(Movie $newMovie)
+        public function setAll()
         {
-            $this->retrieveData();
-            array_push($this->movieList, $newMovie);
+            $this->movieList = $this->movieAPI_DAO->getAll();
             $this->saveData();
-        }
-
-        public function getAll()
-        {
-            $this->retrieveData();
-            return $this->movieList;
         }
 
         /*public function delete($code)
@@ -40,35 +35,35 @@
         private function saveData()
         {
             $arrayToEncode = array();
-
+            $jsonPath = $this->getJsonFilePath();
+            
             foreach ($this->movieList as $movie) 
             {
                 $arrayValue['title'] = $movie->getTitle();
-                $arrayValue['id'] = $movie->getId();
 
                 array_push($arrayToEncode, $arrayValue);
             }
-
+            
             $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-            file_put_contents('../Data/movies.json', $jsonContent);
+            file_put_contents($jsonPath, $jsonContent);
         }
 
         private function retrieveData()
         {
             $this->movieList = array();
-            $jsonPath = $this->GetJsonFilePath();
+            $jsonPath = $this->getJsonFilePath();
             $jsonContent = file_get_contents($jsonPath);
             $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
 
             foreach ($arrayToDecode as $arrayValue) 
             {
-                $movie = new Movie($arrayValue['title'], $arrayValue['id']);
+                $movie = new Movie($arrayValue['title']);
                 
                 array_push($this->movieList, $movie);
             }
         }
 
-        function GetJsonFilePath()
+        function getJsonFilePath()
         {
             $initialPath = "Data/movies.json";
 

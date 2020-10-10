@@ -15,7 +15,7 @@
             for($i=0; $i<5 ;$i++) 
             { 
      ?>
-                <div class="card w-15">
+                <div class="card w-15 m-2">
                     <div class="card-header" alig="center">
                         <img style="display:block; margin:auto;" src="<?php echo IMG_PATH."portrait-example.jpg"; ?>">
                         </div>

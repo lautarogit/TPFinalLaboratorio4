@@ -40,7 +40,7 @@
         private function saveData()
         {
             $arrayToEncode = array();
-            $jsonPath = $this->GetJsonFilePath();
+            $jsonPath = $this->getJsonFilePath();
 
             foreach ($this->userList as $user) 
             {
@@ -62,7 +62,7 @@
         private function retrieveData()
         {
             $this->userList = array();
-            $jsonPath = $this->GetJsonFilePath();
+            $jsonPath = $this->getJsonFilePath();
             $jsonContent = file_get_contents($jsonPath);
             $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
 
@@ -81,7 +81,7 @@
             }
         }
         
-        function GetJsonFilePath()
+        function getJsonFilePath()
         {
             $initialPath = "Data/users.json";
 

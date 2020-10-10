@@ -13,4 +13,6 @@
     define("DB_NAME", "MoviePass");
     define("DB_USER", "root");
     define("DB_PASS", "");
+
+    define("TMDB_API_KEY", "208f12d7c947fe1e0edc0f341b5bdc36");
 ?>

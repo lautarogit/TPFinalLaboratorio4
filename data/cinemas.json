@@ -3,24 +3,42 @@
         "id": 1,
         "name": "Cinema1",
         "location": "Mar del Plata",
-        "capacity": "150"
-    },
-    {
-        "id": 2,
-        "name": "CinemaTwo",
-        "location": "La Plata",
         "capacity": "200"
     },
     {
-        "id": 3,
-        "name": "CinemaTres",
+        "id": 2,
+        "name": "Cinema2",
         "location": "BsAs",
-        "capacity": "400"
+        "capacity": "150"
+    },
+    {
+        "id": 3,
+        "name": "Cinema3",
+        "location": "La Plata",
+        "capacity": "300"
     },
     {
         "id": 4,
         "name": "Cinema4",
-        "location": "BsAs2",
+        "location": "Azul",
         "capacity": "50"
+    },
+    {
+        "id": 5,
+        "name": "Cinema5",
+        "location": "Tucuman",
+        "capacity": "350"
+    },
+    {
+        "id": 6,
+        "name": "Cinema6",
+        "location": "Florencio varela",
+        "capacity": "250"
+    },
+    {
+        "id": 7,
+        "name": "Cinema 7",
+        "location": "Mar del Plata",
+        "capacity": "270"
     }
 ]

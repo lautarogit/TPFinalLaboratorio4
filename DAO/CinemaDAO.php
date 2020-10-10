@@ -40,7 +40,7 @@
         private function saveData()
         {
             $arrayToEncode = array();
-            $jsonPath = $this->GetJsonFilePath();
+            $jsonPath = $this->getJsonFilePath();
 
             foreach ($this->cinemaList as $cinema) 
             {
@@ -59,7 +59,7 @@
         private function retrieveData()
         {
             $this->cinemaList = array();
-            $jsonPath = $this->GetJsonFilePath();
+            $jsonPath = $this->getJsonFilePath();
             $jsonContent = file_get_contents($jsonPath);
             $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
 
@@ -71,7 +71,7 @@
             }
         }
 
-        function GetJsonFilePath()
+        function getJsonFilePath()
         {
             $initialPath = "Data/cinemas.json";
 
