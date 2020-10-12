@@ -20,7 +20,7 @@
                     <label class="form-check-label" for="loggedUserCheck">Recordar datos</label>
                </div>
 
-               <button class="btn btn-primary btn-block btn-lg" type="submit">Iniciar sesion</button>
+               <button class="btn btn-primary btn-block btn-lg background-aquamarina" type="submit">Iniciar sesion</button>
           </form>
      </div>
 </main>

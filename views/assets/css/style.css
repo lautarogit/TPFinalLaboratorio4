@@ -1,0 +1,22 @@
+.background-linear-gradient{
+    background: linear-gradient(-180deg, #8E2DE2, #4A00E0);
+}
+
+.color-blue{
+    color: rgb(5,42,162);
+}
+
+.background-aquamarina{
+    background: rgb(15,234,224);
+}
+
+.card-box-shadow{
+    box-shadow: 2px 2px 10px black; 
+}
+
+.cinema-dashboard-form{ 
+    display:inline; 
+    width: 50%;
+}
+
+

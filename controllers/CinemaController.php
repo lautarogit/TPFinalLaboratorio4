@@ -13,7 +13,7 @@
             $this->cinemaDAO = new CinemaDAO();
         }
 
-        public function showCinemaDashboard()
+        public function showCinemaDashboard ()
         {
             require_once(VIEWS_PATH."cinema-dashboard.php");
         }
@@ -40,6 +40,14 @@
             $cinema->setCapacity($capacity);
 
             $this->cinemaDAO->add($cinema);
+            $this->showCinemaDashboard();
+        }
+
+        public function deleteCinema ($id)
+        {
+            $cinemaDAO = new CinemaDAO();
+
+            $cinemaDAO->delete($id);
             $this->showCinemaDashboard();
         }
     }

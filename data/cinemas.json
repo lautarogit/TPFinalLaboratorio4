@@ -8,37 +8,25 @@
     {
         "id": 2,
         "name": "Cinema2",
-        "location": "BsAs",
-        "capacity": "150"
+        "location": "Buenos Aires",
+        "capacity": "500"
     },
     {
         "id": 3,
         "name": "Cinema3",
         "location": "La Plata",
-        "capacity": "300"
+        "capacity": "250"
     },
     {
         "id": 4,
         "name": "Cinema4",
-        "location": "Azul",
-        "capacity": "50"
-    },
-    {
-        "id": 5,
-        "name": "Cinema5",
-        "location": "Tucuman",
-        "capacity": "350"
+        "location": "Florencio Varela",
+        "capacity": "220"
     },
     {
         "id": 6,
-        "name": "Cinema6",
-        "location": "Florencio varela",
-        "capacity": "250"
-    },
-    {
-        "id": 7,
-        "name": "Cinema 7",
-        "location": "Mar del Plata",
-        "capacity": "270"
+        "name": "Cinema5",
+        "location": "Azul",
+        "capacity": "350"
     }
 ]
