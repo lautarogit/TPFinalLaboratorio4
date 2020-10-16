@@ -14,13 +14,13 @@
             $this->saveData();
         }
 
-        public function getAll()
+        public function getAll ()
         {
             $this->retrieveData();
             return $this->cinemaList;
         }
 
-        public function delete($id)
+        public function delete ($id)
         {
             $this->retrieveData();
             $newList = array();
@@ -37,7 +37,28 @@
             $this->saveData();
         }
 
-        private function saveData()
+        public function edit(Cinema $cinemaUpdated)
+        {
+            $this->retrieveData();
+            $newList = array();
+
+            foreach ($this->cinemaList as $cinema) 
+            {
+                if($cinema->getId() != $cinemaUpdated->getId())
+                {
+                    array_push($newList, $cinema);
+                }
+                else
+                {
+                    array_push($newList,$cinemaUpdated);
+                }
+            }
+            
+            $this->cinemaList = $newList;
+            $this->saveData();
+        }
+
+        private function saveData ()
         {
             $arrayToEncode = array();
             $jsonPath = $this->getJsonFilePath();
@@ -56,7 +77,7 @@
             file_put_contents($jsonPath, $jsonContent);
         }
 
-        private function retrieveData()
+        private function retrieveData ()
         {
             $this->cinemaList = array();
             $jsonPath = $this->getJsonFilePath();
@@ -71,7 +92,7 @@
             }
         }
 
-        function getJsonFilePath()
+        function getJsonFilePath ()
         {
             $initialPath = "Data/cinemas.json";
 

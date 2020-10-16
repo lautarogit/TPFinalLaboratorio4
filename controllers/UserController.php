@@ -1,57 +1,58 @@
 <?php
     namespace Controllers;
 
-    use DAO\UserDAO as UserDAO;
-    use Models\User  as User;
+    use DAO\userDAO as userDAO;
+    use Models\user  as user;
 
-  class UserController
+  class userController
     {
-        private $UserDAO;
+        private $userDAO;
 
         public function __construct()
         {
-            $this->UserDAO = new UserDAO();
+            $this->userDAO = new userDAO();
         }
 
-        public function ShowAddView($message=" ")
+        public function showAddView($message=" ")
         {
         
       /*    require_once(VIEWS_PATH."validate-session.php");
             require_once(VIEWS_PATH."login.php");*/
         }
 
-        public function ShowListView()
+        public function showListView()
         {
           require_once(VIEWS_PATH."validate-session.php");
-            $UserList = $this->UserDAO->getAll();
+            $userList = $this->userDAO->getAll();
     
         }
 
-        public function Add($UserName, $Password)
+        public function add($userName, $password)
         {
-               // require_once(VIEWS_PATH."validate-session.php");
-                $user =new User();
-            $User->setUserName($UserName);
-            $User->setPassword($Password);
+            // require_once(VIEWS_PATH."validate-session.php");
+            $user = new User();
+            $user->setuserName($userName);
+            $user->setPassword($password);
 
-            $this->UserDAO->Add($User);
+            $this->userDAO->Add($user);
 
             $this->ShowAddView();
         }
 
-        public function Remove($User)
+        public function remove($user)
         {
             require_once(VIEWS_PATH."validate-session.php");
             
-            $this->UserDAO->Remove($User);
+            //$this->userDAO->remove($user);
 
             $this->ShowListView();
         }
-        public function ShowsignUP(){
+        public function showsignUP(){
             require_once(VIEWS_PATH."sign-Up.php");
-            $this->UserDAO->getAll();
+            $this->userDAO->getAll();
         }
-        public function signUp(){
+        public function signUp()
+        {
         	
        
 

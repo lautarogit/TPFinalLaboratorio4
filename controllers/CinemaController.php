@@ -43,6 +43,19 @@
             $this->showCinemaDashboard();
         }
 
+        public function editCinema ($id, $name, $location, $capacity)
+        {
+            $cinemaDAO = new CinemaDAO();
+            $cinemaUpdated = new Cinema();
+            $cinemaUpdated->setId($id);
+            $cinemaUpdated->setName($name);
+            $cinemaUpdated->setLocation($location);
+            $cinemaUpdated->setCapacity($capacity);
+
+            $cinemaDAO->edit($cinemaUpdated);
+            $this->showCinemaDashboard();
+        }
+
         public function deleteCinema ($id)
         {
             $cinemaDAO = new CinemaDAO();

@@ -46,7 +46,7 @@
                 if(($user->getUserName() === $userName) && ($user->getPassword() === $password))
                 {
 
-                    $_SESSION["loggedUser"] = true;
+                    $_SESSION["loggedUser"] = $user;
                     $this->showCinemaDashboard();
 
                 }
@@ -69,7 +69,7 @@
         
         public function logout()
         {
-            $_SESSION['loggedUser'] = false;
+            $_SESSION['loggedUser'] = null;
             session_destroy();
             $this->index();
         }
