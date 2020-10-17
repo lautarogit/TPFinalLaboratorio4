@@ -16,8 +16,8 @@
         public function showAddView($message=" ")
         {
         
-      /*    require_once(VIEWS_PATH."validate-session.php");
-            require_once(VIEWS_PATH."login.php");*/
+            require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."login.php");
         }
 
         public function showListView()
@@ -25,37 +25,6 @@
           require_once(VIEWS_PATH."validate-session.php");
             $userList = $this->userDAO->getAll();
     
-        }
-
-        public function add($userName, $password)
-        {
-            // require_once(VIEWS_PATH."validate-session.php");
-            $user = new User();
-            $user->setuserName($userName);
-            $user->setPassword($password);
-
-            $this->userDAO->Add($user);
-
-            $this->ShowAddView();
-        }
-
-        public function remove($user)
-        {
-            require_once(VIEWS_PATH."validate-session.php");
-            
-            //$this->userDAO->remove($user);
-
-            $this->ShowListView();
-        }
-        public function showsignUP(){
-            require_once(VIEWS_PATH."sign-Up.php");
-            $this->userDAO->getAll();
-        }
-        public function signUp()
-        {
-        	
-       
-
         }
     }
 ?>

@@ -20,7 +20,7 @@
             return $this->userList;
         }
 
-        /*public function delete($code)
+        public function delete($code)
         {
             $this->retrieveData();
             $newList = array();
@@ -35,7 +35,7 @@
 
             $this->userList = $newList;
             $this->saveData();
-        }*/
+        }
 
         private function saveData()
         {

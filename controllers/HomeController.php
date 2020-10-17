@@ -20,22 +20,9 @@
 
         public function showCinemaDashboard()
         {
+            require_once(VIEWS_PATH."validate-session.php");
             require_once(VIEWS_PATH."cinema-dashboard.php");
-
         }
-
-        /*public function Login($userName, $password)
-        {
-            $user = $this->userDAO->GetByUserName($userName);
-
-            if(($user != null) && ($user->getPassword() === $password))
-            {
-                $_SESSION["loggedUser"] = $user;
-                $this->showAddView();
-            }
-            else
-                $this->index("Usuario y/o Contraseña incorrectos");
-        }*/
 
         public function login($userName, $password)
         {
@@ -45,21 +32,22 @@
             {
                 if(($user->getUserName() === $userName) && ($user->getPassword() === $password))
                 {
-
                     $_SESSION["loggedUser"] = $user;
                     $this->showCinemaDashboard();
-
+                    break;
                 }
-                else
-                { 
-                    $this->showLoginView(); 
+            } 
+            
+            if(($user->getUserName() != $userName) || ($user->getPassword() != $password) )
+            {
+                $this->showLoginView();
+                   
                 ?> 
                     <div class="alert alert-danger d-flex justify-content-center" role="alert">
-                    Usuario y/o contraseña incorrectos
+                        Usuario y/o contraseña incorrectos
                     </div>
                 <?php 
-                }
-            }  
+            }
         }
 
         public function showLoginView()
@@ -72,6 +60,34 @@
             $_SESSION['loggedUser'] = null;
             session_destroy();
             $this->index();
+        }
+
+        public function signUp ($firstName, $lastName, $userName, $email, $dni, $password)
+        {
+            $user = new User();
+            $userList = $this->userDAO->getAll();
+            $userListDimension = count($userList);
+            $index = $userListDimension-1;
+
+            if($userListDimension == 0)
+            {
+                $id = 1;
+            }
+            else
+            {
+                $id = $userList[$index]->getId() + 1;
+            }
+            
+            $user->setId($id);
+            $user->setFirstName($firstName);
+            $user->setLastName($lastName);
+            $user->setUserName($userName);
+            $user->setEmail($email);
+            $user->setDni($dni);
+            $user->setPassword($password);
+
+            $this->userDAO->add($user);
+            $this->showLoginView();
         }
     }
 ?>

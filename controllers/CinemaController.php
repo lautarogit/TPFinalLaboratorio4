@@ -15,11 +15,13 @@
 
         public function showCinemaDashboard ()
         {
+            require_once(VIEWS_PATH."validate-session.php");
             require_once(VIEWS_PATH."cinema-dashboard.php");
         }
 
         public function addCinema ($name, $location, $capacity)
         {
+            require_once(VIEWS_PATH."validate-session.php");
             $cinema = new Cinema();
             $cinemaList = $this->cinemaDAO->getAll();
             $cinemaListDimension = count($cinemaList);
@@ -45,6 +47,7 @@
 
         public function editCinema ($id, $name, $location, $capacity)
         {
+            require_once(VIEWS_PATH."validate-session.php");
             $cinemaDAO = new CinemaDAO();
             $cinemaUpdated = new Cinema();
             $cinemaUpdated->setId($id);
@@ -58,6 +61,7 @@
 
         public function deleteCinema ($id)
         {
+            require_once(VIEWS_PATH."validate-session.php");
             $cinemaDAO = new CinemaDAO();
 
             $cinemaDAO->delete($id);

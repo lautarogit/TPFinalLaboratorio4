@@ -16,16 +16,7 @@
      <div class="card-rows">
           <div class="card-columns">
                <div class="card w-15 card-box-shadow">
-                    <div class="card-header text-white" style="background: linear-gradient(-180deg, #292829, #838285);">
-                         <h3 class="card-title" style="display:inline;">Agregar cine</h3>
-                    </div>
-
-                    <div class="card-body">
-                         <p class="card-text"><strong>Localidad: </strong>Example</p>
-                         <p class="card-text"><strong>Capacidad: </strong>Example</p>
-                    </div>
-
-                    <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#addCinema">Agregar cine</button>
+                    <button class="btn btn-outline-primary" style="width: 619px; height: 193px;" data-toggle="modal" data-target="#addCinema">Agregar cine</button>
                </div>
 
                <!-- Add cinema Modal -->
@@ -33,15 +24,14 @@
                     <div class="modal-dialog" role="document">
                          <div class="modal-content">
                               <div class="modal-header">
-                              <h5 class="modal-title">Información de la cuenta</h5>
+                              <h5 class="modal-title">Agregar cine</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                    <span aria-hidden="true">&times;</span>
                               </button>
                               </div>
                               <div class="modal-body">
-                                   <div class="content d-flex"> 
+                                   <div class="content d-flex" style="justify-content: center;"> 
                                         <form action="<?php echo FRONT_ROOT."Cinema/addCinema"?>" method="POST" class="bg-dark-alpha p-5 text-black">
-                                             <h2 style="color:black">Agregar cine</h2>
                                              <div class="form-group">
                                                   <label for="name"><h5 class="color-blue">Nombre</h5></label>
                                                   <input class="form-control form-control-lg" type="text" name="name" placeholder="Ingresar nombre"/>
@@ -107,7 +97,7 @@
                                         </button>
                                         </div>
                                         <div class="modal-body">
-                                             <div class="content d-flex d-center"> 
+                                             <div class="content d-flex d-center" style="justify-content: center;"> 
                                                   <form action="<?php echo FRONT_ROOT."Cinema/editCinema"?>" method="POST" class="bg-dark-alpha p-5 text-black">
                                                        <div class="form-group">
                                                             <label for="id"><h5 class="text-black">Id (No editable)</h5></label>
@@ -129,7 +119,7 @@
                                                             <input class="form-control form-control-lg" type="number" name="capacity" value="<?php echo $cinemaValue->getCapacity();?>" placeholder="Ingresar capacidad"/>
                                                        </div>
 
-                                                       <button type="submit" name="addCinema" class="btn btn-warning btn-block">Confirmar cambios</button>   
+                                                       <button type="submit" name="addCinema" class="btn btn-warning">Confirmar cambios</button>   
                                                   </form>
                                              </div>
                                         </div>
