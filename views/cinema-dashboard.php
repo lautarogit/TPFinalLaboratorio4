@@ -82,7 +82,7 @@
                               </div>
 
                               <div>
-                                   <a class="btn btn-sm btn-outline-primary btn-block" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">Ver catalogo</a>
+                                   <a class="btn btn-sm btn-outline-dark btn-block" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">Ver catalogo</a>
                               </div>
                          </div>
 

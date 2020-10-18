@@ -1,14 +1,15 @@
 <?php
 
     namespace Models;
+    use Models\Genre as Genre;
 
     class Movie
     {
         private $id;
         private $title;
+        private $overview;
         private $adult;
-        private $price;
-        private $genres; //object {id, name}
+        private $genres;
         private $originalLanguage;
         private $popularity;
         private $posterPath;
@@ -25,14 +26,14 @@
             return $this->title;
         }
 
+        public function getOverview ()
+        {
+            return $this->overview;
+        }
+
         public function getAdult ()
         {
             return $this->adult;
-        }
-
-        public function getPrice ()
-        {
-            return $this->price;
         }
 
         public function getGenres ()
@@ -75,14 +76,14 @@
             $this->title = $title;
         }
 
+        public function setOverview ($overview)
+        {
+            $this->overview = $overview;
+        }
+
         public function setAdult ($adult)
         {
             $this->adult = $adult;
-        }
-
-        public function setPrice ($price)
-        {
-            $this->price = $price;
         }
 
         public function setGenres (Genre $genres)

@@ -36,19 +36,20 @@
                     $this->showCinemaDashboard();
                     break;
                 }
-            } 
-            
-            if(($user->getUserName() != $userName) || ($user->getPassword() != $password) )
-            {
-                $this->showLoginView();
-                   
-                ?> 
-                    <div class="alert alert-danger d-flex justify-content-center" role="alert">
-                        Usuario y/o contraseña incorrectos
-                    </div>
-                <?php 
+                else
+                {
+                    $this->showLoginView();
+                    
+                    ?> 
+                        <div class="alert alert-danger d-flex justify-content-center" role="alert">
+                            Usuario y/o contraseña incorrectos
+                        </div>
+                    <?php 
+                }
             }
-        }
+        } 
+            
+            
 
         public function showLoginView()
         {

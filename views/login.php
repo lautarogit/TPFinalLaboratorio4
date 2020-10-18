@@ -21,7 +21,7 @@
 <!-- Sign up Modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="signUpModal">
      <div class="modal-dialog" role="document">
-          <div class="modal-content">
+          <div class="modal-content" style="border-radius:35px 5px 35px 5px;">
                <div class="modal-header">
                <h5 class="modal-title"></h5>
                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -60,7 +60,7 @@
                     </div>
                </div>
                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-secondary" style="border-radius:15px 2px 15px 2px;" data-dismiss="modal">Cerrar</button>
                </div>
           </div>
      </div>
