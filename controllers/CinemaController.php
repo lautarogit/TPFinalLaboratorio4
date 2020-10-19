@@ -26,7 +26,7 @@
             $cinemaList = $this->cinemaDAO->getAll();
             $cinemaListDimension = count($cinemaList);
             $index = $cinemaListDimension-1;
-
+    
             if($cinemaListDimension == 0)
             {
                 $id = 1;
@@ -35,12 +35,12 @@
             {
                 $id = $cinemaList[$index]->getId() + 1;
             }
-            
+                
             $cinema->setId($id);
             $cinema->setName($name);
             $cinema->setLocation($location);
             $cinema->setCapacity($capacity);
-
+    
             $this->cinemaDAO->add($cinema);
             $this->showCinemaDashboard();
         }

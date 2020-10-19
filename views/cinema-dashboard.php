@@ -16,13 +16,13 @@
      <div class="card-rows">
           <div class="card-columns">
                <div class="card w-15 card-box-shadow">
-                    <button class="btn btn-outline-primary" style="width: 619px; height: 193px;" data-toggle="modal" data-target="#addCinema">Agregar cine</button>
+                    <button class="btn btn-outline-dark background-dark text-white" style="width: 619px; height: 193px;" data-toggle="modal" data-target="#addCinema">Agregar cine</button>
                </div>
 
                <!-- Add cinema Modal -->
                <div class="modal fade" tabindex="-1" role="dialog" id="addCinema">
                     <div class="modal-dialog" role="document">
-                         <div class="modal-content">
+                         <div class="modal-content background-dark text-white">
                               <div class="modal-header">
                               <h5 class="modal-title">Agregar cine</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -33,17 +33,17 @@
                                    <div class="content d-flex" style="justify-content: center;"> 
                                         <form action="<?php echo FRONT_ROOT."Cinema/addCinema"?>" method="POST" class="bg-dark-alpha p-5 text-black">
                                              <div class="form-group">
-                                                  <label for="name"><h5 class="color-blue">Nombre</h5></label>
+                                                  <label for="name"><h5><strong>Nombre</strong>(3-40 caracteres)</h5></label>
                                                   <input class="form-control form-control-lg" type="text" name="name" placeholder="Ingresar nombre"/>
                                              </div>
 
                                              <div class="form-group">
-                                                  <label for="location"><h5 class="color-blue">Localidad</h5></label>
+                                                  <label for="location"><h5><strong>Localidad</strong>(3-40 caracteres)</h5></label>
                                                   <input class="form-control form-control-lg" type="text" name="location" placeholder="Ingresar localidad"/>
                                              </div>
 
                                              <div class="form-group">
-                                                  <label for="capacity"><h5 class="color-blue">Capacidad</h5></label>
+                                                  <label for="capacity"><h5><strong>Capacidad</strong>(2-4 dígitos)</h5></label>
                                                   <input class="form-control form-control-lg" type="number" name="capacity" placeholder="Ingresar capacidad"/>
                                              </div>
 
@@ -76,20 +76,20 @@
                                    </div>
                               </div>
 
-                              <div class="card-body">
+                              <div class="card-body text-white background-dark">
                                    <p class="card-text"><?php echo "<strong>Localidad: </strong>".$cinemaValue->getLocation();?></p>
                                    <p class="card-text"><?php echo "<strong>Capacidad: </strong>".$cinemaValue->getCapacity();?></p>
                               </div>
 
                               <div>
-                                   <a class="btn btn-sm btn-outline-dark btn-block" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">Ver catalogo</a>
+                                   <a class="btn btn-sm btn-outline-info background-dark btn-block" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">Ver catalogo</a>
                               </div>
                          </div>
 
                          <!-- Edit cinema Modal -->
                          <div class="modal fade" tabindex="-1" role="dialog" id="<?php echo "editCinema".$cinemaValue->getId();?>">
                               <div class="modal-dialog" role="document">
-                                   <div class="modal-content">
+                                   <div class="modal-content background-dark text-white">
                                         <div class="modal-header">
                                         <h5 class="modal-title">Editar cine</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -100,26 +100,26 @@
                                              <div class="content d-flex d-center" style="justify-content: center;"> 
                                                   <form action="<?php echo FRONT_ROOT."Cinema/editCinema"?>" method="POST" class="bg-dark-alpha p-5 text-black">
                                                        <div class="form-group">
-                                                            <label for="id"><h5 class="text-black">Id (No editable)</h5></label>
+                                                            <label for="id"><h5><strong>Id</strong> (No editable)</h5></label>
                                                             <input class="form-control form-control-lg" type="text" name="id" value="<?php echo $cinemaValue->getId();?>" readonly/>
                                                        </div>
 
                                                        <div class="form-group">
-                                                            <label for="name"><h5 class="color-blue">Nombre</h5></label>
+                                                            <label for="name"><h5><strong>Nombre</strong> (3-40 caracteres)</h5></label>
                                                             <input class="form-control form-control-lg" type="text" name="name" value="<?php echo $cinemaValue->getName();?>" placeholder="Ingresar nombre"/>
                                                        </div>
 
                                                        <div class="form-group">
-                                                            <label for="location"><h5 class="color-blue">Localidad</h5></label>
+                                                            <label for="location"><h5><strong>Localidad</strong> (3-40 caracteres)</h5></label>
                                                             <input class="form-control form-control-lg" type="text" name="location" value="<?php echo $cinemaValue->getLocation();?>" placeholder="Ingresar localidad"/>
                                                        </div>
 
                                                        <div class="form-group">
-                                                            <label for="capacity"><h5 class="color-blue">Capacidad</h5></label>
+                                                            <label for="capacity"><h5><strong>Capacidad</strong> (2-4 dígitos)</h5></label>
                                                             <input class="form-control form-control-lg" type="number" name="capacity" value="<?php echo $cinemaValue->getCapacity();?>" placeholder="Ingresar capacidad"/>
                                                        </div>
 
-                                                       <button type="submit" name="addCinema" class="btn btn-warning">Confirmar cambios</button>   
+                                                       <button type="submit" name="addCinema" class="btn btn-warning">Confirmar cambios</button>
                                                   </form>
                                              </div>
                                         </div>

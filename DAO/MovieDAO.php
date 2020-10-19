@@ -3,7 +3,8 @@
     
     use Models\Movie as Movie;
     use Models\Genre as Genre;
-    
+    use DAO\GenreDAO as GenreDAO;
+
     class MovieDAO 
     {
         private $movieList = array();
@@ -17,24 +18,39 @@
 
         public function getAll()
         {
-            $this->retrieveDataFromAPI();
+            if($this->movieList !== [])
+            {
+                $this->retrieveDataFromAPI();
+            }
+            else
+            {
+                $this->retrieveData();
+            }
+            
             return $this->movieList;
         }
 
         public function retrieveDataFromAPI ()
         {
-            $this->movieList;
-            $moviedb = file_get_contents(API_HOST.'/movie/now_playing?api_key='.TMDB_API_KEY.'&language='.LANG.'&page=1');
-            $movieList = json_decode($moviedb, TRUE)['results'];
+            //$moviedb = file_get_contents(API_HOST.'/movie/now_playing?api_key='.TMDB_API_KEY.'&language='.LANG.'&page=1');
+            //$this->movieList = json_decode($moviedb, TRUE)['results'];
 
-            foreach($movieList as $movie)
+            $moviedb = file_get_contents(API_HOST.'/movie/now_playing?api_key='.TMDB_API_KEY.'&language='.LANG.'&page=1');
+            $this->movieList = ($moviedb) ? json_decode($moviedb, TRUE)['results'] : array();
+
+            foreach($this->movieList as $movie)
             {
+                $genre = new Genre();
+                $genreDAO = new GenreDAO();
+
+                $genre = $genreDAO->getAll();
+                $genres = $genre;
+                
                 $id = $movie['id'];
                 $title = $movie['title'];
                 $overview = $movie['overview'];
                 $adult = $movie['adult'];
-                $genres = new Genre();
-                $genres = $movie['genres_ids'];
+                $genres = $movie['genre_ids'];
                 $originalLanguage = $movie['original_language'];
                 $popularity = $movie['popularity'];
                 $posterPath = $movie['poster_path'];  
@@ -69,7 +85,7 @@
                 $arrayValue['title'] = $movie->getTitle();
                 $arrayValue['overview'] = $movie->getOverview();
                 $arrayValue['adult'] = $movie->getAdult();
-                $arrayValue['genres'] = $movie->getGenres();
+                $arrayValue['genre_ids'] = $movie->getGenres();
                 $arrayValue['original_language'] = $movie->getOriginalLanguage();
                 $arrayValue['popularity'] = $movie->getPopularity();
                 $arrayValue['poster_Path'] = $movie->getPosterPath();
@@ -97,7 +113,7 @@
                 $title = $arrayValue['title'];
                 $overview = $arrayValue['overview'];
                 $adult = $arrayValue['adult'];
-                $genres = $arrayValue['genres'];
+                $genre = $arrayValue['genre_ids'];
                 $originalLanguage = $arrayValue['original_language'];
                 $popularity = $arrayValue['popularity'];
                 $posterPath = $arrayValue['poster_Path'];  
@@ -108,7 +124,7 @@
                 $movie->setTitle($title);
                 $movie->setOverview($overview);
                 $movie->setAdult($adult);
-                $movie->setGenres($genres);
+                $movie->setGenres($genre);
                 $movie->setOriginalLanguage($originalLanguage);
                 $movie->setPopularity($popularity);
                 $movie->setPosterPath($posterPath);

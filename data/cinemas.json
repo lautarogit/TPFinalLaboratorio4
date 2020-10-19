@@ -1,9 +1,9 @@
 [
     {
-        "id": 1,
+        "id": "1",
         "name": "Cinema1",
         "location": "Mar del Plata",
-        "capacity": "200"
+        "capacity": "55556"
     },
     {
         "id": "2",

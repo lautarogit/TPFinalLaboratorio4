@@ -86,7 +86,7 @@
             $this->adult = $adult;
         }
 
-        public function setGenres (Genre $genres)
+        public function setGenres ($genres)
         {
             $this->genres = $genres;
         }

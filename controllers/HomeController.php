@@ -39,18 +39,10 @@
                 else
                 {
                     $this->showLoginView();
-                    
-                    ?> 
-                        <div class="alert alert-danger d-flex justify-content-center" role="alert">
-                            Usuario y/o contraseña incorrectos
-                        </div>
-                    <?php 
                 }
             }
         } 
             
-            
-
         public function showLoginView()
         {
             require_once(VIEWS_PATH."login.php");

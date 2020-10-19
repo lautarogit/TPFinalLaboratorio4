@@ -6,10 +6,10 @@
                </div>
 
                <div class="form-group">
-                    <input class="login-input" type="text" name="password" placeholder="Ingresar constraseña">
+                    <input class="login-input" type="password" name="password" placeholder="Ingresar constraseña">
                </div>
 
-               <button class="btn btn-primary btn-block btn-lg background-aquamarina" style="border-radius:25px 25px 3px 3px;" type="submit">Iniciar sesion</button>
+               <button class="btn btn-dark btn-block btn-lg" style="border-radius:25px 25px 3px 3px;" type="submit">Iniciar sesion</button>
           </form>
 
           <div class="text-center">
@@ -21,9 +21,9 @@
 <!-- Sign up Modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="signUpModal">
      <div class="modal-dialog" role="document">
-          <div class="modal-content" style="border-radius:35px 5px 35px 5px;">
+          <div class="modal-content background-dark text-white" style="border-radius:35px 5px 35px 5px;">
                <div class="modal-header">
-               <h5 class="modal-title"></h5>
+                    <h5 class="modal-title">Crear cuenta</h5>
                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                </button>
@@ -65,4 +65,4 @@
           </div>
      </div>
 </div>
-               <!-- ---------------- -->
+<!-- ---------------- -->
