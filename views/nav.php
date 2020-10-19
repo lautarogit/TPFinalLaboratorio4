@@ -10,12 +10,12 @@
      <ul class="navbar-nav ml-auto">
           <?php if($_SESSION['loggedUser']){ ?>
           <li class="nav-item">
-               <a class="btn btn-danger" role="button" href="<?php echo FRONT_ROOT."Home/logout"?>">Cerrar sesión</a>
-               <button class="btn btn-outline-primary" data-toggle="modal" data-target="#infoModal">i</button>
+            <a class="btn btn-danger" role="button" href="<?php echo FRONT_ROOT."Home/logout"?>">Cerrar sesión</a>
+            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#infoModal">i</button>
           </li>
           <?php }else{ ?>
           <li class="nav-item">
-          <a class="btn btn-primary" role="button" href="<?php echo FRONT_ROOT."Home/showLoginView"?>">Iniciar sesión</a>
+            <a class="btn btn-primary" role="button" href="<?php echo FRONT_ROOT."Home/showLoginView"?>">Iniciar sesión</a>
           </li>
           <?php } ?>
      </ul>
@@ -23,7 +23,7 @@
 
 <div class="modal fade" tabindex="-1" role="dialog" id="infoModal">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content background-dark text-white">
       <div class="modal-header">
         <h5 class="modal-title">Información de la cuenta</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
