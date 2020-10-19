@@ -6,9 +6,11 @@
      use DAO\MovieDAO as MovieDAO;
 ?>
 
+<a class="btn btn-primary" role="button" href="<?php echo FRONT_ROOT."Home/showCinemaDashboard";?>">Volver</a>
+
 <main class="d-flex align-items-center height-100">
-    <div class="card-rows">
-        <div class="card-columns">
+    <!--<div class="card-rows"> -->
+        <div class="grid">
      <?php   
             $movie = new Movie();
             $movieDAO = new MovieDAO($movie);
@@ -17,7 +19,7 @@
             foreach($movieList as $movieValue)
             {  
      ?>
-                <div class="card w-15 m-2 background-dark text-white" style="width: 375px; height: 750px;">
+                <div class="card w-15 m-2 background-dark text-white text-center" style="width: 364px;">
                     <div class="card-header" style="background: crimson;">
                         <h3 class="card-title" style="text-align:center;"><?php echo $movieValue->getTitle();?></h3> 
                     </div>
@@ -31,9 +33,10 @@
                             <?php 
                                 $movieOverview = $movieValue->getOverview(); 
                                 $movieOverviewLength = strlen($movieOverview);
-                                $limitedMovieOverview = substr($movieOverview, 0, 200);
+                                $overviewMaxCharacters = 210;
+                                $limitedMovieOverview = substr($movieOverview, 0, $overviewMaxCharacters);
 
-                                if($movieOverviewLength < 200)
+                                if($movieOverviewLength < $overviewMaxCharacters)
                                 {
                                     echo $movieOverview;
                                 }
@@ -82,8 +85,5 @@
             } 
      ?> 
         </div>
-    </div>
+    <!--</div> -->
 </main>
-<br>
-<br>
-<a class="btn btn-primary" role="button" href="<?php echo FRONT_ROOT."Home/showCinemaDashboard";?>">Volver</a>

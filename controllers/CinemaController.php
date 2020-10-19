@@ -48,14 +48,13 @@
         public function editCinema ($id, $name, $location, $capacity)
         {
             require_once(VIEWS_PATH."validate-session.php");
-            $cinemaDAO = new CinemaDAO();
             $cinemaUpdated = new Cinema();
             $cinemaUpdated->setId($id);
             $cinemaUpdated->setName($name);
             $cinemaUpdated->setLocation($location);
             $cinemaUpdated->setCapacity($capacity);
 
-            $cinemaDAO->edit($cinemaUpdated);
+            $this->$cinemaDAO->edit($cinemaUpdated);
             $this->showCinemaDashboard();
         }
 

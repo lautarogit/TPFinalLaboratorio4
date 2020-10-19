@@ -8,5 +8,5 @@
      <link rel="stylesheet" href="<?php echo CSS_PATH."bootstrap.min.css";?>">
      <link rel="stylesheet" href="<?php echo CSS_PATH."style.css";?>">
 </head>
-<body background="<?php echo IMG_PATH."bg.jpg";?>"></body>
+<body background="<?php echo IMG_PATH."bg.jpg";?>" style="background-attachment: fixed"></body>
 
