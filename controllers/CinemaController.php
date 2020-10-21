@@ -61,9 +61,10 @@
         public function deleteCinema ($id)
         {
             require_once(VIEWS_PATH."validate-session.php");
-            $cinemaDAO = new CinemaDAO();
+            $cinemaDeleted = new Cinema();
+            $cinemaDeleted->setId($id);
 
-            $cinemaDAO->delete($id);
+            $this->cinemaDAO->delete($cinemaDeleted);
             $this->showCinemaDashboard();
         }
     }

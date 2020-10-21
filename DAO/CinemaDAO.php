@@ -20,14 +20,14 @@
             return $this->cinemaList;
         }
 
-        public function delete ($id)
+        public function delete (Cinema $cinemaDeleted)
         {
             $this->retrieveData();
             $newList = array();
 
             foreach ($this->cinemaList as $cinema) 
             {
-                if($cinema->getId() != $id)
+                if($cinema->getId() != $cinemaDeleted->getId())
                 {
                     array_push($newList, $cinema);
                 }
@@ -37,7 +37,7 @@
             $this->saveData();
         }
 
-        public function edit(Cinema $cinemaUpdated)
+        public function edit (Cinema $cinemaUpdated)
         {
             $this->retrieveData();
             $newList = array();

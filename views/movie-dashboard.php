@@ -9,16 +9,15 @@
 <a class="btn btn-primary" role="button" href="<?php echo FRONT_ROOT."Home/showCinemaDashboard";?>">Volver</a>
 
 <main class="d-flex align-items-center height-100">
-    <!--<div class="card-rows"> -->
-        <div class="grid">
-     <?php   
+    <div class="grid">
+        <?php   
             $movie = new Movie();
             $movieDAO = new MovieDAO($movie);
             $movieList = $movieDAO->getAll();
 
             foreach($movieList as $movieValue)
             {  
-     ?>
+        ?>
                 <div class="card w-15 m-2 background-dark text-white text-center" style="width: 364px;">
                     <div class="card-header" style="background: crimson;">
                         <h3 class="card-title" style="text-align:center;"><?php echo $movieValue->getTitle();?></h3> 
@@ -46,7 +45,7 @@
                             <?php 
                                 }   
                             ?></p>
-
+                            
                             <button class="btn btn-sm btn-success btn-block">Comprar</button>
                     </div>
                 </div> 
@@ -81,9 +80,8 @@
                     </div>
                 </div>
                 <!-- ----------------- -->
-     <?php  
+        <?php  
             } 
-     ?> 
-        </div>
-    <!--</div> -->
+        ?> 
+    </div>
 </main>

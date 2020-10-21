@@ -5,8 +5,11 @@
     {
         private $id;
         private $codeQR;
-        private $number;
-        private $location;
+        private $function;
+        /*
+        date falta
+        idTicket	codeQr	
+        */
 
         public function getID()
         {
@@ -23,11 +26,6 @@
             return $this->number;
         }
 
-        public function getLocation()
-        {
-            return $this->location;
-        }
-
         public function setID($id)
         {
             $this->id = $id;
@@ -41,11 +39,6 @@
         public function setNumber($number)
         {
             $this->number = $number;
-        }
-
-        public function setLocation($location)
-        {
-            $this->location = $location;
         }
     }
 ?>
