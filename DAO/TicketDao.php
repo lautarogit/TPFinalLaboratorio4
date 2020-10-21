@@ -2,53 +2,52 @@
     namespace DAO;
     use Models\Ticket as Ticket;
     use Models\MovieXroom as MovieXroom;
-    use DAO\UserDAO as UserDAO;
 
-    class TicketDao
+    class TicketDAO
     {
-        private $TicketList;
+        private $ticketList;
 
         public function add (Ticket $ticket)
         {
             $this->retrieveData();
-            array_push($this->TicketList, $ticket);
+            array_push($this->ticketList, $ticket);
             $this->saveData();
         }
 
-        public function getAll()
+        public function getAll ()
         {
             $this->retrieveData();
-            return $this->TicketList;
+            return $this->ticketList;
         }
 
-        public function delete($idTicket)
+        public function delete (Ticket $ticketDeleted)
         {
             $this->retrieveData();
             $newList = array();
 
-            foreach ($this->TicketList as $ticket) 
+            foreach ($this->ticketList as $ticket) 
             {
-                if($ticket->getCode() != $idTicket)
+                if($ticket->getCode() != $ticketDeleted->getId())
                 {
                     array_push($newList, $ticket);
                 }
             }
 
-            $this->TicketList = $newList;
+            $this->ticketList = $newList;
             $this->saveData();
         }
 
         public function saveData ()
         {
-            $arrayToEncode=array();
-            $jsonPath =$this->getJsonFilePath();
+            $arrayToEncode = array();
+            $jsonPath = $this->getJsonFilePath();
 
-            foreach ($this->TicketList as $ticket) 
+            foreach ($this->ticketList as $ticket) 
             {
-                $arrayValue['idTicket'] =$ticket->getId();
-                $arrayValue['codeQr'] =$ticket->getCodeQR();
-                $arrayValue['function'] =$ticket->getFunction();
-                $arrayValue['user'] =$ticket->getUser();
+                $arrayValue['id'] = $ticket->getId();
+                $arrayValue['codeQR'] = $ticket->getCodeQR();
+                $arrayValue['function'] = $ticket->getFunction();
+                $arrayValue['user'] = $ticket->getUser();
                 array_push($arrayToEncode,$arrayValue);
             }
 
@@ -58,7 +57,7 @@
 
         public function retrieveData ()
         {
-            $this->TicketList = array();
+            $this->ticketList = array();
             $jsonPath = $this->getJsonFilePath();
             $jsonContent = file_get_contents($jsonPath);
             $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
@@ -66,17 +65,16 @@
             foreach ($arrayToDecode as $arrayValue) 
             {
                 $ticket = new Ticket(
-                $arrayValue['idTicket'] ;
-                $arrayValue['codeQr'] ;
-                $arrayValue['function'];
-                $arrayValue['user'];)
+                $arrayValue['id'],
+                $arrayValue['codeQR'],
+                $arrayValue['function'],
+                $arrayValue['user']);
                         
-                array_push($this->TicketList, $ticket);
+                array_push($this->ticketList, $ticket);
             }
-
         }
 
-        public function getJsonFilePath()
+        public function getJsonFilePath ()
         {
             $initialPath = "Data/tickets.json";
 

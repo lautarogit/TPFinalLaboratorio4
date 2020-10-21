@@ -46,7 +46,7 @@
             {
                 $arrayValue['userName'] = $user->getUserName();
                 $arrayValue['password'] = $user->getPassword();
-      
+                $arrayValue['rolId'] = $user->getRolId();
                 $arrayValue['firstName'] = $user->getFirstName();
                 $arrayValue['lastName'] = $user->getLastName();
                 $arrayValue['dni'] = $user->getDni();
@@ -68,14 +68,24 @@
 
             foreach ($arrayToDecode as $arrayValue) 
             {
-                $user = new User(
-                $arrayValue['userName'], 
-                $arrayValue['password'], 
-                $arrayValue['firstName'], 
-                $arrayValue['lastName'],
-                $arrayValue['dni'],
-                $arrayValue['email']);
-                
+                $user = new User();
+
+                $userName = $arrayValue['userName'];
+                $password = $arrayValue['password'];
+                $rolId = $arrayValue['rolId'];
+                $firstName = $arrayValue['firstName'];
+                $lastName = $arrayValue['lastName'];
+                $dni = $arrayValue['dni'];
+                $email = $arrayValue['email'];
+
+                $user->setUserName($userName);
+                $user->setPassword($password);
+                $user->setRolId($rolId);
+                $user->setFirstName($firstName);
+                $user->setLastName($lastName);
+                $user->setDni($dni);
+                $user->setEmail($email);
+
                 array_push($this->userList, $user);
             }
         }

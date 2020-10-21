@@ -7,7 +7,7 @@
     {
         private $cinemaList = array();
 
-        public function add(Cinema $newCinema)
+        public function add (Cinema $newCinema)
         {
             $this->retrieveData();
             array_push($this->cinemaList, $newCinema);
@@ -50,7 +50,7 @@
                 }
                 else
                 {
-                    array_push($newList,$cinemaUpdated);
+                    array_push($newList, $cinemaUpdated);
                 }
             }
             
@@ -68,7 +68,7 @@
                 $arrayValue['id'] = $cinema->getId();
                 $arrayValue['name'] = $cinema->getName();
                 $arrayValue['location'] = $cinema->getLocation();
-         
+                $arrayValue['capacity'] = $cinema->getCapacity();
 
                 array_push($arrayToEncode, $arrayValue);
             }
@@ -86,8 +86,18 @@
 
             foreach ($arrayToDecode as $arrayValue) 
             {
-                $cinema = new Cinema($arrayValue['id'], $arrayValue['name'], $arrayValue['location']);
-                
+                $cinema = new Cinema();
+
+                $id = $arrayValue['id'];
+                $name = $arrayValue['name'];
+                $location = $arrayValue['location'];
+                $capacity = $arrayValue['capacity'];
+
+                $cinema->setId($id);
+                $cinema->setName($name);
+                $cinema->setLocation($location);
+                $cinema->setCapacity($capacity);
+
                 array_push($this->cinemaList, $cinema);
             }
         }

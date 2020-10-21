@@ -24,41 +24,43 @@
           <div class="modal-content background-dark text-white" style="border-radius:35px 5px 35px 5px;">
                <div class="modal-header">
                     <h5 class="modal-title">Crear cuenta</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                </button>
                </div>
+
                <div class="modal-body">
                     <div class="content d-flex" style="justify-content: center;"> 
                          <form action="<?php echo FRONT_ROOT."Home/signUp";?>" method="POST" class="login-form bg-dark-alpha p-5 text-white">
                               <div class="form-group">
-                                   <input class="form-control form-control-lg" type="text" name="firstName" placeholder="Nombre">
+                                   <input class="form-control form-control-lg" type="text" name="firstName" placeholder="Nombre" required>
                               </div>
 
                               <div class="form-group">
-                                   <input class="form-control form-control-lg" type="text" name="lastName" placeholder="Apellido">
+                                   <input class="form-control form-control-lg" type="text" name="lastName" placeholder="Apellido" required>
                               </div>
 
                               <div class="form-group">
-                                   <input class="form-control form-control-lg" type="text" name="userName" placeholder="Nombre de usuario">
+                                   <input class="form-control form-control-lg" type="text" name="userName" placeholder="Nombre de usuario" required>
                               </div>
 
                               <div class="form-group">
-                                   <input class="form-control form-control-lg" type="email" name="email" placeholder="E-Mail">
+                                   <input class="form-control form-control-lg" type="email" name="email" placeholder="E-Mail" required>
                               </div>
 
                               <div class="form-group">
-                                   <input class="form-control form-control-lg" type="number" name="dni" placeholder="DNI">
+                                   <input class="form-control form-control-lg" type="number" name="dni" placeholder="DNI" required>
                               </div>
 
                               <div class="form-group">
-                                   <input class="form-control form-control-lg" type="password" name="password" placeholder="Contraseña">
+                                   <input class="form-control form-control-lg" type="password" name="password" placeholder="Contraseña" required>
                               </div>
 
-                              <button class="btn btn-outline-primary btn-block btn-lg" style="border-radius:25px 3px 25px 3px;" type="submit">Registrarte</button>
+                              <button class="btn btn-primary btn-block btn-lg text-center background-green" style="border-radius:25px 3px 25px 3px;" type="submit">Registrarte</button>
                          </form>
                     </div>
                </div>
+
                <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" style="border-radius:15px 2px 15px 2px;" data-dismiss="modal">Cerrar</button>
                </div>

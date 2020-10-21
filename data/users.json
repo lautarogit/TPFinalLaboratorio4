@@ -1,17 +1,17 @@
 [
     {
-        "userName": "root",
-        "password": "root",
-
+        "userName": "admin",
+        "password": "admin",
+        "rolId": 1,
         "firstName": "admin",
-        "lastName": "admin2",
+        "lastName": "admin",
         "dni": "123456789",
         "email": "admin@admin"
     },
     {
         "userName": "lautarolp27",
         "password": "lautaro123",
-   
+        "rolId": 0,
         "firstName": "Lautaro",
         "lastName": "Montes",
         "dni": "41669469",

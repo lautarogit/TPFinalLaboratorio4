@@ -1,6 +1,7 @@
 <?php 
     use DAO\UserDAO as UserDAO;
     use Models\User as User;
+    use Models\Rol as Rol;
 ?>
 
 <nav class="navbar navbar-expand-lg bg-dark">
@@ -33,7 +34,13 @@
       <div class="modal-body">
         <?php 
           $user = new User();
-          $user = $_SESSION['loggedUser']; 
+          $rol = new Rol();
+
+          $user = $_SESSION['loggedUser'];
+
+          $rolId = $user->getRolId();
+          $rol->setId($rolId);
+          $rol->setRolType($rolId);
         ?>
 
         <p><strong>Nombre de usuario: </strong><?php echo $user->getUserName();?></p>
@@ -41,6 +48,7 @@
         <p><strong>Apellido: </strong><?php echo $user->getLastName();?></p>
         <p><strong>DNI: </strong><?php echo $user->getDni();?></p>
         <p><strong>Email: </strong><?php echo $user->getEmail();?></p>
+        <p><strong>Rol: </strong><?php echo $rol->getRolType();?></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

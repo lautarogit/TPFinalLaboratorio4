@@ -8,23 +8,20 @@
         private $dni;
         private $email;
         
-        public function __construct ($id=' ', $firstName=' ', $lastName = ' ', $dni= ' ', $email=' ')
+        public function __construct ($firstName=' ', $lastName = ' ', $dni= ' ', $email=' ')
         {
-            $this->id = $id;
             $this->firstName = $firstName;
             $this->lastName = $lastName;
             $this->dni = $dni;
             $this->email = $email;
         }
 
-       
-
         public function getFirstName ()
         {
             return $this->firstName;
         }
 
-        public function getlastName ()
+        public function getLastName ()
         {
             return $this->lastName;
         }
@@ -38,8 +35,6 @@
         {
             return $this->email;
         }
-
-       
 
         public function setFirstName ($firstName)
         {

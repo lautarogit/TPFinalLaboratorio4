@@ -59,25 +59,14 @@
         {
             $user = new User();
             $userList = $this->userDAO->getAll();
-            $userListDimension = count($userList);
-            $index = $userListDimension-1;
 
-            if($userListDimension == 0)
-            {
-                $id = 1;
-            }
-            else
-            {
-                $id = $userList[$index]->getId() + 1;
-            }
-            
-            $user->setId($id);
+            $user->setUserName($userName);
+            $user->setPassword($password);
+            $user->setRolId(0);
             $user->setFirstName($firstName);
             $user->setLastName($lastName);
-            $user->setUserName($userName);
+            $user->setDni($dni); //if dni exists, the account shouldn't be created
             $user->setEmail($email);
-            $user->setDni($dni);
-            $user->setPassword($password);
 
             $this->userDAO->add($user);
             $this->showLoginView();
