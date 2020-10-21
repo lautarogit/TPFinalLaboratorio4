@@ -3,13 +3,11 @@
      require_once("nav.php");
 
      use DAO\CinemaDAO as CinemaDAO;
-     use Models\Cinema as Cinema;
 ?>
 
 <main class="d-flex m-2">
      <?php   
-          $cinema = new Cinema();
-          $cinemaDAO = new CinemaDAO($cinema);
+          $cinemaDAO = new CinemaDAO();
           $cinemaList = $cinemaDAO->getAll();
      ?>
 

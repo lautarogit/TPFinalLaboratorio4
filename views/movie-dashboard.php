@@ -2,7 +2,6 @@
      require_once("header.php"); 
      require_once("nav.php");
 
-     use Models\Movie as Movie;
      use DAO\MovieDAO as MovieDAO;
 ?>
 
@@ -11,8 +10,7 @@
 <main class="d-flex align-items-center height-100">
     <div class="grid">
         <?php   
-            $movie = new Movie();
-            $movieDAO = new MovieDAO($movie);
+            $movieDAO = new MovieDAO();
             $movieList = $movieDAO->getAll();
 
             foreach($movieList as $movieValue)
