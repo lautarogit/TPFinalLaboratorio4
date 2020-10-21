@@ -2,7 +2,7 @@
     {
         "userName": "root",
         "password": "root",
-        "id": 1,
+
         "firstName": "admin",
         "lastName": "admin2",
         "dni": "123456789",
@@ -11,7 +11,7 @@
     {
         "userName": "lautarolp27",
         "password": "lautaro123",
-        "id": 2,
+   
         "firstName": "Lautaro",
         "lastName": "Montes",
         "dni": "41669469",

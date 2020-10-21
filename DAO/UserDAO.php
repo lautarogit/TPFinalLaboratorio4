@@ -46,7 +46,7 @@
             {
                 $arrayValue['userName'] = $user->getUserName();
                 $arrayValue['password'] = $user->getPassword();
-                $arrayValue['id'] = $user->getId();
+      
                 $arrayValue['firstName'] = $user->getFirstName();
                 $arrayValue['lastName'] = $user->getLastName();
                 $arrayValue['dni'] = $user->getDni();
@@ -71,7 +71,6 @@
                 $user = new User(
                 $arrayValue['userName'], 
                 $arrayValue['password'], 
-                $arrayValue['id'], 
                 $arrayValue['firstName'], 
                 $arrayValue['lastName'],
                 $arrayValue['dni'],

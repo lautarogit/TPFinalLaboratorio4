@@ -68,7 +68,7 @@
                 $arrayValue['id'] = $cinema->getId();
                 $arrayValue['name'] = $cinema->getName();
                 $arrayValue['location'] = $cinema->getLocation();
-                $arrayValue['capacity'] = $cinema->getCapacity();
+         
 
                 array_push($arrayToEncode, $arrayValue);
             }
@@ -86,7 +86,7 @@
 
             foreach ($arrayToDecode as $arrayValue) 
             {
-                $cinema = new Cinema($arrayValue['id'], $arrayValue['name'], $arrayValue['location'], $arrayValue['capacity']);
+                $cinema = new Cinema($arrayValue['id'], $arrayValue['name'], $arrayValue['location']);
                 
                 array_push($this->cinemaList, $cinema);
             }

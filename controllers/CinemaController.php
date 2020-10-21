@@ -39,7 +39,7 @@
             $cinema->setId($id);
             $cinema->setName($name);
             $cinema->setLocation($location);
-            $cinema->setCapacity($capacity);
+     
     
             $this->cinemaDAO->add($cinema);
             $this->showCinemaDashboard();
@@ -52,7 +52,6 @@
             $cinemaUpdated->setId($id);
             $cinemaUpdated->setName($name);
             $cinemaUpdated->setLocation($location);
-            $cinemaUpdated->setCapacity($capacity);
 
             $this->$cinemaDAO->edit($cinemaUpdated);
             $this->showCinemaDashboard();

@@ -4,14 +4,13 @@
     class Cinema
     {
         private $id;
-        private $capacity;
         private $location;
         private $name;
 
-        public function __construct ($id = ' ', $name = ' ', $location = ' ', $capacity = ' ')
+        public function __construct ($id = ' ', $name = ' ', $location = ' ')
         {
             $this->id = $id;
-            $this->capacity = $capacity;
+          
             $this->location = $location;
             $this->name = $name;
         }
@@ -19,16 +18,6 @@
         public function getId ()
         {
             return $this->id;
-        }
-
-        public function getCapacity ()
-        {
-            return $this->capacity;
-        }
-
-        public function getLocation ()
-        {
-            return $this->location;
         }
 
         public function getName ()

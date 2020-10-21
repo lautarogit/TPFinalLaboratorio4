@@ -8,7 +8,7 @@
         private $userName;
         private $password;
 
-        public function __construct ($userName = ' ', $password = ' ', $id = ' ', $firstName = ' ', $lastName = ' ', $dni = ' ', $email = ' ')
+        public function __construct ($userName = ' ', $password = ' ', $firstName = ' ', $lastName = ' ', $dni = ' ', $email = ' ')
         {
             parent::__construct($id, $firstName, $lastName, $dni, $email);
             $this->userName = $userName;

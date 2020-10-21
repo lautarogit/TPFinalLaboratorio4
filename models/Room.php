@@ -5,6 +5,7 @@
     {
         private $id;
         private $capacity;
+        private $type;
         private $location;
         private $name;
 
@@ -55,5 +56,17 @@
         {
             $this->name = $name;
         }
+        
+   
+    public function getType()
+    {
+        return $this->type;
     }
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+}
 ?>

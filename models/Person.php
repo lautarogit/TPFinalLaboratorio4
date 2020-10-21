@@ -3,13 +3,12 @@
 
     class Person
     {
-        private $id;
         private $firstName;
         private $lastName;
         private $dni;
         private $email;
         
-        public function __construct ($id, $firstName, $lastName, $dni, $email)
+        public function __construct ($id=' ', $firstName=' ', $lastName = ' ', $dni= ' ', $email=' ')
         {
             $this->id = $id;
             $this->firstName = $firstName;
@@ -18,10 +17,7 @@
             $this->email = $email;
         }
 
-        public function getId ()
-        {
-            return $this->id;
-        }
+       
 
         public function getFirstName ()
         {
@@ -43,10 +39,7 @@
             return $this->email;
         }
 
-        public function setId ($id)
-        {
-            $this->id = $id;
-        }
+       
 
         public function setFirstName ($firstName)
         {
