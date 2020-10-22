@@ -107,13 +107,15 @@
             $this->roomDAO->add($room);
 
             $roomsId = array();
-            $roomList = $this->roomDAO->getAll();
-
+            
             foreach($roomList as $roomValue)
             {
                 $roomId = $roomValue->getId();
                 array_push($roomsId, $roomId);
             }
+
+            $roomId = $room->getId();
+            array_push ($roomsId, $roomId);
 
             $cinema->setRoomsId($roomsId);
 

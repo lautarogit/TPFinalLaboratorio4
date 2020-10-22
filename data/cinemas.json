@@ -1,7 +1,10 @@
 [
     {
         "id": 1,
-        "roomsId": null,
+        "roomsId": [
+            1,
+            2
+        ],
         "name": "CineDePrueba",
         "location": "Mar del Plata",
         "capacity": "200"

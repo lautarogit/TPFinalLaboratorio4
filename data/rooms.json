@@ -1,3 +1,16 @@
 [
-    
+    {
+        "id": 1,
+        "idCinema": 1,
+        "capacity": "200",
+        "type": "2D",
+        "name": "A-1"
+    },
+    {
+        "id": 2,
+        "idCinema": 1,
+        "capacity": "250",
+        "type": "Atmos",
+        "name": "A-2"
+    }
 ]
