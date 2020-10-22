@@ -20,8 +20,38 @@
 
         public function showCinemaDashboard()
         {
+            $rolId = $_SESSION['loggedUser']->getRolId();
+
             require_once(VIEWS_PATH."validate-session.php");
-            require_once(VIEWS_PATH."cinema-dashboard.php");
+
+            if($rolId == 1)
+            {
+                require_once(VIEWS_PATH."cinema-dashboard.php");
+            }
+            else
+            {
+                ?>
+                    <h4 class="text-white">No tiene los permisos necesarios para ingresar a esta página</h4>
+                <?php   
+            }
+        }
+
+        public function showClientCinemaDashboard()
+        {
+            $rolId = $_SESSION['loggedUser']->getRolId();
+
+            require_once(VIEWS_PATH."validate-session.php");
+
+            if($rolId == 0)
+            {
+                require_once(VIEWS_PATH."client-cinema-dashboard.php");
+            }
+            else
+            {
+                ?>
+                    <h4 class="text-white">No tiene los permisos necesarios para ingresar a esta página</h4>
+                <?php   
+            } 
         }
 
         public function login($userName, $password)
@@ -33,8 +63,17 @@
                 if(($user->getUserName() === $userName) && ($user->getPassword() === $password))
                 {
                     $_SESSION["loggedUser"] = $user;
-                    $this->showCinemaDashboard();
-                    break;
+                    
+                    if($user->getRolId() == 0)
+                    {
+                        $this->showClientCinemaDashboard();
+                    }
+
+                    if($user->getRolId() == 1)
+                    {
+                        $this->showCinemaDashboard();
+                        break;
+                    }   
                 }
                 else
                 {
@@ -62,10 +101,10 @@
 
             $user->setUserName($userName);
             $user->setPassword($password);
-            $user->setRolId(0);
+            $user->setRolId(0); //default ID for client
             $user->setFirstName($firstName);
             $user->setLastName($lastName);
-            $user->setDni($dni); //if dni exists, the account shouldn't be created
+            $user->setDni($dni); 
             $user->setEmail($email);
 
             $this->userDAO->add($user);

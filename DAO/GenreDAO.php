@@ -66,6 +66,7 @@
 
         private function retrieveData()
         {
+            $genre = new Genre();
             $this->genreList = array();
             $jsonPath = $this->getJsonFilePath();
             $jsonContent = file_get_contents($jsonPath);
@@ -73,8 +74,6 @@
 
             foreach ($arrayToDecode as $arrayValue) 
             {
-                $genre = new Genre();
-
                 $id = $arrayValue['id'];
                 $name = $arrayValue['name'];
 

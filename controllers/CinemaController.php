@@ -2,21 +2,31 @@
     namespace Controllers;
 
     use DAO\CinemaDAO as CinemaDAO;
+    use DAO\RoomDAO as RoomDAO;
     use Models\Cinema as Cinema;
+    use Models\Room as Room;
 
     class CinemaController
     {
         private $cinemaDAO;
+        private $roomDAO;
 
         public function __construct ()
         {
             $this->cinemaDAO = new CinemaDAO();
+            $this->roomDAO = new RoomDAO();
         }
 
         public function showCinemaDashboard ()
         {
             require_once(VIEWS_PATH."validate-session.php");
             require_once(VIEWS_PATH."cinema-dashboard.php");
+        }
+
+        public function showRoomDashboard ()
+        {
+            require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."room-dashboard.php");
         }
 
         public function addCinema ($name, $location, $capacity)
@@ -65,6 +75,49 @@
             $cinemaDeleted->setId($id);
 
             $this->cinemaDAO->delete($cinemaDeleted);
+            $this->showCinemaDashboard();
+        }
+
+        public function addRoom ($idCinema, $capacity, $type, $name)
+        {
+            require_once(VIEWS_PATH."validate-session.php");
+            $cinema = new Cinema();
+            $cinema = $this->cinemaDAO->getCinemaById($idCinema);
+
+            $room = new Room();
+            $roomList = $this->roomDAO->getAll();
+            $roomListDimension = count($roomList);
+            $index = $roomListDimension-1;
+    
+            if($roomListDimension == 0)
+            {
+                $id = 1;
+            }
+            else
+            {
+                $id = $roomList[$index]->getId() + 1;
+            }
+    
+            $room->setId($id);
+            $idCinema = $cinema->getId();
+            $room->setIdCinema($idCinema);
+            $room->setCapacity($capacity);
+            $room->setType($type);
+            $room->setName($name);
+            $this->roomDAO->add($room);
+
+            $roomsId = array();
+            $roomList = $this->roomDAO->getAll();
+
+            foreach($roomList as $roomValue)
+            {
+                $roomId = $roomValue->getId();
+                array_push($roomsId, $roomId);
+            }
+
+            $cinema->setRoomsId($roomsId);
+
+            $this->cinemaDAO->edit($cinema);
             $this->showCinemaDashboard();
         }
     }

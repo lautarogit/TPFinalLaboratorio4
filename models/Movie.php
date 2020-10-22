@@ -9,7 +9,7 @@
         private $title;
         private $overview;
         private $adult;
-        private $genres;
+        private $genresId;
         private $originalLanguage;
         private $popularity;
         private $posterPath;
@@ -36,9 +36,9 @@
             return $this->adult;
         }
 
-        public function getGenres ()
+        public function getGenresId ()
         {
-            return $this->genres;
+            return $this->genresId;
         }
 
         public function getOriginalLanguage ()
@@ -86,9 +86,9 @@
             $this->adult = $adult;
         }
 
-        public function setGenres ($genres)
+        public function setGenresId ($genresId)
         {
-            $this->genres = $genres;
+            $this->genresId = $genresId;
         }
 
         public function setOriginalLanguage ($originalLanguage)

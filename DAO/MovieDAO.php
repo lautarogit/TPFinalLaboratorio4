@@ -2,8 +2,6 @@
     namespace DAO;
     
     use Models\Movie as Movie;
-    use Models\Genre as Genre;
-    use DAO\GenreDAO as GenreDAO;
 
     class MovieDAO 
     {
@@ -32,38 +30,28 @@
 
         public function retrieveDataFromAPI ()
         {
-            //$moviedb = file_get_contents(API_HOST.'/movie/now_playing?api_key='.TMDB_API_KEY.'&language='.LANG.'&page=1');
-            //$this->movieList = json_decode($moviedb, TRUE)['results'];
-
+            $newMovie = new Movie();
             $moviedb = file_get_contents(API_HOST.'/movie/now_playing?api_key='.TMDB_API_KEY.'&language='.LANG.'&page=1');
             $this->movieList = ($moviedb) ? json_decode($moviedb, TRUE)['results'] : array();
 
             foreach($this->movieList as $movie)
             {
-                $genre = new Genre();
-                $genreDAO = new GenreDAO();
-
-                $genre = $genreDAO->getAll();
-                $genres = $genre;
-                
                 $id = $movie['id'];
                 $title = $movie['title'];
                 $overview = $movie['overview'];
                 $adult = $movie['adult'];
-                $genres = $movie['genre_ids'];
+                $genresId = $movie['genre_ids'];
                 $originalLanguage = $movie['original_language'];
                 $popularity = $movie['popularity'];
                 $posterPath = $movie['poster_path'];  
                 $releaseDate = $movie['release_date'];
                 $status = null;
 
-                $newMovie = new Movie();
-                
                 $newMovie->setId($id);
                 $newMovie->setTitle($title);
                 $newMovie->setOverview($overview);
                 $newMovie->setAdult($adult);
-                $newMovie->setGenres($genres);
+                $newMovie->setGenresId($genresId);
                 $newMovie->setOriginalLanguage($originalLanguage);
                 $newMovie->setPopularity($popularity);
                 $newMovie->setPosterPath($posterPath);
@@ -85,7 +73,7 @@
                 $arrayValue['title'] = $movie->getTitle();
                 $arrayValue['overview'] = $movie->getOverview();
                 $arrayValue['adult'] = $movie->getAdult();
-                $arrayValue['genre_ids'] = $movie->getGenres();
+                $arrayValue['genre_ids'] = $movie->getGenresId();
                 $arrayValue['original_language'] = $movie->getOriginalLanguage();
                 $arrayValue['popularity'] = $movie->getPopularity();
                 $arrayValue['poster_Path'] = $movie->getPosterPath();
@@ -100,6 +88,7 @@
 
         private function retrieveData()
         {
+            $movie = new Movie();
             $this->movieList = array();
             $jsonPath = $this->getJsonFilePath();
             $jsonContent = file_get_contents($jsonPath);
@@ -107,13 +96,11 @@
 
             foreach ($arrayToDecode as $arrayValue) 
             {
-                $movie = new Movie();
-
                 $id = $arrayValue['id_movie'];
                 $title = $arrayValue['title'];
                 $overview = $arrayValue['overview'];
                 $adult = $arrayValue['adult'];
-                $genre = $arrayValue['genre_ids'];
+                $genresId = $arrayValue['genre_ids'];
                 $originalLanguage = $arrayValue['original_language'];
                 $popularity = $arrayValue['popularity'];
                 $posterPath = $arrayValue['poster_Path'];  
@@ -124,7 +111,7 @@
                 $movie->setTitle($title);
                 $movie->setOverview($overview);
                 $movie->setAdult($adult);
-                $movie->setGenres($genre);
+                $movie->setGenresId($genresId);
                 $movie->setOriginalLanguage($originalLanguage);
                 $movie->setPopularity($popularity);
                 $movie->setPosterPath($posterPath);

@@ -4,22 +4,19 @@
     class Room
     {
         private $id;
+        private $idCinema;
         private $capacity;
         private $type;
-        private $location;
         private $name;
 
-        public function __construct ($id = ' ', $name = ' ', $location = ' ', $capacity = ' ')
-        {
-            $this->id = $id;
-            $this->capacity = $capacity;
-            $this->location = $location;
-            $this->name = $name;
-        }
-        
         public function getId ()
         {
             return $this->id;
+        }
+
+        public function getIdCinema ()
+        {
+            return $this->idCinema;
         }
 
         public function getCapacity ()
@@ -27,9 +24,9 @@
             return $this->capacity;
         }
 
-        public function getLocation ()
+        public function getType()
         {
-            return $this->location;
+            return $this->type;
         }
 
         public function getName ()
@@ -42,31 +39,24 @@
             $this->id = $id;
         }
 
+        public function setIdCinema ($idCinema)
+        {
+            $this->idCinema = $idCinema;
+        }
+
         public function setCapacity ($capacity)
         {
             $this->capacity = $capacity;
         }
 
-        public function setLocation ($location)
+        public function setType($type)
         {
-            $this->location = $location;
+            $this->type = $type;
         }
 
         public function setName ($name)
         {
             $this->name = $name;
         }
-        
-   
-    public function getType()
-    {
-        return $this->type;
-    }
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
 }
 ?>

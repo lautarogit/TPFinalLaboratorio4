@@ -1,32 +1,9 @@
 [
     {
         "id": 1,
-        "name": "Cinema1",
+        "roomsId": null,
+        "name": "CineDePrueba",
         "location": "Mar del Plata",
         "capacity": "200"
-    },
-    {
-        "id": 2,
-        "name": "Cinema2",
-        "location": "Buenos Aires",
-        "capacity": "500"
-    },
-    {
-        "id": 3,
-        "name": "Cinema3",
-        "location": "La Plata",
-        "capacity": "250"
-    },
-    {
-        "id": 4,
-        "name": "Cinema4",
-        "location": "Florencio Varela",
-        "capacity": "220"
-    },
-    {
-        "id": 5,
-        "name": "Cinema5",
-        "location": "Azul",
-        "capacity": "350"
     }
 ]

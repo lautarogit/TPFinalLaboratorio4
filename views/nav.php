@@ -1,12 +1,20 @@
 <?php 
-    use DAO\UserDAO as UserDAO;
     use Models\User as User;
     use Models\Rol as Rol;
 ?>
 
 <nav class="navbar navbar-expand-lg bg-dark">
      <span class="navbar-text">
-          <img src="<?php echo IMG_PATH."logo.png"; ?>">
+          <img src="<?php echo IMG_PATH."logo.png"; ?>" style="display: inline;">
+          <?php
+            if($_SESSION['loggedUser'] != null)
+            {
+              ?>
+                <h2 style="display: inline;">Bienvenido </h2>
+                <h4 class="text-white" style="display: inline;"><?php echo "<strong>".$_SESSION['loggedUser']->getUserName()."</strong>"; ?></h4>
+              <?php
+            }
+          ?>
      </span>
      <ul class="navbar-nav ml-auto">
           <?php if($_SESSION['loggedUser']){ ?>

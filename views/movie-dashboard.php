@@ -1,18 +1,31 @@
 <?php 
-     require_once("header.php"); 
-     require_once("nav.php");
+    require_once("header.php"); 
+    require_once("nav.php");
 
-     use DAO\MovieDAO as MovieDAO;
+    use DAO\MovieDAO as MovieDAO;
+
+    $rolId = $_SESSION['loggedUser']->getRolId();
+
+    $movieDAO = new MovieDAO();
+    $movieList = $movieDAO->getAll();
 ?>
 
-<a class="btn btn-primary" role="button" href="<?php echo FRONT_ROOT."Home/showCinemaDashboard";?>">Volver</a>
+<a class="btn btn-primary" role="button" href="
+<?php 
+    if($rolId == 0)
+    {
+        echo FRONT_ROOT."Home/showClientCinemaDashboard";
+    }
+
+    if($rolId == 1)
+    {
+        echo FRONT_ROOT."Home/showCinemaDashboard";
+    }
+?>">Volver</a>
 
 <main class="d-flex align-items-center height-100">
     <div class="grid">
         <?php   
-            $movieDAO = new MovieDAO();
-            $movieList = $movieDAO->getAll();
-
             foreach($movieList as $movieValue)
             {  
         ?>
@@ -44,9 +57,41 @@
                                 }   
                             ?></p>
                             
-                            <button class="btn btn-sm btn-success btn-block">Comprar</button>
+                            <button class="btn btn-sm btn-outline-success background-dark btn-block" data-toggle="modal" data-target="<?php echo "";//"#buyTicket".$cinemaValue->getTicket()->getId();?>">Comprar entrada</button>
                     </div>
                 </div> 
+
+                <!-- Buy ticket Modal -->
+                <div class="modal fade" tabindex="-1" role="dialog" id="buyTicket">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content background-dark text-white">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Ticket</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="content d-flex" style="justify-content: center;"> 
+                                    <h4>Sala 8</h4>
+                                    <h3>ADULTO  $63.00</h3>
+                                    <h2>Sherlock Holmes</h2>
+                                    <p>Funcion: 30/12/2011 07:00 pm Asiento E-8</p>
+                                    <p>Usuario: lautarolp27</p>
+                                    <form class="bg-dark-alpha p-5 text-black" action="<?php echo FRONT_ROOT."Cinema/addCinema"?>" method="POST">
+                                        <button type="submit" name="addCinema" class="btn btn-success">Comprar entrada</button>   
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ---------------- -->
                 
                 <!-- Movie info Modal -->
                 <div class="modal fade" tabindex="-1" role="dialog" id="<?php echo "movieInfo".$movieValue->getId();?>">

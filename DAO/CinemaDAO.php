@@ -20,6 +20,19 @@
             return $this->cinemaList;
         }
 
+        public function getCinemaById ($idCinema)
+        {
+            $this->retrieveData();
+
+            foreach($this->cinemaList as $cinemaValue)
+            {
+                if($cinemaValue->getId() == $idCinema)
+                {
+                    return $cinemaValue;
+                }
+            }
+        }
+
         public function delete (Cinema $cinemaDeleted)
         {
             $this->retrieveData();
@@ -66,6 +79,7 @@
             foreach ($this->cinemaList as $cinema) 
             {
                 $arrayValue['id'] = $cinema->getId();
+                $arrayValue['roomsId'] = $cinema->getRoomsId();
                 $arrayValue['name'] = $cinema->getName();
                 $arrayValue['location'] = $cinema->getLocation();
                 $arrayValue['capacity'] = $cinema->getCapacity();
@@ -79,6 +93,7 @@
 
         private function retrieveData ()
         {
+            $cinema = new Cinema();
             $this->cinemaList = array();
             $jsonPath = $this->getJsonFilePath();
             $jsonContent = file_get_contents($jsonPath);
@@ -86,14 +101,14 @@
 
             foreach ($arrayToDecode as $arrayValue) 
             {
-                $cinema = new Cinema();
-
                 $id = $arrayValue['id'];
+                $roomsId = $arrayValue['roomsId'];
                 $name = $arrayValue['name'];
                 $location = $arrayValue['location'];
                 $capacity = $arrayValue['capacity'];
 
                 $cinema->setId($id);
+                $cinema->setRoomsId($roomsId);
                 $cinema->setName($name);
                 $cinema->setLocation($location);
                 $cinema->setCapacity($capacity);
