@@ -5,8 +5,36 @@
             1,
             2
         ],
-        "name": "CineDePrueba",
+        "name": "Cinema1",
         "location": "Mar del Plata",
         "capacity": "200"
+    },
+    {
+        "id": 2,
+        "roomsId": null,
+        "name": "Cinema2",
+        "location": "Buenos Aires",
+        "capacity": "500"
+    },
+    {
+        "id": 3,
+        "roomsId": null,
+        "name": "Cinema3",
+        "location": "La Plata",
+        "capacity": "250"
+    },
+    {
+        "id": 4,
+        "roomsId": null,
+        "name": "Cinema4",
+        "location": "Florencio Varela",
+        "capacity": "220"
+    },
+    {
+        "id": 5,
+        "roomsId": null,
+        "name": "Cinema5",
+        "location": "Azul",
+        "capacity": "350"
     }
 ]

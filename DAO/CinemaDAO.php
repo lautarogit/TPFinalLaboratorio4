@@ -93,7 +93,6 @@
 
         private function retrieveData ()
         {
-            $cinema = new Cinema();
             $this->cinemaList = array();
             $jsonPath = $this->getJsonFilePath();
             $jsonContent = file_get_contents($jsonPath);
@@ -101,6 +100,8 @@
 
             foreach ($arrayToDecode as $arrayValue) 
             {
+                $cinema = new Cinema();
+
                 $id = $arrayValue['id'];
                 $roomsId = $arrayValue['roomsId'];
                 $name = $arrayValue['name'];

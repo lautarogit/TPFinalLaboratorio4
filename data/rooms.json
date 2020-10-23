@@ -2,14 +2,14 @@
     {
         "id": 1,
         "idCinema": 1,
-        "capacity": "200",
-        "type": "2D",
+        "capacity": "250",
+        "type": "3D",
         "name": "A-1"
     },
     {
         "id": 2,
         "idCinema": 1,
-        "capacity": "250",
+        "capacity": "150",
         "type": "Atmos",
         "name": "A-2"
     }

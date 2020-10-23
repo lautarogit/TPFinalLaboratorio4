@@ -20,9 +20,8 @@
 
         public function showCinemaDashboard()
         {
-            $rolId = $_SESSION['loggedUser']->getRolId();
-
             require_once(VIEWS_PATH."validate-session.php");
+            $rolId = $_SESSION['loggedUser']->getRolId();
 
             if($rolId == 1)
             {
@@ -38,9 +37,8 @@
 
         public function showClientCinemaDashboard()
         {
-            $rolId = $_SESSION['loggedUser']->getRolId();
-
             require_once(VIEWS_PATH."validate-session.php");
+            $rolId = $_SESSION['loggedUser']->getRolId();
 
             if($rolId == 0)
             {
