@@ -42,14 +42,14 @@ class MovieXRoomDAO {
 
      foreach ($this->functionList as $function) 
      {
-         /*saber los atributos
+     
          $arrayValue['id'] = $function->getId();
-        $arrayValue['']=$function->getDate();
-        $arrayValue['']=$function->getMovie();
-        $arrayValue['']=$function->getRoom();
+        $arrayValue['date']=$function->getDate();
+        $arrayValue['movie']=$function->getMovie();
+        $arrayValue['room']=$function->getRoom();
 
         
-         array_push($arrayToEncode,$arrayValue);*/
+         array_push($arrayToEncode,$arrayValue)
      }
 
      $jsonContent = json_encode($arrayToEncode,JSON_PRETTY_PRINT);
@@ -66,10 +66,10 @@ class MovieXRoomDAO {
      foreach ($arrayToDecode as $arrayValue) 
      {
          $function = new MovieXRoom(
-       /*  $arrayValue['id'],
+        $arrayValue['id'],
          $arrayValue['Date'],
          $arrayValue['movie'],
-         $arrayValue['room']*/);
+         $arrayValue['room']);
                  
          array_push($this->functionList, $function );
      }

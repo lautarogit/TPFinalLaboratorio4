@@ -101,7 +101,7 @@
                     break;
                     }
                     else {
-                        return false;
+                        return new User();
                     }
             }
         }

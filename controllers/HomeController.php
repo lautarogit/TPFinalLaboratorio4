@@ -54,30 +54,33 @@
        
             
 
-        public function login($userName, $password){
-           $user=new User($userName,$password);
-           $us=$this->userDAO->getLoginUser($user);
-            if($us)
-                {
-                    $_SESSION["loggedUser"] = $us;
-               
-                        
-                    if($us->getRolId() == 0)
-                    {
-                        $this->showClientCinemaDashboard();
-                    }
-                    else{
-
-                      $this->showCinemaDashboard();
-                        
-                    }   
-                }
-                else
-                {
-             $this->showLoginView();
-                }
-            
+ 
+            public function login($userName, $password)
+            {
+                $userList = $this->userDAO->GetAll();
                 
+                foreach($userList as $user)
+                {
+                    if(($user->getUserName() === $userName) && ($user->getPassword() === $password))
+                    {
+                        $_SESSION["loggedUser"] = $user;
+                        
+                        if($user->getRolId() == 0)
+                        {
+                            $this->showClientCinemaDashboard();
+                        }
+    
+                        if($user->getRolId() == 1)
+                        {
+                            $this->showCinemaDashboard();
+                            break;
+                        }   
+                    }
+                    else
+                    {
+                        $this->showLoginView();
+                    }
+                }
             } 
         public function showLoginView()
         {
