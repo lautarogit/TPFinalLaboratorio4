@@ -23,9 +23,10 @@
             require_once(VIEWS_PATH."cinema-dashboard.php");
         }
 
-        public function showRoomDashboard ()
+        public function showRoomDashboard ($idCinema)
         {
             require_once(VIEWS_PATH."validate-session.php");
+            $_SESSION['idCinema'] = $idCinema;
             require_once(VIEWS_PATH."room-dashboard.php");
         }
 

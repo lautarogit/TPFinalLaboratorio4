@@ -12,7 +12,7 @@
      <div class="card-rows">
           <div class="card-columns">
                <div class="card w-15 card-box-shadow">
-                    <button class="btn btn-outline-dark background-dark text-white" style="width: 619px; height: 232px;" data-toggle="modal" data-target="#addCinema">Agregar cine</button>
+                    <button class="btn btn-outline-dark background-dark text-white" style="width: 619px; height: 225px;" data-toggle="modal" data-target="#addCinema">Agregar cine</button>
                </div>
 
                <!-- Add cinema Modal -->
@@ -82,8 +82,12 @@
                                    <p class="card-text"><?php echo "<strong>Dirección: </strong>".$cinemaValue->getLocation();?></p>
                                    <p class="card-text"><?php echo "<strong>Capacidad: </strong>".$cinemaValue->getCapacity();?></p>
                               </div>
+
                               <a class="btn btn-sm btn-outline-info background-dark btn-block" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">Ver catalogo</a>
-                              <a class="btn btn-sm btn-outline-success background-dark btn-block" role="button" href="<?php echo FRONT_ROOT."Cinema/showRoomDashboard";?>">Ver salas</a>
+
+                              <form method="POST" action="<?php echo FRONT_ROOT."Cinema/showRoomDashboard";?>"> 
+                                   <button class="btn btn-sm btn-outline-success background-dark btn-block" value="<?php echo $cinemaValue->getId();?>" name="idCinema">Ver salas</button>
+                              </form>
                          </div>
 
                          <!-- Edit cinema Modal -->
@@ -154,7 +158,7 @@
 
                                                        <div class="form-group">
                                                             <label for="name"><h5><strong>Capacidad</strong> (3-40 caracteres)</h5></label>
-                                                            <input class="form-control form-control-lg" type="text" name="capacity" placeholder="Ingresar capacidad" required>
+                                                            <input class="form-control form-control-lg" type="number" name="capacity" placeholder="Ingresar capacidad" required>
                                                        </div>
 
                                                        <div class="form-group">

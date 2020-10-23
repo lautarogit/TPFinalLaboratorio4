@@ -20,17 +20,21 @@
             return $this->roomList;
         }
 
-        public function getRoomById ($roomId)
+        public function getRoomById ($idRoom)
         {
-            $this->retrieveData ();
+            $this->retrieveData();
+            $res = null;
 
             foreach($this->roomList as $roomValue)
             {
-                if($roomValue->getId() == $roomId)
+                if($roomValue->getId() == $idRoom) 
                 {
-                    return $roomValue;
+                    $res = $roomValue;
+                    
                 }
             }
+
+            return $res;
         }
 
         public function delete (Room $roomDeleted)
@@ -93,14 +97,15 @@
 
         private function retrieveData ()
         {
-            $room = new room();
+            
             $this->roomList = array();
             $jsonPath = $this->getJsonFilePath();
             $jsonContent = file_get_contents($jsonPath);
-            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, TRUE) : array();
 
             foreach ($arrayToDecode as $arrayValue) 
             {
+                $room = new Room();
                 $id = $arrayValue['id'];
                 $idCinema = $arrayValue['idCinema'];
                 $capacity = $arrayValue['capacity'];
