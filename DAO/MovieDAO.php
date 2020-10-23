@@ -28,14 +28,30 @@
             return $this->movieList;
         }
 
+        public function getMovieById ($idMovie)
+        {
+            $this->retrieveData();
+            $movie = new Movie();
+
+            foreach($this->movieList as $movieValue)
+            {
+                if($movieValue->getId() == $idMovie)
+                {
+                    $movie = $movieValue;
+                }
+            }
+
+            return $movie;
+        }
+
         public function retrieveDataFromAPI ()
         {
-            $newMovie = new Movie();
             $moviedb = file_get_contents(API_HOST.'/movie/now_playing?api_key='.TMDB_API_KEY.'&language='.LANG.'&page=1');
             $this->movieList = ($moviedb) ? json_decode($moviedb, TRUE)['results'] : array();
 
             foreach($this->movieList as $movie)
             {
+                $newMovie = new Movie();
                 $id = $movie['id'];
                 $title = $movie['title'];
                 $overview = $movie['overview'];
@@ -88,7 +104,6 @@
 
         private function retrieveData()
         {
-            $movie = new Movie();
             $this->movieList = array();
             $jsonPath = $this->getJsonFilePath();
             $jsonContent = file_get_contents($jsonPath);
@@ -96,6 +111,7 @@
 
             foreach ($arrayToDecode as $arrayValue) 
             {
+                $movie = new Movie();
                 $id = $arrayValue['id_movie'];
                 $title = $arrayValue['title'];
                 $overview = $arrayValue['overview'];

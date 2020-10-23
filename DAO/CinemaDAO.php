@@ -23,14 +23,17 @@
         public function getCinemaById ($idCinema)
         {
             $this->retrieveData();
+            $cinema = new Cinema();
 
             foreach($this->cinemaList as $cinemaValue)
             {
                 if($cinemaValue->getId() == $idCinema)
                 {
-                    return $cinemaValue;
+                    $cinema = $cinemaValue;
                 }
             }
+
+            return $cinema;
         }
 
         public function delete (Cinema $cinemaDeleted)
@@ -82,7 +85,6 @@
                 $arrayValue['roomsId'] = $cinema->getRoomsId();
                 $arrayValue['name'] = $cinema->getName();
                 $arrayValue['location'] = $cinema->getLocation();
-                $arrayValue['capacity'] = $cinema->getCapacity();
 
                 array_push($arrayToEncode, $arrayValue);
             }
@@ -106,13 +108,11 @@
                 $roomsId = $arrayValue['roomsId'];
                 $name = $arrayValue['name'];
                 $location = $arrayValue['location'];
-                $capacity = $arrayValue['capacity'];
 
                 $cinema->setId($id);
                 $cinema->setRoomsId($roomsId);
                 $cinema->setName($name);
                 $cinema->setLocation($location);
-                $cinema->setCapacity($capacity);
 
                 array_push($this->cinemaList, $cinema);
             }

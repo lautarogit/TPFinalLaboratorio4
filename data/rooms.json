@@ -1,16 +1,58 @@
 [
     {
         "id": 1,
-        "idCinema": 1,
-        "capacity": "250",
-        "type": "3D",
+        "idCinema": "1",
+        "capacity": "200",
+        "type": "Atmos",
         "name": "A-1"
     },
     {
         "id": 2,
-        "idCinema": 1,
+        "idCinema": "1",
         "capacity": "150",
+        "type": "3D",
+        "name": "A-2"
+    },
+    {
+        "id": 3,
+        "idCinema": "1",
+        "capacity": "180",
+        "type": "3D",
+        "name": "B-1"
+    },
+    {
+        "id": 4,
+        "idCinema": "3",
+        "capacity": "200",
+        "type": "2D",
+        "name": "A-1"
+    },
+    {
+        "id": 5,
+        "idCinema": "3",
+        "capacity": "220",
         "type": "Atmos",
         "name": "A-2"
+    },
+    {
+        "id": 6,
+        "idCinema": "5",
+        "capacity": "200",
+        "type": "2D",
+        "name": "C-1"
+    },
+    {
+        "id": 7,
+        "idCinema": "1",
+        "capacity": "180",
+        "type": "Atmos",
+        "name": "B-2"
+    },
+    {
+        "id": 8,
+        "idCinema": "2",
+        "capacity": "120",
+        "type": "3D",
+        "name": "A-1"
     }
 ]

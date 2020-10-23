@@ -17,5 +17,10 @@
         {
             require_once(VIEWS_PATH."movie-dashboard.php");
         }
+
+        public function filterByGenre ()
+        {
+            
+        }
     }
 ?>

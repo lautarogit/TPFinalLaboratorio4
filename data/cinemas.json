@@ -3,38 +3,48 @@
         "id": 1,
         "roomsId": [
             1,
-            2
+            2,
+            3,
+            7
         ],
         "name": "Cinema1",
-        "location": "Mar del Plata",
-        "capacity": "200"
+        "location": "Mar del Plata"
     },
     {
         "id": 2,
-        "roomsId": null,
+        "roomsId": [
+            8
+        ],
         "name": "Cinema2",
-        "location": "Buenos Aires",
-        "capacity": "500"
+        "location": "Buenos Aires"
     },
     {
         "id": 3,
-        "roomsId": null,
+        "roomsId": [
+            4,
+            5
+        ],
         "name": "Cinema3",
-        "location": "La Plata",
-        "capacity": "250"
+        "location": "La Plata"
     },
     {
         "id": 4,
         "roomsId": null,
         "name": "Cinema4",
-        "location": "Florencio Varela",
-        "capacity": "220"
+        "location": "Florencio Varela"
     },
     {
         "id": 5,
-        "roomsId": null,
+        "roomsId": [
+            6
+        ],
         "name": "Cinema5",
-        "location": "Azul",
-        "capacity": "350"
+        "location": "Azul"
+    },
+    {
+        "id": 6,
+        "roomsId": null,
+        "name": "Cinema6",
+        "location": "Nueva1"
     }
 ]

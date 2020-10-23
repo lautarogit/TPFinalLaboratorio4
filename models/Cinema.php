@@ -5,7 +5,6 @@
     {
         private $id;
         private $roomsId;
-        private $capacity;
         private $location;
         private $name;
 
@@ -17,11 +16,6 @@
         public function getRoomsId ()
         {
             return $this->roomsId;
-        }
-
-        public function getCapacity ()
-        {
-            return $this->capacity;
         }
 
         public function getLocation ()
@@ -43,12 +37,7 @@
         {
             $this->roomsId = $roomsId;
         }
-
-        public function setCapacity ($capacity)
-        {
-            $this->capacity = $capacity;
-        }
-
+        
         public function setLocation ($location)
         {
             $this->location = $location;

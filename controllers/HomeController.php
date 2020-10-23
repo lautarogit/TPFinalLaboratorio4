@@ -7,49 +7,17 @@
     class HomeController
     {
         private $userDAO;
+        private $cinemaController;
 
         public function __construct()
         {
             $this->userDAO = new UserDAO();
+            $this->cinemaController = new CinemaController();
         }
 
         public function index($message = "")
         {
             require_once(VIEWS_PATH."home.php");
-        }
-
-        public function showCinemaDashboard()
-        {
-            require_once(VIEWS_PATH."validate-session.php");
-            $rolId = $_SESSION['loggedUser']->getRolId();
-
-            if($rolId == 1)
-            {
-                require_once(VIEWS_PATH."cinema-dashboard.php");
-            }
-            else
-            {
-                ?>
-                    <h4 class="text-white">No tiene los permisos necesarios para ingresar a esta página</h4>
-                <?php   
-            }
-        }
-
-        public function showClientCinemaDashboard()
-        {
-            require_once(VIEWS_PATH."validate-session.php");
-            $rolId = $_SESSION['loggedUser']->getRolId();
-
-            if($rolId == 0)
-            {
-                require_once(VIEWS_PATH."client-cinema-dashboard.php");
-            }
-            else
-            {
-                ?>
-                    <h4 class="text-white">No tiene los permisos necesarios para ingresar a esta página</h4>
-                <?php   
-            } 
         }
 
         public function login($userName, $password)
@@ -64,12 +32,13 @@
                     
                     if($user->getRolId() == 0)
                     {
-                        $this->showClientCinemaDashboard();
+                        $this->cinemaController->showClientCinemaDashboard();
+                        break;
                     }
 
                     if($user->getRolId() == 1)
                     {
-                        $this->showCinemaDashboard();
+                        $this->cinemaController->showCinemaDashboard();
                         break;
                     }   
                 }

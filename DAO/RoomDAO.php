@@ -10,6 +10,21 @@
         public function add (Room $newRoom)
         {
             $this->retrieveData();
+
+            $roomListDimension = count($this->roomList);
+            $index = $roomListDimension-1;
+    
+            if($roomListDimension == 0)
+            {
+                $id = 1;
+            }
+            else
+            {
+                $id = $this->roomList[$index]->getId() + 1;
+            }
+    
+            $newRoom->setId($id);
+
             array_push($this->roomList, $newRoom);
             $this->saveData();
         }
@@ -23,18 +38,17 @@
         public function getRoomById ($idRoom)
         {
             $this->retrieveData();
-            $res = null;
+            $room = new Room();
 
             foreach($this->roomList as $roomValue)
             {
                 if($roomValue->getId() == $idRoom) 
                 {
-                    $res = $roomValue;
-                    
+                    $room = $roomValue;
                 }
             }
 
-            return $res;
+            return $room;
         }
 
         public function delete (Room $roomDeleted)
@@ -97,7 +111,6 @@
 
         private function retrieveData ()
         {
-            
             $this->roomList = array();
             $jsonPath = $this->getJsonFilePath();
             $jsonContent = file_get_contents($jsonPath);

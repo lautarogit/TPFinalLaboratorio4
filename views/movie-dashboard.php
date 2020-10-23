@@ -3,25 +3,56 @@
     require_once("nav.php");
 
     use DAO\MovieDAO as MovieDAO;
+    use DAO\GenreDAO as GenreDAO;
 
     $rolId = $_SESSION['loggedUser']->getRolId();
 
     $movieDAO = new MovieDAO();
+    $genreDAO = new GenreDAO();
     $movieList = $movieDAO->getAll();
+    $genreList = $genreDAO->getAll();
 ?>
 
-<a class="btn btn-primary" role="button" href="
+<a class="btn btn-primary" style="display: inline;" role="button" href="
 <?php 
     if($rolId == 0)
     {
-        echo FRONT_ROOT."Home/showClientCinemaDashboard";
+        echo FRONT_ROOT."Cinema/showClientCinemaDashboard";
     }
 
     if($rolId == 1)
     {
-        echo FRONT_ROOT."Home/showCinemaDashboard";
+        echo FRONT_ROOT."Cinema/showCinemaDashboard";
     }
 ?>">Volver</a>
+
+<div class="dropdown" style="display: inline;">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Filtrar por
+    </button>
+    <div class="dropdown-menu background-dark" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" style="color: crimson;" href="#">Titulo</a>
+        <a class="dropdown-item" style="color: crimson;" href="#">Niños/Familiares</a>
+        <a class="dropdown-item" style="color: crimson;" href="#">Adultos</a>
+    </div>
+</div>
+
+<div class="dropdown" style="display: inline;">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="genreFilterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Filtrar por género
+    </button>
+    <div class="dropdown-menu background-dark" aria-labelledby="dropdownMenuButton">
+        <?php 
+            foreach($genreList as $genre)
+            {
+
+        ?>
+                <a class="dropdown-item" style="color: crimson;" href="<?php echo "#genreId".$genre->getId();?>"><?php echo $genre->getName();?></a>
+        <?php   
+            }
+        ?>
+    </div>
+</div>
 
 <main class="d-flex align-items-center height-100">
     <div class="grid">
@@ -56,10 +87,56 @@
                             <?php 
                                 }   
                             ?></p>
+
                             
-                            <button class="btn btn-sm btn-outline-success background-dark btn-block" data-toggle="modal" data-target="<?php echo "";//"#buyTicket".$cinemaValue->getTicket()->getId();?>">Comprar entrada</button>
                     </div>
-                </div> 
+
+                    <div class="modal-footer">
+                        <div style="display:block; margin:auto;">
+                            <?php 
+                                $genresId = $movieValue->getGenresId();
+                                $genreNameList = array();
+
+                                foreach($genresId as $genreId)
+                                {
+                                    foreach($genreList as $genre)
+                                    {
+                                        if($genreId == $genre->getId())
+                                        {
+                                            $genreName = $genre->getName();
+                                            array_push($genreNameList, $genreName);
+                                        } 
+                                    }     
+                                }   
+                            ?>
+                        
+                            <p><?php 
+                                echo "<strong>Géneros: </strong>"; 
+
+                                $genreNameListDimension = count($genreNameList);
+                                $i = 0;
+                                
+                                foreach($genreNameList as $genreName)
+                                {
+                                    $i ++;
+
+                                    if($i == $genreNameListDimension)
+                                    {  
+                                        echo $genreName;
+                                    }
+                                    else
+                                    {
+                                        echo $genreName.", ";
+                                    } 
+                                }
+                            ?></p>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-sm btn-outline-success background-dark btn-block" data-toggle="modal" data-target="<?php echo "#buyTicket";?>">Comprar entrada</button>
+                    </div>
+                </div>                              
 
                 <!-- Buy ticket Modal -->
                 <div class="modal fade" tabindex="-1" role="dialog" id="buyTicket">
@@ -73,14 +150,14 @@
                             </div>
 
                             <div class="modal-body">
-                                <div class="content d-flex" style="justify-content: center;"> 
+                                <div class="content d-flex d-center" style="justify-content: center;"> 
                                     <h4>Sala 8</h4>
                                     <h3>ADULTO  $63.00</h3>
-                                    <h2>Sherlock Holmes</h2>
+                                    <h2>TITULO PELICULA</h2>
                                     <p>Funcion: 30/12/2011 07:00 pm Asiento E-8</p>
                                     <p>Usuario: lautarolp27</p>
-                                    <form class="bg-dark-alpha p-5 text-black" action="<?php echo FRONT_ROOT."Cinema/addCinema"?>" method="POST">
-                                        <button type="submit" name="addCinema" class="btn btn-success">Comprar entrada</button>   
+                                    <form class="bg-dark-alpha p-5 text-black" action="" method="POST">
+                                        <button type="submit" class="btn btn-success">Comprar entrada</button>   
                                     </form>
                                 </div>
                             </div>
