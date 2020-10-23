@@ -89,7 +89,22 @@
                 array_push($this->userList, $user);
             }
         }
-        
+        public function getLoginUser ($user)
+        {
+            $this->retrieveData();
+            $loginUser = new User();
+            foreach($this->userList as $us)
+            {
+                if($us->getUserName()==$user->getUserName() && $us->getPassword()==$user->getPassword())
+                    {
+                        return $us;
+                    break;
+                    }
+                    else {
+                        return new User();
+                    }
+            }
+        }
         function getJsonFilePath()
         {
             $initialPath = "Data/users.json";
