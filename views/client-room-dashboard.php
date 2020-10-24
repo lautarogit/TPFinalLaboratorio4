@@ -69,7 +69,9 @@
      }
 ?>
 
-<a class="btn btn-primary" role="button" href="<?php echo FRONT_ROOT."Cinema/showClientCinemaDashboard";?>">Volver</a>
+<a class="btn btn-primary" role="button" href="<?php echo FRONT_ROOT."Cinema/showClientCinemaDashboard";?>">
+     Volver
+</a>
 
 <?php 
      require_once("footer.php");

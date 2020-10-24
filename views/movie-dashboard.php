@@ -2,60 +2,65 @@
     require_once("header.php"); 
     require_once("nav.php");
 
-    use DAO\MovieDAO as MovieDAO;
-    use DAO\GenreDAO as GenreDAO;
-
     $rolId = $_SESSION['loggedUser']->getRolId();
-
-    $movieDAO = new MovieDAO();
-    $genreDAO = new GenreDAO();
-    $movieList = $movieDAO->getAll();
-    $genreList = $genreDAO->getAll();
 ?>
 
-<a class="btn btn-primary" style="display: inline;" role="button" href="
-<?php 
-    if($rolId == 0)
-    {
-        echo FRONT_ROOT."Cinema/showClientCinemaDashboard";
-    }
+<div class="m-1">
+    <a class="btn btn-primary" style="display: inline;" role="button" href="
+    <?php 
+        if($rolId == 0)
+        {
+            echo FRONT_ROOT."Cinema/showClientCinemaDashboard";
+        }
 
-    if($rolId == 1)
-    {
-        echo FRONT_ROOT."Cinema/showCinemaDashboard";
-    }
-?>">Volver</a>
+        if($rolId == 1)
+        {
+            echo FRONT_ROOT."Cinema/showCinemaDashboard";
+        }
+    ?>">Volver</a>
 
-<div class="dropdown" style="display: inline;">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Filtrar por
-    </button>
-    <div class="dropdown-menu background-dark" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" style="color: crimson;" href="#">Titulo</a>
-        <a class="dropdown-item" style="color: crimson;" href="#">Niños/Familiares</a>
-        <a class="dropdown-item" style="color: crimson;" href="#">Adultos</a>
+    <div class="dropdown" style="display: inline;">
+        <button class="btn btn-dark dropdown-toggle" type="button" id="genreFilterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Filtrar por género
+        </button>
+        <div class="dropdown-menu background-dark" aria-labelledby="dropdownMenuButton">
+            <?php 
+                foreach($genreList as $genre)
+                {
+            ?>
+                    <form action="<?php echo FRONT_ROOT."Movie/filterByGenre"?>" method="POST">
+                        <button class="dropdown-item btn btn-dark" style="color: crimson;" type="submit" name="paramGenreId" value="<?php echo $genre->getId();?>">
+                            <?php echo $genre->getName();?>
+                        </button>
+                    </form> 
+            <?php   
+                }
+            ?>
+        </div>
     </div>
-</div>
 
-<div class="dropdown" style="display: inline;">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="genreFilterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Filtrar por género
-    </button>
-    <div class="dropdown-menu background-dark" aria-labelledby="dropdownMenuButton">
-        <?php 
-            foreach($genreList as $genre)
-            {
-
-        ?>
-                <a class="dropdown-item" style="color: crimson;" href="<?php echo "#genreId".$genre->getId();?>"><?php echo $genre->getName();?></a>
-        <?php   
-            }
-        ?>
-    </div>
+    <form action="<?php echo FRONT_ROOT."Movie/showMovieDashboard"?>" style="display: inline;" method="POST">
+        <button class="btn btn-secondary" type="submit">
+            Restaurar filtro
+        </button>
+    </form>
 </div>
 
 <main class="d-flex align-items-center height-100">
+    <?php 
+        if(count($movieList) >= 5)
+        {
+    ?>
     <div class="grid">
+    <?php   
+        }
+        else if(count($movieList) <= 4)
+        {
+    ?>
+    <div class="card-columns">
+    <?php 
+        }  
+    ?>
         <?php   
             foreach($movieList as $movieValue)
             {  
@@ -74,7 +79,7 @@
                             <?php 
                                 $movieOverview = $movieValue->getOverview(); 
                                 $movieOverviewLength = strlen($movieOverview);
-                                $overviewMaxCharacters = 210;
+                                $overviewMaxCharacters = 150;
                                 $limitedMovieOverview = substr($movieOverview, 0, $overviewMaxCharacters);
 
                                 if($movieOverviewLength < $overviewMaxCharacters)
@@ -86,9 +91,7 @@
                                     echo $limitedMovieOverview;?><a class="color-red" data-toggle="modal" data-target="<?php echo "#movieInfo".$movieValue->getId();?>">(...)</a>
                             <?php 
                                 }   
-                            ?></p>
-
-                            
+                            ?></p>       
                     </div>
 
                     <div class="modal-footer">
@@ -130,11 +133,17 @@
                                     } 
                                 }
                             ?></p>
+
+                            <p><?php 
+                                echo "<strong>Fecha de lanzamiento: </strong>".$movieValue->getReleaseDate();
+                            ?></p>
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button class="btn btn-sm btn-outline-success background-dark btn-block" data-toggle="modal" data-target="<?php echo "#buyTicket";?>">Comprar entrada</button>
+                        <button class="btn btn-sm btn-outline-success background-dark btn-block" data-toggle="modal" data-target="<?php echo "#buyTicket";?>">
+                            Comprar entrada
+                        </button>
                     </div>
                 </div>                              
 
@@ -157,7 +166,9 @@
                                     <p>Funcion: 30/12/2011 07:00 pm Asiento E-8</p>
                                     <p>Usuario: lautarolp27</p>
                                     <form class="bg-dark-alpha p-5 text-black" action="" method="POST">
-                                        <button type="submit" class="btn btn-success">Comprar entrada</button>   
+                                        <button type="submit" class="btn btn-success">
+                                            Comprar entrada
+                                        </button>   
                                     </form>
                                 </div>
                             </div>
@@ -194,7 +205,9 @@
                             <div class="modal-footer">
                                 <p><?php echo $movieValue->getOverview();?></p>
 
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                    Cerrar
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -205,3 +218,7 @@
         ?> 
     </div>
 </main>
+
+<?php 
+     require_once("footer.php");
+?>

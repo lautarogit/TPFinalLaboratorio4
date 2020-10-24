@@ -36,10 +36,14 @@
                             <?php echo "<strong>N° de Salas disponibles: </strong>".$roomsQuantity;?></p>
                         </div>
 
-                        <a class="btn btn-sm btn-outline-info background-dark btn-block" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">Ver catalogo</a>
+                        <a class="btn btn-sm btn-outline-info background-dark btn-block" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">
+                            Ver catalogo
+                        </a>
 
                         <form method="POST" action="<?php echo FRONT_ROOT."Room/showClientRoomDashboard";?>"> 
-                            <button class="btn btn-sm btn-outline-success background-dark btn-block" value="<?php echo $cinemaValue->getId();?>" name="idCinema">Ver salas</button>
+                            <button class="btn btn-sm btn-outline-success background-dark btn-block" value="<?php echo $cinemaValue->getId();?>" name="idCinema">
+                                Ver salas
+                            </button>
                         </form>
                     </div> 
             <?php

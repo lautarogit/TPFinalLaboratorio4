@@ -51,11 +51,15 @@
                                         <td><?php echo $roomValue->getType();?></td>
                                         <td><?php echo $roomValue->getCapacity();?></td>
                                         <td> 
-                                             <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="<?php echo "#editRoom".$roomValue->getId(); ?>">Editar</button>
+                                             <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="<?php echo "#editRoom".$roomValue->getId(); ?>">
+                                                  Editar
+                                             </button>
                                         </td>
                                         <td>
                                              <form method="POST" action="<?php echo FRONT_ROOT."Room/deleteRoom";?>"> 
-                                                  <button class="btn btn-danger btn-sm" value="<?php echo $roomValue->getId(); ?>" name="id">Eliminar</button>
+                                                  <button class="btn btn-danger btn-sm" value="<?php echo $roomValue->getId(); ?>" name="id">
+                                                       Eliminar
+                                                  </button>
                                              </form>
                                         </td>
                                    </tr>
@@ -101,7 +105,9 @@
                                                                       <input class="form-control form-control-lg" type="number" name="capacity" value="<?php echo $roomValue->getCapacity();?>" placeholder="Ingresar capacidad" required>
                                                                  </div>
 
-                                                                 <button type="submit" class="btn btn-warning">Confirmar cambios</button>
+                                                                 <button type="submit" class="btn btn-warning">
+                                                                      Confirmar cambios
+                                                                 </button>
                                                             </form>
                                                        </div>
                                                   </div>
@@ -131,7 +137,9 @@
      }
 ?>
 
-<a class="btn btn-primary" role="button" href="<?php echo FRONT_ROOT."Cinema/showCinemaDashboard";?>">Volver</a>
+<a class="btn btn-primary" role="button" href="<?php echo FRONT_ROOT."Cinema/showCinemaDashboard";?>">
+     Volver
+</a>
 
 <?php 
      require_once("footer.php");

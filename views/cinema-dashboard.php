@@ -12,7 +12,9 @@
      <div class="card-rows">
           <div class="card-columns">
                <div class="card w-15 card-box-shadow">
-                    <button class="btn btn-outline-dark background-dark text-white" style="width: 619px; height: 225px;" data-toggle="modal" data-target="#addCinema">Agregar cine</button>
+                    <button class="btn btn-outline-dark background-dark text-white" style="width: 619px; height: 225px;" data-toggle="modal" data-target="#addCinema">
+                         Agregar cine
+                    </button>
                </div>
 
                <!-- Add cinema Modal -->
@@ -39,7 +41,9 @@
                                                   <input class="form-control form-control-lg" type="text" name="location" placeholder="Ingresar localidad" required>
                                              </div>
 
-                                             <button type="submit" class="btn btn-success">Agregar cine</button>   
+                                             <button type="submit" class="btn btn-success">
+                                                  Agregar cine
+                                             </button>   
                                         </form>
                                    </div>
                               </div>
@@ -61,15 +65,21 @@
                                    <h3 class="card-title" style="display: inline;"><?php echo $cinemaValue->getName();?></h3>
 
                                    <form style="float:right; display: inline" method="POST" action="<?php echo FRONT_ROOT."Cinema/deleteCinema"?>"> 
-                                        <button class="btn btn-danger btn-sm" value="<?php echo $cinemaValue->getId(); ?>" name="id">Eliminar</button>
+                                        <button class="btn btn-danger btn-sm" value="<?php echo $cinemaValue->getId(); ?>" name="id">
+                                             Eliminar
+                                        </button>
                                    </form>
 
                                    <div style="float:right; display: inline"> 
-                                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="<?php echo "#editCinema".$cinemaValue->getId();?>">Editar</button>
+                                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="<?php echo "#editCinema".$cinemaValue->getId();?>">
+                                             Editar
+                                        </button>
                                    </div>
                                    
                                    <div style="float:right; display: inline"> 
-                                        <button class="btn btn-success btn-sm" data-toggle="modal" data-target="<?php echo "#addRoom".$cinemaValue->getId();?>">Agregar sala</button>
+                                        <button class="btn btn-success btn-sm" data-toggle="modal" data-target="<?php echo "#addRoom".$cinemaValue->getId();?>">
+                                             Agregar sala
+                                        </button>
                                    </div>
                               </div>
 
@@ -89,10 +99,14 @@
                                    <?php echo "<strong>N° de Salas disponibles: </strong>".$roomsQuantity;?></p>
                               </div>
 
-                              <a class="btn btn-sm btn-outline-info background-dark btn-block" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">Ver catalogo</a>
+                              <a class="btn btn-sm btn-outline-info background-dark btn-block" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">
+                                   Ver catalogo
+                              </a>
 
                               <form method="POST" action="<?php echo FRONT_ROOT."Room/showRoomDashboard";?>"> 
-                                   <button class="btn btn-sm btn-outline-success background-dark btn-block" value="<?php echo $cinemaValue->getId();?>" name="idCinema">Ver salas</button>
+                                   <button class="btn btn-sm btn-outline-success background-dark btn-block" value="<?php echo $cinemaValue->getId();?>" name="idCinema">
+                                        Ver salas
+                                   </button>
                               </form>
                          </div>
 
@@ -125,7 +139,9 @@
                                                             <input class="form-control form-control-lg" type="text" name="location" value="<?php echo $cinemaValue->getLocation();?>" placeholder="Ingresar localidad" required>
                                                        </div>
 
-                                                       <button type="submit" class="btn btn-warning">Confirmar cambios</button>
+                                                       <button type="submit" class="btn btn-warning">
+                                                            Confirmar cambios
+                                                       </button>
                                                   </form>
                                              </div>
                                         </div>
@@ -174,7 +190,9 @@
                                                             <input class="form-control form-control-lg" type="text" name="name" placeholder="Ingresar nombre" required>
                                                        </div>
 
-                                                       <button type="submit" name="addRoom" class="btn btn-warning">Agregar sala</button>
+                                                       <button type="submit" name="addRoom" class="btn btn-warning">
+                                                            Agregar sala
+                                                       </button>
                                                   </form>
                                              </div>
                                         </div>
