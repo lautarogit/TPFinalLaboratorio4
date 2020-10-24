@@ -21,5 +21,5 @@
     define("TMDB_API_KEY", "208f12d7c947fe1e0edc0f341b5bdc36");
     define("API_HOST", 'https://api.themoviedb.org/3');
     define("LANG", 'es-AR');
-    define("BASE_PATH_IMG", 'https://image.tmdb.org/t/p');
+    define("TMDB_IMG_PATH", 'https://image.tmdb.org/t/p/w780/');
 ?>

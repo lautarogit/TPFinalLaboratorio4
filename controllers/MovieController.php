@@ -54,13 +54,51 @@
                     if($paramGenreId == $genreId)
                     {  
                         $filterMovie = $movieValue;
-
                         array_push($filterMovieList, $filterMovie);  
                     }
                 }
             }
 
             $this->showFilterMovieDashboard($filterMovieList);     
+        }
+
+        public function filterTopRated ($movieList)
+        {
+            $movieList = $this->movieDAO->getAll();
+            $filterMovieList = array();
+            $popularityList = array();
+
+            foreach($movieList as $movie)
+            {
+                $popularity = $movie->getPopularity();
+                array_push($popularityList, $popularity);
+            }
+
+            arsort($popularityList);
+
+            $topRatedPopularityList = array();
+
+            for($i = 0; $i < 5 ; $i++)
+            {
+                $popularity = $popularityList[$i];
+                array_push($topRatedPopularityList, $popularity);
+            }
+
+            foreach($movieList as $movieValue)
+            {
+                foreach($topRatedPopularityList as $popularityValue)
+                {
+                    if($movieValue->getPopularity() == $popularityValue)
+                    {
+                        $filterMovie = $movieValue;
+                        array_push($filterMovieList, $filterMovie); 
+                    }
+                }   
+            }
+
+            $this->showFilterMovieDashboard($filterMovieList);
+
+            return $filterMovieList;
         }
     }
 ?>
