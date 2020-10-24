@@ -9,7 +9,7 @@
     $topRatedMovieList = $movieController->filterTopRated($movieList);
 ?>
 
-<div class="m-2 movie-buttons-div">
+<div class="movie-buttons-div">
     <a class="btn btn-light m-1" style="display: inline; border-radius: 2px 2px 2px 10px;" role="button" href="
     <?php 
         if($rolId == 0)
@@ -25,7 +25,7 @@
 
     <form action="<?= FRONT_ROOT."Movie/showMovieDashboard"?>" style="display: inline;" method="POST">
         <button class="btn btn-secondary m-1" type="submit">
-            Restaurar filtro
+            Restaurar filtro <i class="fas fa-redo"></i>
         </button>
     </form>
 
@@ -58,48 +58,61 @@
 <div class="container" style="width: 500px; height: 750px;">
     <div id="carouselIndicator" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-            <li data-target="#carouselIndicator" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselIndicator" data-slide-to="1"></li>
-            <li data-target="#carouselIndicator" data-slide-to="2"></li>
-            <li data-target="#carouselIndicator" data-slide-to="3"></li>
-            <li data-target="#carouselIndicator" data-slide-to="4"></li>
+            <?php
+                $i = 0;
+
+                foreach($topRatedMovieList as $movieValue)
+                {
+                    if($i == 0)
+                    {
+            ?>
+                        <li data-target="#carouselIndicator" data-slide-to="<?= $i; ?>" class="active"></li>
+            <?php
+                    }
+                    else
+                    {
+            ?>
+                        <li data-target="#carouselIndicator" data-slide-to="<?= $i; ?>"></li>
+            <?php
+                    }
+                    $i++;
+                }
+            ?>
         </ol>
 
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="w-100" src='<?= TMDB_IMG_PATH.$topRatedMovieList[0]->getPosterPath(); ?>' alt="First slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h2 class="text-info text-shadow"><?= "<strong>Top 1 - </strong>".$topRatedMovieList[0]->getTitle(); ?></h2>
-                </div>
-            </div>
+            
+            <?php
+                $i = 0;
 
-            <div class="carousel-item">
-                <img class="w-100" src='<?= TMDB_IMG_PATH.$topRatedMovieList[1]->getPosterPath(); ?>' alt="Second slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h2 class="text-info text-shadow"><?= "<strong>Top 2 - </strong>".$topRatedMovieList[1]->getTitle(); ?></h2>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <img class="w-100" src='<?= TMDB_IMG_PATH.$topRatedMovieList[2]->getPosterPath(); ?>' alt="Third slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h2 class="text-info text-shadow"><?= "<strong>Top 3 - </strong>".$topRatedMovieList[2]->getTitle(); ?></h2>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <img class="w-100" src='<?= TMDB_IMG_PATH.$topRatedMovieList[3]->getPosterPath(); ?>' alt="Fourth slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h2 class="text-info text-shadow"><?= "<strong>Top 4 - </strong>".$topRatedMovieList[3]->getTitle(); ?></h2>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <img class="w-100" src='<?= TMDB_IMG_PATH.$topRatedMovieList[4]->getPosterPath(); ?>' alt="Fifth slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h2 class="text-info text-shadow"><?= "<strong>Top 5 - </strong>".$topRatedMovieList[4]->getTitle(); ?></h2>
-                </div>
-            </div>
+                foreach($topRatedMovieList as $movieValue)
+                {
+                    if($i == 0)
+                    {
+            ?>
+                        <div class="carousel-item active">
+                            <img class="w-100" src='<?= TMDB_IMG_PATH.$movieValue->getPosterPath(); ?>' alt="<?= $i; ?>">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h2 class="text-info text-shadow"><?= "<strong>Top ".($i+1)." -</strong> ".$movieValue->getTitle(); ?></h2>
+                            </div>
+                        </div>
+            <?php
+                    }
+                    else
+                    {
+            ?>
+                        <div class="carousel-item">
+                            <img class="w-100" src='<?= TMDB_IMG_PATH.$movieValue->getPosterPath(); ?>' alt="<?= $i; ?>">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h2 class="text-info text-shadow"><?= "<strong>Top ".($i+1)." -</strong> ".$movieValue->getTitle(); ?></h2>
+                            </div>
+                        </div>
+            <?php
+                    }
+                    $i++;
+                }
+            ?>
+            
         </div>
 
         <a class="carousel-control-prev" href="#carouselIndicator" role="button" data-slide="prev">
@@ -128,9 +141,16 @@
     ?>
     <div class="card-columns">
     <?php 
-        }  
-    ?>
-        <?php   
+        } 
+
+        if($movieList == null)
+        {
+            ?>
+                <h2 class="text-white">No hay películas con el género elegido</h2>
+            <?php 
+        }
+        else
+        {
             foreach($movieList as $movieValue)
             {  
         ?>
@@ -282,11 +302,13 @@
                 <!-- ----------------- -->
         <?php  
             } 
-        ?> 
+         
+        }
+        ?>
     </div>
 </main>
 
-<div class="m-2 movie-buttons-div">
+<div class="movie-buttons-div">
     <a class="btn btn-light m-1" style="display: inline; border-radius: 2px 2px 2px 10px;" role="button" href="
     <?php 
         if($rolId == 0)
@@ -302,7 +324,7 @@
 
     <form action="<?= FRONT_ROOT."Movie/showMovieDashboard"?>" style="display: inline;" method="POST">
         <button class="btn btn-secondary m-1" type="submit">
-            Restaurar filtro
+            Restaurar filtro <i class="fas fa-redo"></i>
         </button>
     </form>
 
@@ -328,5 +350,5 @@
 </div>
 
 <?php 
-     require_once("footer.php");
+    require_once("footer.php");
 ?>

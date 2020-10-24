@@ -39,6 +39,8 @@
                               <th>Nombre de sala</th>
                               <th>Tipo de sala</th>
                               <th>Capacidad</th>
+                              <th>Editar</th>
+                              <th>Eliminar</th>
                          </thead>
 
                          <tbody>
@@ -52,13 +54,13 @@
                                         <td><?php echo $roomValue->getCapacity();?></td>
                                         <td> 
                                              <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="<?php echo "#editRoom".$roomValue->getId(); ?>">
-                                                  Editar
+                                                  <i class="fas fa-cogs"></i>
                                              </button>
                                         </td>
                                         <td>
                                              <form method="POST" action="<?php echo FRONT_ROOT."Room/deleteRoom";?>"> 
                                                   <button class="btn btn-danger btn-sm" value="<?php echo $roomValue->getId(); ?>" name="id">
-                                                       Eliminar
+                                                       <i class="fas fa-trash"></i>
                                                   </button>
                                              </form>
                                         </td>
@@ -66,7 +68,7 @@
 
                                    <!-- Edit room Modal -->
                                    <div class="modal fade" tabindex="-1" role="dialog" id="<?php echo "editRoom".$roomValue->getId();?>">
-                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-dialog modal-lg" role="document">
                                              <div class="modal-content background-dark text-white">
                                                   <div class="modal-header">
                                                        <h5 class="modal-title">Editar sala</h5>
@@ -104,15 +106,15 @@
                                                                       <label for="capacity"><h5><strong>Capacidad</strong> (2-3 dígitos)</h5></label>
                                                                       <input class="form-control form-control-lg" type="number" name="capacity" value="<?php echo $roomValue->getCapacity();?>" placeholder="Ingresar capacidad" required>
                                                                  </div>
-
-                                                                 <button type="submit" class="btn btn-warning">
-                                                                      Confirmar cambios
-                                                                 </button>
                                                             </form>
                                                        </div>
                                                   </div>
 
                                                   <div class="modal-footer">
+                                                       <button type="submit" class="btn btn-warning">
+                                                            Confirmar cambios
+                                                       </button>
+
                                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cerrar</button>
                                                   </div>
                                              </div>

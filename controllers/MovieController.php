@@ -30,13 +30,6 @@
             $movieList = $filterMovieList;
 
             require_once(VIEWS_PATH."movie-dashboard.php");
-            
-            if($movieList == null)
-            {
-                ?>
-                    <h4 class="text-white">No hay películas con el género elegido</h4>
-                <?php 
-            }
         }
 
         public function filterByGenre ($paramGenreId)

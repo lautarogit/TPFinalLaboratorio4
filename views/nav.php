@@ -20,7 +20,7 @@
           <?php if($_SESSION['loggedUser']){ ?>
           <li class="nav-item">
             <a class="btn btn-danger" role="button" href="<?php echo FRONT_ROOT."Home/logout"?>">Cerrar sesión</a>
-            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#infoModal">i</button>
+            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#infoModal"><i class="fas fa-cog"></i></button>
           </li>
           <?php }else{ ?>
           <li class="nav-item">

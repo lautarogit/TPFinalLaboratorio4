@@ -27,12 +27,9 @@
 }
 
 .movie-buttons-div{
-    margin-left: auto;
-    margin-rigth: auto;
     background: rgba(209, 10, 76, 0.6);
     border-radius:2px 2px 15px 15px;
-    width: 400px;
-    height: 47px;
+    width:auto;
 }
 
 .card-box-shadow{
@@ -70,4 +67,11 @@
 
 .hover-box:hover{
     border-color: seagreen;
+}
+footer{
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
 }

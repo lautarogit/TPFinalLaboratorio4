@@ -13,7 +13,7 @@
           <div class="card-columns">
                <div class="card w-15 card-box-shadow">
                     <button class="btn btn-outline-dark background-dark text-white" style="width: 619px; height: 225px;" data-toggle="modal" data-target="#addCinema">
-                         Agregar cine
+                         <h1><i class="fas fa-plus-square"></i></h1>
                     </button>
                </div>
 
@@ -66,13 +66,13 @@
 
                                    <form style="float:right; display: inline" method="POST" action="<?php echo FRONT_ROOT."Cinema/deleteCinema"?>"> 
                                         <button class="btn btn-danger btn-sm" value="<?php echo $cinemaValue->getId(); ?>" name="id">
-                                             Eliminar
+                                             <i class="fas fa-trash"></i>
                                         </button>
                                    </form>
 
                                    <div style="float:right; display: inline"> 
                                         <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="<?php echo "#editCinema".$cinemaValue->getId();?>">
-                                             Editar
+                                             <i class="fas fa-cogs"></i>
                                         </button>
                                    </div>
                                    
@@ -100,12 +100,12 @@
                               </div>
 
                               <a class="btn btn-sm btn-outline-info background-dark btn-block" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">
-                                   Ver catalogo
+                                   <i class="fas fa-film"></i> Ver catalogo
                               </a>
 
                               <form method="POST" action="<?php echo FRONT_ROOT."Room/showRoomDashboard";?>"> 
                                    <button class="btn btn-sm btn-outline-success background-dark btn-block" value="<?php echo $cinemaValue->getId();?>" name="idCinema">
-                                        Ver salas
+                                        <i class="fas fa-eye"></i> Ver salas
                                    </button>
                               </form>
                          </div>

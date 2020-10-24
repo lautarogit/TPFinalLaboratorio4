@@ -28,7 +28,7 @@
         "name": "A-1"
     },
     {
-        "id": 5,
+        "id": "5",
         "idCinema": "3",
         "capacity": "220",
         "type": "Atmos",

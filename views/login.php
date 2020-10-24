@@ -2,18 +2,18 @@
      <div class="content">
           <form action="<?php echo FRONT_ROOT."Home/login";?>" method="POST" class="login-form bg-dark-alpha p-2 text-white">
                <div class="form-group">
-                    <input class="login-input" type="text" name="userName" placeholder="Ingresar usuario">
+                    <i class="fas fa-user"></i><input class="login-input" type="text" name="userName" placeholder="Ingresar usuario">
                </div>
 
                <div class="form-group">
-                    <input class="login-input" type="password" name="password" placeholder="Ingresar constraseña">
+                    <i class="fas fa-key"></i><input class="login-input" type="password" name="password" placeholder="Ingresar constraseña">
                </div>
 
                <button class="btn btn-dark btn-block btn-lg" style="border-radius:25px 25px 3px 3px;" type="submit">Iniciar sesion</button>
           </form>
 
           <div class="text-center">
-               <button class="btn btn-primary btn-lg text-center background-green" style="border-radius:3px 3px 25px 25px; width: 276px;" data-toggle="modal" data-target="#signUpModal">Únete ahora</button>
+               <button class="btn btn-primary btn-lg text-center background-green" style="border-radius:3px 3px 25px 25px; width: 292px;" data-toggle="modal" data-target="#signUpModal">Únete ahora</button>
           </div>
      </div>
 </main>
