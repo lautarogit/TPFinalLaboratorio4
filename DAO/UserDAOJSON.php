@@ -20,16 +20,17 @@
             return $this->userList;
         }
 
-        public function getUserByUserName (User $user)
+        public function getUserByUserName ($userName)
         {
             $this->retrieveData();
             $result = null;
 
             foreach($this->userList as $userValue)
             {
-                if(($userValue->getUserName() == $user->getUserName()) && ($userValue->getPassword() == $user->getPassword()))
+                if($userValue->getUserName() == $userName)
                 {
                     $result = $userValue;
+                    break;
                 }
                 else 
                 {

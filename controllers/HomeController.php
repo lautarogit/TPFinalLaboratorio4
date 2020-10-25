@@ -9,17 +9,27 @@
     {
         private $userDAO;
 
-        public function __construct()
+        public function __construct ()
         {
+            //$this->userDAO = new UserDAOJSON();
             $this->userDAO = new UserDAO();
         }
 
-        public function index($message = "")
+        public function index ($message = "")
         {
             require_once(VIEWS_PATH."home.php");
         }
 
-        public function showCinemaDashboard()
+        public function showLoginView ($errorMessage = "")
+        {
+            if(!empty($errorMessage))
+            {
+                echo $errorMessage;
+            }
+            require_once(VIEWS_PATH."login.php");
+        }
+
+        public function showCinemaDashboard ()
         {
             $rolId = $_SESSION['loggedUser']->getRolId();
 
@@ -37,7 +47,7 @@
             }
         }
 
-        public function showClientCinemaDashboard()
+        public function showClientCinemaDashboard ()
         {
             $rolId = $_SESSION['loggedUser']->getRolId();
 
@@ -51,7 +61,7 @@
             {
                 ?>
                     <h4 class="text-white">No tiene los permisos necesarios para ingresar a esta página</h4>
-                <?php   
+                <?php 
             } 
         }
 
@@ -60,9 +70,8 @@
             $_SESSION["loggedUser"] = $user;
         }
        
-        public function login($userName, $password)
+        public function login ($userName, $password)
         {
-            $user = new User();
             $user = $this->userDAO->getUserByUserName($userName);
 
             if($user)
@@ -81,14 +90,13 @@
                     }  
                 }
             }
+            else
+            {
+                $this->showLoginView("<p class="."text-white align-center".">Datos incorrectos. Ingrese nuevamente</p>");
+            }
         } 
 
-        public function showLoginView($errorMessage = ' ')
-        {
-            require_once(VIEWS_PATH."login.php");
-        }
-        
-        public function logout()
+        public function logout ()
         {
             $_SESSION['loggedUser'] = null;
             session_destroy();
@@ -98,10 +106,10 @@
         public function signUp ($firstName, $lastName, $userName, $email, $dni, $password)
         {
             $user = new User();
-            
-            //validar userName, dni, email
-            
-            if(true)
+           
+            $validate = $this->userDAO->validateData($userName, $dni, $email);
+
+            if(!$validate)
             {
                 $user->setUserName($userName);
                 $user->setPassword($password);
@@ -112,95 +120,13 @@
                 $user->setEmail($email);
     
                 $this->userDAO->add($user);
-                $this->showLoginView();
+                $this->showLoginView("<p class="."text-white align-center".">Cuenta registrada con éxito.</p>");
             }
             else
             {
-                $errorMessage = "Datos incorrectos. Ingrese nuevamente";
-                $this->showLoginView($errorMessage);
+                $this->showLoginView("<p class="."text-white align-center".">Datos incorrectos. Ingrese nuevamente</p>");
             }   
         }
     }
 ?>
-
-<?php
-    /*namespace Controllers;
-
-    use DAO\UserDAOJSON as UserDAOJSON;
-    use Models\User as User;
-
-    class HomeController
-    {
-        private $userDAO;
-        private $cinemaController;
-
-        public function __construct()
-        {
-            $this->userDAO = new UserDAOJSON();
-            $this->cinemaController = new CinemaController();
-        }
-
-        public function index($message = "")
-        {
-            require_once(VIEWS_PATH."home.php");
-        }
-
-        public function login($userName, $password)
-        {
-            $user = new User();
-
-            $user->setUserName($userName);
-            $user->setPassword($password);
-            
-            $us = $this->userDAO->getUserByUserName($user);
-
-            if($us)
-            {
-                $_SESSION["loggedUser"] = $us;
-                     
-                if($us->getRolId() == 0)
-                {
-                    $this->showClientCinemaDashboard();
-                }
-                else
-                {
-                    $this->showCinemaDashboard();      
-                }   
-            }
-            else
-            {
-                $this->showLoginView();
-            }  
-        } 
-            
-        public function showLoginView()
-        {
-            require_once(VIEWS_PATH."login.php");
-        }
-        
-        public function logout()
-        {
-            $_SESSION['loggedUser'] = null;
-            session_destroy();
-            $this->index();
-        }
-
-        public function signUp ($firstName, $lastName, $userName, $email, $dni, $password)
-        {
-            $user = new User();
-            $userList = $this->userDAO->getAll();
-
-            $user->setUserName($userName);
-            $user->setPassword($password);
-            $user->setRolId(0); //default ID for client
-            $user->setFirstName($firstName);
-            $user->setLastName($lastName);
-            $user->setDni($dni); 
-            $user->setEmail($email);
-
-            $this->userDAO->add($user);
-            $this->showLoginView();
-        }
-    } */
-?> 
 

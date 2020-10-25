@@ -9,11 +9,6 @@
     {
         private $connection;
 
-        public function getAll()
-        {
-            
-        }
-
         public function add (User $user)
         {
             $sqlQuery = "INSERT INTO users (userName, password, rolId, firstName, lastName, dni, email) 
@@ -41,7 +36,8 @@
 
         public function getUserByUserName ($userName)
         {
-            $sqlQuery = "SELECT * FROM users WHERE userName = :userName";
+            $sqlQuery = "SELECT * FROM users 
+            WHERE userName = :userName";
 
             $parameters['userName'] = $userName;
 
@@ -58,14 +54,48 @@
 
             if(!empty($resultSet))
             {
-                $mappedResultSet = $this->mapout($resultSet);
+                $user = $this->mapout($resultSet);
             }
             else
             {
-                $mappedResultSet = false;
+                $user = false;
             }
 
-            return $mappedResultSet;
+            return $user;
+        }
+
+        public function validateData ($userName, $dni, $email)
+        {
+            $sqlQuery = "SELECT * FROM users 
+            WHERE userName = :userName
+            OR dni = :dni
+            OR email = :email";
+
+            $parameters['userName'] = $userName;
+            $parameters['dni'] = $dni;
+            $parameters['email'] = $email;
+
+            try
+            {
+                $this->connection = Connection::getInstance();
+                
+                $resultSet = $this->connection->execute($sqlQuery, $parameters);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+
+            if(!empty($resultSet))
+            {
+                $flag = true;
+            }
+            else
+            {
+                $flag = false;
+            }
+
+            return $flag;
         }
 
         public function mapout ($value)
