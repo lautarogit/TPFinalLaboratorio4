@@ -2,16 +2,16 @@
      require_once("header.php"); 
      require_once("nav.php");
 
-     use DAO\CinemaDAO as CinemaDAO;
+     use DAO\CinemaDAOJSON as CinemaDAOJSON;
      use Models\Cinema as Cinema;
-     use DAO\RoomDAO as RoomDAO;
+     use DAO\RoomDAOJSON as RoomDAOJSON;
      use Models\Room as Room;
 
      $idCinema = $_SESSION['idCinema'];
      $rolId = $_SESSION['loggedUser']->getRolId();
-     $cinemaDAO = new CinemaDAO();
+     $cinemaDAO = new CinemaDAOJSON();
      $cinema = new Cinema();
-     $roomDAO = new RoomDAO();
+     $roomDAO = new RoomDAOJSON();
      $room = new Room();
 
      $cinema = $cinemaDAO->getCinemaById($idCinema);

@@ -1,83 +1,79 @@
-create database if not exists TPFinalMoviePass;
-#drop database TPFinalMoviePass
-use TpFinalMoviePass;
-CREATE TABLE IF NOT EXISTS Persons (
-    dni INT NOT NULL UNIQUE,
-    firstName VARCHAR(15),
-    lastName VARCHAR(15),
-    email VARCHAR(30),
-    CONSTRAINT pk_dni PRIMARY KEY (dni)
-);
-CREATE TABLE IF NOT EXISTS Users (
-    id INT NOT NULL AUTO_INCREMENT,
+CREATE DATABASE IF NOT EXISTS TPFinalMoviePass;
+
+USE TpFinalMoviePass;
+
+CREATE TABLE IF NOT EXISTS users (
     userName VARCHAR(20) UNIQUE,
-    userPassword VARCHAR(20),
+    `password` VARCHAR(45),
+    rolId INT NOT NULL,
+    firstName VARCHAR(30),
+    lastName VARCHAR(30),
     dni INT NOT NULL UNIQUE,
-    CONSTRAINT pk_idUser PRIMARY KEY (id),
-    CONSTRAINT fk_dni FOREIGN KEY (dni)
-        REFERENCES Persons (dni)
+    email VARCHAR(45), 
+    CONSTRAINT PK_dni PRIMARY KEY (dni)
 );
-CREATE TABLE IF NOT EXISTS Cinemas (
+
+CREATE TABLE IF NOT EXISTS cinemas (
     id INT NOT NULL AUTO_INCREMENT,
     nameCinema VARCHAR(20),
     location VARCHAR(20),
-    CONSTRAINT pk_idCinema PRIMARY KEY (id)
+    CONSTRAINT PK_idCinema PRIMARY KEY (id)
 );
-create table if not exists TypesRooms(id int not null auto_increment,
-									price int not null ,
-                                    roomType varchar (15),
-                                    constraint pk_idType primary key (id));
-CREATE TABLE IF NOT EXISTS Rooms (
+
+create table if not exists typesRooms (
+	id INT NOT NULL AUTO_INCREMENT,
+	price INT NOT NULL ,
+	roomType VARCHAR(15),
+	CONSTRAINT PK_idType PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS rooms (
     id INT NOT NULL AUTO_INCREMENT,
     idCinema INT NOT NULL,
     idType INT NOT NULL,
     capacity INT NOT NULL,
     nameRoom INT NOT NULL,
-    CONSTRAINT pk_idRoom PRIMARY KEY (id),
-    CONSTRAINT fk_idType FOREIGN KEY (idType)
-        REFERENCES TypesRooms (id),
-    CONSTRAINT fk_idCinema FOREIGN KEY (idCinema)
-        REFERENCES Cinemas (id)
+    CONSTRAINT PK_idRoom PRIMARY KEY (id),
+    CONSTRAINT FK_idType FOREIGN KEY (idType) REFERENCES TypesRooms (id),
+    CONSTRAINT FK_idCinema FOREIGN KEY (idCinema) REFERENCES Cinemas (id)
 );
-create table if not exists Genres (id int not null auto_increment,
-								nameGenre varchar (15),
-                                constraint pk_idGenre primary key (id));
-create table if not exists Movies(id int not null auto_increment,
-						title varchar (50),
-                        overview varchar (200),
-                        adult boolean,
-                        genresId int not null,
-                        originalLanguage varchar (15),
-                        popularity float,
-                        posterPath varchar (50),
-                        releaseDate datetime,
-               /*         statusMovie */
-               constraint pk_idMovie primary key (id),
-               constraint fk_idGenre foreign key (genresId) references Genres (id)
-               );
+
+CREATE TABLE IF NOT EXISTS genres (
+	id INT NOT NULL AUTO_INCREMENT,
+	nameGenre VARCHAR(15),
+	CONSTRAINT PK_idGenre PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS movies (
+	id INT NOT NULL AUTO_INCREMENT,
+	title VARCHAR(50),
+	overview VARCHAR(200),
+	adult BOOLEAN,
+	genresId INT NOT NULL,
+	originalLanguage VARCHAR(15),
+	popularity FLOAT,
+	posterPath VARCHAR(50),
+	releaseDate DATETIME,
+	/* statusMovie */
+	CONSTRAINT PK_idMovie PRIMARY KEY (id),
+	CONSTRAINT FK_idGenre FOREIGN KEY (genresId) REFERENCES Genres (id)
+);
 							
-                                    /*se deberia agregar un pfk*/
-CREATE TABLE IF NOT EXISTS MovieXRoom (
-    id INT NOT NULL AUTO_INCREMENT,
-    idRoom INT NOT NULL,
-    idMovie INT NOT NULL,
-    dateFunction DATETIME,
-    CONSTRAINT pk_idFunction PRIMARY KEY (id),
-    CONSTRAINT fk_idRoom FOREIGN KEY (idRoom)
-        REFERENCES Rooms (id),
-    CONSTRAINT fk_idMovie FOREIGN KEY (idMovie)
-        REFERENCES Movies (id)
+/*se deberia agregar un pfk*/
+CREATE TABLE IF NOT EXISTS movieXroom (
+	id INT NOT NULL AUTO_INCREMENT,
+	idRoom INT NOT NULL,
+	idMovie INT NOT NULL,
+	showDate DATETIME,
+	CONSTRAINT PK_idFunction PRIMARY KEY (id),
+	CONSTRAINT PFK_idRoom FOREIGN KEY (idRoom) REFERENCES Rooms (id),
+	CONSTRAINT PFK_idMovie FOREIGN KEY (idMovie) REFERENCES Movies (id)
 );
-	
-									
-                                
-								
-                                
-CREATE TABLE IF NOT EXISTS Tickets (
+									                             
+CREATE TABLE IF NOT EXISTS tickets (
     id INT NOT NULL AUTO_INCREMENT,
     codeQR VARCHAR(200),
     idUser INT NOT NULL,
-    CONSTRAINT pk_idTicket PRIMARY KEY (id),
-    CONSTRAINT fk_idUser FOREIGN KEY (idUser)
-        REFERENCES Users (id)
+    CONSTRAINT PK_idTicket PRIMARY KEY (id),
+    CONSTRAINT FK_idUser FOREIGN KEY (idUser) REFERENCES Users (id)
 );

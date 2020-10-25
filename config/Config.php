@@ -13,7 +13,7 @@
     
     //SQL
     define("DB_HOST", "localhost");
-    define("DB_NAME", "Moviepass");
+    define("DB_NAME", "TPFinalMoviePass");
     define("DB_USER", "root");
     define("DB_PASS", "");
 

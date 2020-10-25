@@ -2,108 +2,81 @@
     namespace DAO;
     
     use Models\User as User;
+    use \PDOException as PDOException;
+    use DAO\Connection as Connection;
 
-    class UserDAO 
+    class UserDAO
     {
-        private $userList = array();
-
-        public function add(User $newUser)
-        {
-            $this->retrieveData();
-            array_push($this->userList, $newUser);
-            $this->saveData();
-        }
+        private $connection;
 
         public function getAll()
         {
-            $this->retrieveData();
-            return $this->userList;
+            
         }
 
-        public function delete($code)
+        public function add (User $user)
         {
-            $this->retrieveData();
-            $newList = array();
+            $sqlQuery = "INSERT INTO users (userName, password, rolId, firstName, lastName, dni, email) 
+            VALUES (:userName, :password, :rolId, :firstName, :lastName, :dni, :email)";
 
-            foreach ($this->userList as $user) 
+            $parameters['userName'] = $user->getUserName();
+            $parameters['password'] = $user->getPassword();
+            $parameters['rolId'] = $user->getRolId();
+            $parameters['firstName'] = $user->getFirstName();
+            $parameters['lastName'] = $user->getLastName();
+            $parameters['dni'] = $user->getDni();
+            $parameters['email'] = $user->getEmail();
+
+            try
             {
-                if($user->getCode() != $code)
-                {
-                    array_push($newList, $user);
-                }
+                $this->connection = Connection::getInstance();
+
+                return $this->connection->executeNonQuery($sqlQuery, $parameters);
             }
-
-            $this->userList = $newList;
-            $this->saveData();
-        }
-
-        private function saveData()
-        {
-            $arrayToEncode = array();
-            $jsonPath = $this->getJsonFilePath();
-
-            foreach ($this->userList as $user) 
+            catch(PDOException $ex)
             {
-                $arrayValue['userName'] = $user->getUserName();
-                $arrayValue['password'] = $user->getPassword();
-                $arrayValue['rolId'] = $user->getRolId();
-                $arrayValue['firstName'] = $user->getFirstName();
-                $arrayValue['lastName'] = $user->getLastName();
-                $arrayValue['dni'] = $user->getDni();
-                $arrayValue['email'] = $user->getEmail();
-
-                array_push($arrayToEncode, $arrayValue);
-            }
-
-            $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-            file_put_contents($jsonPath, $jsonContent);
-        }
-
-        private function retrieveData()
-        {
-            $this->userList = array();
-            $jsonPath = $this->getJsonFilePath();
-            $jsonContent = file_get_contents($jsonPath);
-            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-            foreach ($arrayToDecode as $arrayValue) 
-            {
-                $user = new User();
-
-                $userName = $arrayValue['userName'];
-                $password = $arrayValue['password'];
-                $rolId = $arrayValue['rolId'];
-                $firstName = $arrayValue['firstName'];
-                $lastName = $arrayValue['lastName'];
-                $dni = $arrayValue['dni'];
-                $email = $arrayValue['email'];
-
-                $user->setUserName($userName);
-                $user->setPassword($password);
-                $user->setRolId($rolId);
-                $user->setFirstName($firstName);
-                $user->setLastName($lastName);
-                $user->setDni($dni);
-                $user->setEmail($email);
-
-                array_push($this->userList, $user);
+                throw $ex;
             }
         }
-        
-        function getJsonFilePath()
-        {
-            $initialPath = "Data/users.json";
 
-            if(file_exists($initialPath))
+        public function getUserByUserName ($userName)
+        {
+            $sqlQuery = "SELECT * FROM users WHERE userName = :userName";
+
+            $parameters['userName'] = $userName;
+
+            try
             {
-                $jsonFilePath = $initialPath;
+                $this->connection = Connection::getInstance();
+                
+                $resultSet = $this->connection->execute($sqlQuery, $parameters);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+
+            if(!empty($resultSet))
+            {
+                $mappedResultSet = $this->mapout($resultSet);
             }
             else
             {
-                $jsonFilePath = "../".$initialPath;
+                $mappedResultSet = false;
             }
 
-            return $jsonFilePath;
+            return $mappedResultSet;
+        }
+
+        public function mapout ($value)
+        {
+            $value = is_array($value) ? $value : [];
+
+            $resp = array_map(function($p){
+                return new User($p['userName'], $p['password'], $p['rolId'], $p['firstName'], $p['lastName'], $p['dni'], $p['email']);
+            }, $value);
+
+            return count($resp) > 1 ? $resp : $resp['0'];
         }
     }
 ?>

@@ -1,4 +1,5 @@
-<?php namespace Config;
+<?php 
+    namespace Config;
 	
     class Autoload 
     {

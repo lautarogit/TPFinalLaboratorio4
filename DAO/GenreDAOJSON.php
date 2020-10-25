@@ -3,7 +3,7 @@
     
     use Models\Genre as Genre;
     
-    class GenreDAO
+    class GenreDAOJSON
     {
         private $genreList = array();
         

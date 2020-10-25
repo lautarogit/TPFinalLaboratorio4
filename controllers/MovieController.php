@@ -1,8 +1,8 @@
 <?php
     namespace Controllers;
 
-    use DAO\MovieDAO as MovieDAO;
-    use DAO\GenreDAO as GenreDAO;
+    use DAO\MovieDAOJSON as MovieDAOJSON;
+    use DAO\GenreDAOJSON as GenreDAOJSON;
     use Models\Movie as Movie;
     use Models\Genre as Genre;
 
@@ -13,8 +13,8 @@
 
         public function __construct ()
         {
-            $this->movieDAO = new MovieDAO();
-            $this->genreDAO = new GenreDAO();
+            $this->movieDAO = new MovieDAOJSON();
+            $this->genreDAO = new GenreDAOJSON();
         }
 
         public function showMovieDashboard ()

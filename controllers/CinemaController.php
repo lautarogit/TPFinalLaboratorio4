@@ -1,7 +1,7 @@
 <?php
     namespace Controllers;
 
-    use DAO\CinemaDAO as CinemaDAO;
+    use DAO\CinemaDAOJSON as CinemaDAOJSON;
     use Models\Cinema as Cinema;
 
     class CinemaController
@@ -10,7 +10,7 @@
 
         public function __construct ()
         {
-            $this->cinemaDAO = new CinemaDAO();
+            $this->cinemaDAO = new CinemaDAOJSON();
         }
 
         public function showCinemaDashboard()

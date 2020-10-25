@@ -3,7 +3,7 @@
     
     use Models\Movie as Movie;
 
-    class MovieDAO 
+    class MovieDAOJSON 
     {
         private $movieList = array();
         

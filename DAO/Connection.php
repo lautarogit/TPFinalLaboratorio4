@@ -24,21 +24,23 @@
             }
         }
 
-        public static function GetInstance()
+        public static function getInstance()
         {
             if(self::$instance == null)
+            {
                 self::$instance = new Connection();
-
+            }
+                
             return self::$instance;
         }
 
-        public function Execute($query, $parameters = array(), $queryType = QueryType::Query)
+        public function execute($query, $parameters = array(), $queryType = QueryType::Query)
 	    {
             try
             {
-                $this->Prepare($query);
+                $this->prepare($query);
                 
-                $this->BindParameters($parameters, $queryType);
+                $this->bindParameters($parameters, $queryType);
                 
                 $this->pdoStatement->execute();
 
@@ -50,13 +52,13 @@
             }
         }
         
-        public function ExecuteNonQuery($query, $parameters = array(), $queryType = QueryType::Query)
+        public function executeNonQuery($query, $parameters = array(), $queryType = QueryType::Query)
 	    {            
             try
             {
-                $this->Prepare($query);
+                $this->prepare($query);
                 
-                $this->BindParameters($parameters, $queryType);
+                $this->bindParameters($parameters, $queryType);
 
                 $this->pdoStatement->execute();
 
@@ -68,7 +70,7 @@
             }        	    	
         }
         
-        private function Prepare($query)
+        private function prepare($query)
         {
             try
             {
@@ -80,7 +82,7 @@
             }
         }
         
-        private function BindParameters($parameters = array(), $queryType = QueryType::Query)
+        private function bindParameters($parameters = array(), $queryType = QueryType::Query)
         {
             $i = 0;
 
@@ -89,9 +91,13 @@
                 $i++;
 
                 if($queryType == QueryType::Query)
+                {
                     $this->pdoStatement->bindParam(":".$parameterName, $parameters[$parameterName]);
+                }
                 else
+                {
                     $this->pdoStatement->bindParam($i, $parameters[$parameterName]);
+                }  
             }
         }
     }

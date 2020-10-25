@@ -3,7 +3,7 @@
     
     use Models\Cinema as Cinema;
 
-    class CinemaDAO 
+    class CinemaDAOJSON 
     {
         private $cinemaList = array();
 

@@ -3,7 +3,7 @@
     
     use Models\Room as Room;
 
-    class RoomDAO 
+    class RoomDAOJSON
     {
         private $roomList = array();
 

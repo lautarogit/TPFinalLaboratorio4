@@ -2,9 +2,9 @@
     require_once("header.php"); 
     require_once("nav.php");
 
-    use DAO\CinemaDAO as CinemaDAO;
+    use DAO\CinemaDAOJSON as CinemaDAOJSON;
 
-    $cinemaDAO = new CinemaDAO();
+    $cinemaDAO = new CinemaDAOJSON();
     $cinemaList = $cinemaDAO->getAll();
 ?>
 
@@ -37,12 +37,12 @@
                         </div>
 
                         <a class="btn btn-sm btn-outline-info background-dark btn-block" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">
-                            Ver catalogo
+                            <i class="fas fa-film"></i> Ver catalogo
                         </a>
 
                         <form method="POST" action="<?php echo FRONT_ROOT."Room/showClientRoomDashboard";?>"> 
                             <button class="btn btn-sm btn-outline-success background-dark btn-block" value="<?php echo $cinemaValue->getId();?>" name="idCinema">
-                                Ver salas
+                                <i class="fas fa-eye"></i> Ver salas
                             </button>
                         </form>
                     </div> 

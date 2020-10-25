@@ -1,8 +1,6 @@
 <?php 
     namespace Models;
 
-    use DAO\RoomDAO as RoomDAO;
-
     class Room
     {
         private $id;
@@ -10,11 +8,6 @@
         private $capacity;
         private $type;
         private $name;
-
-        public function __construct ()
-        {
-            $this->roomDAO = new RoomDAO();
-        }
 
         public function getId ()
         {

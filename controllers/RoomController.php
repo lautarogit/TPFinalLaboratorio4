@@ -1,9 +1,9 @@
 <?php
     namespace Controllers;
 
-    use DAO\RoomDAO as RoomDAO;
+    use DAO\RoomDAOJSON as RoomDAOJSON;
     use Models\Room as Room;
-    use DAO\CinemaDAO as CinemaDAO;
+    use DAO\CinemaDAOJSON as CinemaDAOJSON;
     use Models\Cinema as Cinema;
 
     class RoomController
@@ -13,8 +13,8 @@
 
         public function __construct ()
         {
-            $this->roomDAO = new RoomDAO();
-            $this->cinemaDAO = new CinemaDAO();
+            $this->roomDAO = new RoomDAOJSON();
+            $this->cinemaDAO = new CinemaDAOJSON();
         }
 
         public function showRoomDashboard ($idCinema = ' ')
