@@ -3,7 +3,7 @@
 
     use DAO\CinemaDAOJSON as CinemaDAOJSON;
     use Models\Cinema as Cinema;
-
+use DAO\CinemaDAO as CinemaDAO;
     class CinemaController
     {
         private $cinemaDAO;
@@ -74,6 +74,12 @@
             $this->cinemaDAO->add($cinema);
             $this->showCinemaDashboard();
         }
+  /*      {$cine=new Cinema;
+            $cine->setName($name);
+            $cine->setLocation($location);
+          $cinema=  new CinemaDAO;
+          $cinema->add($cine);
+        }*/
 
         public function editCinema ($id, $name, $location)
         {
