@@ -13,14 +13,17 @@ CREATE TABLE IF NOT EXISTS users (
     CONSTRAINT PK_dni PRIMARY KEY (dni)
 );
 
+SELECT * FROM users;
+
 CREATE TABLE IF NOT EXISTS cinemas (
     id INT NOT NULL AUTO_INCREMENT,
-    nameCinema VARCHAR(20),
+    `name` VARCHAR(20),
     location VARCHAR(20),
-    CONSTRAINT PK_idCinema PRIMARY KEY (id)
+    CONSTRAINT PK_id PRIMARY KEY (id),
+    CONSTRAINT FK_idRoom FOREIGN KEY (idRoom) REFERENCES rooms (id)
 );
 
-create table if not exists typesRooms (
+CREATE TABLE IF NOT EXISTS typesRooms (
 	id INT NOT NULL AUTO_INCREMENT,
 	price INT NOT NULL ,
 	roomType VARCHAR(15),

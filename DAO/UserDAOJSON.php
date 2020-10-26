@@ -41,6 +41,26 @@
             return $result;
         }
 
+        public function validateData ($userName, $dni, $email)
+        {
+            $this->retrieveData();
+            
+            foreach($this->userList as $userValue)
+            {
+                if(($userValue->getUserName() == $userName) || ($userValue->getDni() == $dni) || ($userValue->getEmail() == $email))
+                {
+                    $flag = true;
+                    break;
+                }
+                else
+                {
+                    $flag = false;
+                }
+            }
+
+            return $flag;
+        }
+
         private function saveData ()
         {
             $arrayToEncode = array();
