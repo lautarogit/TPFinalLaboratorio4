@@ -13,10 +13,16 @@
             $this->cinemaDAO = new CinemaDAOJSON();
         }
 
-        public function showCinemaDashboard()
+        public function showPermissionBlocked ($rolId)
         {
-            require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."permission-blocked.php");
+        }
+
+        public function showCinemaDashboard ()
+        {
             $rolId = $_SESSION['loggedUser']->getRolId();
+
+            require_once(VIEWS_PATH."validate-session.php");
 
             if($rolId == 1)
             {
@@ -24,16 +30,15 @@
             }
             else
             {
-                ?>
-                    <h4 class="text-white">No tiene los permisos necesarios para ingresar a esta página</h4>
-                <?php   
+                $this->showPermissionBlocked($rolId);
             }
         }
 
-        public function showClientCinemaDashboard()
+        public function showClientCinemaDashboard ()
         {
-            require_once(VIEWS_PATH."validate-session.php");
             $rolId = $_SESSION['loggedUser']->getRolId();
+
+            require_once(VIEWS_PATH."validate-session.php");
 
             if($rolId == 0)
             {
@@ -41,9 +46,7 @@
             }
             else
             {
-                ?>
-                    <h4 class="text-white">No tiene los permisos necesarios para ingresar a esta página</h4>
-                <?php   
+                $this->showPermissionBlocked($rolId);
             } 
         }
 

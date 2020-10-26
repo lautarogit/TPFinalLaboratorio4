@@ -4,15 +4,18 @@
     use DAO\UserDAOJSON as UserDAOJSON;
     use DAO\UserDAO as UserDAO;
     use Models\User as User;
+    use Controllers\CinemaController as CinemaController;
 
     class HomeController
     {
         private $userDAO;
+        private $cinemaController;
 
         public function __construct ()
         {
             //$this->userDAO = new UserDAOJSON();
             $this->userDAO = new UserDAO();
+            $this->cinemaController = new CinemaController();
         }
 
         public function index ($message = "")
@@ -22,47 +25,7 @@
 
         public function showLoginView ($errorMessage = "")
         {
-            if(!empty($errorMessage))
-            {
-                echo $errorMessage;
-            }
             require_once(VIEWS_PATH."login.php");
-        }
-
-        public function showCinemaDashboard ()
-        {
-            $rolId = $_SESSION['loggedUser']->getRolId();
-
-            require_once(VIEWS_PATH."validate-session.php");
-
-            if($rolId == 1)
-            {
-                require_once(VIEWS_PATH."cinema-dashboard.php");
-            }
-            else
-            {
-                ?>
-                    <h4 class="text-white">No tiene los permisos necesarios para ingresar a esta página</h4>
-                <?php   
-            }
-        }
-
-        public function showClientCinemaDashboard ()
-        {
-            $rolId = $_SESSION['loggedUser']->getRolId();
-
-            require_once(VIEWS_PATH."validate-session.php");
-
-            if($rolId == 0)
-            {
-                require_once(VIEWS_PATH."client-cinema-dashboard.php");
-            }
-            else
-            {
-                ?>
-                    <h4 class="text-white">No tiene los permisos necesarios para ingresar a esta página</h4>
-                <?php 
-            } 
         }
 
         public function setSession ($user)
@@ -82,17 +45,23 @@
 
                     if($user->getRolId() == 0)
                     {
-                        $this->showClientCinemaDashboard();
+                        $this->cinemaController->showClientCinemaDashboard();
                     }
                     else
                     {
-                        $this->showCinemaDashboard();
+                        $this->cinemaController->showCinemaDashboard();
                     }  
+                }
+                else
+                {
+                    $errorMessage = true;
+                    $this->showLoginView($errorMessage);
                 }
             }
             else
             {
-                $this->showLoginView("<p class="."text-white align-center".">Datos incorrectos. Ingrese nuevamente</p>");
+                $errorMessage = true;
+                $this->showLoginView($errorMessage);
             }
         } 
 
@@ -109,7 +78,11 @@
            
             $validate = $this->userDAO->validateData($userName, $dni, $email);
 
-            if(!$validate)
+            if(!$validate 
+            && $this->validateFormField($firstName) && $this->validateFormField($lastName)
+            && $this->validateFormField($userName) && $this->validateFormField($email)
+            && $this->validateFormField($dni) && $this->validateFormField($password)
+            )
             {
                 $user->setUserName($userName);
                 $user->setPassword($password);
@@ -120,12 +93,28 @@
                 $user->setEmail($email);
     
                 $this->userDAO->add($user);
-                $this->showLoginView("<p class="."text-white align-center".">Cuenta registrada con éxito.</p>");
+                $errorMessage = false;
+                $this->showLoginView($errorMessage);
             }
             else
             {
-                $this->showLoginView("<p class="."text-white align-center".">Datos incorrectos. Ingrese nuevamente</p>");
+                $errorMessage = true;
+                $this->showLoginView($errorMessage);
             }   
+        }
+
+        public function validateFormField ($param_name) 
+        {
+            if(!empty(trim($param_name)))
+            {
+                $flag = true;
+            }
+            else
+            {
+                $flag = false;
+            } 
+
+            return $flag;
         }
     }
 ?>

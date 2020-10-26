@@ -15,6 +15,28 @@
           <div class="text-center">
                <button class="btn btn-primary btn-lg text-center background-green" style="border-radius:3px 3px 25px 25px; width: 292px;" data-toggle="modal" data-target="#signUpModal">Únete ahora</button>
           </div>
+
+          <?php 
+               if(!empty($errorMessage) && $errorMessage)
+               {
+          ?>
+                    <div class="text-center">
+                         <p class="text-white align-center">Datos incorrectos. Ingrese nuevamente</p>
+                    </div>
+          <?php      
+               }   
+          ?>
+
+          <?php 
+               if(!empty($errorMessage) && !$errorMessage)
+               {
+          ?>
+                    <div class="text-center">
+                         <p class="text-white align-center">Cuenta registrada con éxito.</p>
+                    </div>
+          <?php      
+               }   
+          ?>  
      </div>
 </main>
 

@@ -7,7 +7,7 @@
      <span class="navbar-text">
           <img src="<?php echo IMG_PATH."logo.png"; ?>" style="display: inline;">
           <?php
-            if($_SESSION['loggedUser'] != null)
+            if($_SESSION['loggedUser'])
             {
               ?>
                 <h2 style="display: inline;">Bienvenido </h2>
@@ -17,16 +17,25 @@
           ?>
      </span>
      <ul class="navbar-nav ml-auto">
-          <?php if($_SESSION['loggedUser']){ ?>
-          <li class="nav-item">
-            <a class="btn btn-danger" role="button" href="<?php echo FRONT_ROOT."Home/logout"?>">Cerrar sesión</a>
-            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#infoModal"><i class="fas fa-cog"></i></button>
-          </li>
-          <?php }else{ ?>
-          <li class="nav-item">
-            <a class="btn btn-primary" role="button" href="<?php echo FRONT_ROOT."Home/showLoginView"?>">Iniciar sesión</a>
-          </li>
-          <?php } ?>
+          <?php 
+            if($_SESSION['loggedUser'])
+            { 
+          ?>
+              <li class="nav-item">
+                <a class="btn btn-danger" role="button" href="<?php echo FRONT_ROOT."Home/logout"?>">Cerrar sesión</a>
+                <button class="btn btn-outline-primary" data-toggle="modal" data-target="#infoModal"><i class="fas fa-cog"></i></button>
+              </li>
+          <?php 
+            }
+            else
+            { 
+          ?>
+              <li class="nav-item">
+                <a class="btn btn-primary" role="button" href="<?php echo FRONT_ROOT."Home/showLoginView"?>">Iniciar sesión</a>
+              </li>
+          <?php 
+            } 
+          ?>
      </ul>
 </nav>
 
