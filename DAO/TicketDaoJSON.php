@@ -3,8 +3,11 @@
     use Models\Ticket as Ticket;
     use Models\MovieXroom as MovieXroom;
 
-    class TicketDAO
+    class TicketDAOJSON
     {
+        function add(Ticket $ticket){
+
+        }
         
     }
  ?>
