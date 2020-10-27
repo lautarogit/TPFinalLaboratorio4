@@ -1,28 +1,5 @@
 [
     {
-        "id": 3,
-        "roomsId": [
-            4,
-            5
-        ],
-        "name": "Cinema3",
-        "location": "La Plata"
-    },
-    {
-        "id": 4,
-        "roomsId": null,
-        "name": "Cinema4",
-        "location": "Florencio Varela"
-    },
-    {
-        "id": 5,
-        "roomsId": [
-            6
-        ],
-        "name": "Cinema5",
-        "location": "Azul"
-    },
-    {
         "id": 6,
         "roomsId": null,
         "name": "Cinema6",

@@ -7,13 +7,14 @@
         private $roomsId;
         private $location;
         private $name;
-public function __construct($id=0,$location=' ',$name=' '){
-    $this->id=$id;
 
-    $this->location=$location;
-    $this->name=$name;
+        public function __construct($id = 0, $location = ' ', $name = ' ')
+        {
+            $this->id = $id;
+            $this->location = $location;
+            $this->name = $name;
+        }
 
-}
         public function getId ()
         {
             return $this->id;

@@ -22,16 +22,29 @@
             { 
           ?>
               <li class="nav-item">
-                <a class="btn btn-danger" role="button" href="<?php echo FRONT_ROOT."Home/logout"?>">Cerrar sesión</a>
-                <button class="btn btn-outline-primary" data-toggle="modal" data-target="#infoModal"><i class="fas fa-cog"></i></button>
-              </li>
+                <div class="dropleft" style="display: inline;">
+                  <button class="btn btn-dark dropdown-toggle m-1" style="color: crimson; border-radius: 50px 50px 50px 50px;" type="button" id="genreFilterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-cog"></i>
+                  </button>
+
+                  <div class="dropdown-menu background-dark" aria-labelledby="dropdownMenuButton">
+                    <button class="dropdown-item btn btn-dark text-center" style="color: crimson;" data-toggle="modal" data-target="#infoModal">
+                      <i class="fas fa-info"></i>  Datos de la cuenta
+                    </button>  
+
+                    <a class="dropdown-item btn btn-dark text-center" style="color: crimson;" role="button" href="<?php echo FRONT_ROOT."Home/logout"?>">
+                      <i class="fas fa-sign-out-alt"></i>  Cerrar sesión
+                    </a> 
+                  </div>
+                </div>
+              </li>              
           <?php 
             }
             else
             { 
           ?>
               <li class="nav-item">
-                <a class="btn btn-primary" role="button" href="<?php echo FRONT_ROOT."Home/showLoginView"?>">Iniciar sesión</a>
+                <a class="btn btn-primary" role="button" href="<?php echo FRONT_ROOT."Home/showLoginView"?>"><i class="fas fa-sign-in-alt"></i>  Iniciar sesión</a>
               </li>
           <?php 
             } 

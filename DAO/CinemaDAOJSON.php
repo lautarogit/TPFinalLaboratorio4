@@ -10,6 +10,7 @@
         public function add (Cinema $newCinema)
         {
             $this->retrieveData();
+            $newCinema->setId($this->GetNextId());
             array_push($this->cinemaList, $newCinema);
             $this->saveData();
         }
@@ -116,6 +117,18 @@
 
                 array_push($this->cinemaList, $cinema);
             }
+        }
+
+        private function GetNextId()
+        {
+            $id = 0;
+
+            foreach($this->cinemaList as $cinema)
+            {
+                $id = ($cinema->getId() > $id) ? $cinema->getId() : $id;
+            }
+
+            return $id + 1;
         }
 
         function getJsonFilePath ()
