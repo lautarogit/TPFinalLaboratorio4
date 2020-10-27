@@ -1,24 +1,5 @@
 [
     {
-        "id": 1,
-        "roomsId": [
-            1,
-            2,
-            3,
-            7
-        ],
-        "name": "Cinema1",
-        "location": "Mar del Plata"
-    },
-    {
-        "id": 2,
-        "roomsId": [
-            8
-        ],
-        "name": "Cinema2",
-        "location": "Buenos Aires"
-    },
-    {
         "id": 3,
         "roomsId": [
             4,

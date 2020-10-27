@@ -77,6 +77,8 @@ CREATE TABLE IF NOT EXISTS tickets (
     id INT NOT NULL AUTO_INCREMENT,
     codeQR VARCHAR(200),
     idUser INT NOT NULL,
+    idFunction int NOT null,
     CONSTRAINT PK_idTicket PRIMARY KEY (id),
-    CONSTRAINT FK_idUser FOREIGN KEY (idUser) REFERENCES Users (id)
+    CONSTRAINT FK_idUser FOREIGN KEY (idUser) REFERENCES Users (id),
+    CONSTRAINT FK_idFunction FOREIGN KEY (idFunction) REFERENCES movieXroom (id)
 );
