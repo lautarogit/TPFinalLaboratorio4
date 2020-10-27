@@ -1,14 +1,6 @@
 <?php 
      require_once("header.php"); 
      require_once("nav.php");
-     
-     var_dump($cinemaList);
-     
-     foreach($cinemaList as $cinemaValue) 
-     {
-          echo $cinemaValue;
-          echo "<br>";
-     }      
 ?>
 
 <main class="d-flex m-2">
@@ -59,7 +51,7 @@
                </div>
                <!-- ---------------- -->
 
-               <?php 
+               <?php  
                     foreach($cinemaList as $cinemaValue) 
                     {
                ?>
@@ -208,7 +200,7 @@
                          </div>
                          <!-- ----------------- -->
                <?php
-                    } 
+                    }
                ?> 
           </div>
      </div> 

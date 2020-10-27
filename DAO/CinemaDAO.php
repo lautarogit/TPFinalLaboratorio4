@@ -46,14 +46,30 @@
             
             if(!empty($result))
             {
-                $cinemaList = $this->mapout($result);
+                $result = $this->mapout($result);
+
+                $cinemaList = array();
+
+                if(!is_array($result))
+                {
+                   array_push($cinemaList, $result);
+                }
             }
             else 
             {
-                $cinemaList =  false;
+                $result =  false;
             }
 
-            return $cinemaList;
+            if(!empty($cinemaList))
+            {
+                $finalResult = $cinemaList;  
+            }
+            else
+            {
+                $finalResult = $result;
+            }
+
+            return $finalResult;
         }
 
         public function getCinemaByID ($id)
@@ -146,7 +162,7 @@
             $value = is_array($value) ? $value : [];
 
             $resp = array_map(function($p){
-                return new Cinema($p['id'],/*$p['roomsId'],*/$p['location'], $p['name']);
+                return new Cinema($p['id'],/*$p['roomsId'] no va,*/$p['location'], $p['name']);
             }, $value);
 
             return count($resp) > 1 ? $resp : $resp['0'];
