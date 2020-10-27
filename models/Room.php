@@ -8,7 +8,14 @@
         private $capacity;
         private $type;
         private $name;
-
+public function __construct($id=0,$idCinema=0,$capacity=0,$type=' ',$name=' ')
+{
+    $this->id=$id;
+    $this->idCinema=$idCinema;
+    $this->capacity=$capacity;
+    $this->type=$type;
+    $this->name=$name;
+}
         public function getId ()
         {
             return $this->id;

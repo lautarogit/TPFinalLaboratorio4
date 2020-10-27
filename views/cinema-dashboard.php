@@ -2,10 +2,13 @@
      require_once("header.php"); 
      require_once("nav.php");
 
-     use DAO\CinemaDAOJSON as CinemaDAOJSON;
+  
 
-     $cinemaDAO = new CinemaDAOJSON();
+     use DAO\CinemaDAO as CinemaDAO;
+
+     $cinemaDAO = new CinemaDAO();
      $cinemaList = $cinemaDAO->getAll();
+
 ?>
 
 <main class="d-flex m-2">

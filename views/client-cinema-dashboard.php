@@ -2,9 +2,9 @@
     require_once("header.php"); 
     require_once("nav.php");
 
-    use DAO\CinemaDAOJSON as CinemaDAOJSON;
+    use DAO\CinemaDAO as CinemaDAO;
 
-    $cinemaDAO = new CinemaDAOJSON();
+    $cinemaDAO = new CinemaDAO();
     $cinemaList = $cinemaDAO->getAll();
 ?>
 

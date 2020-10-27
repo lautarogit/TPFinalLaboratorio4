@@ -28,33 +28,60 @@ public function add (Cinema $cinema)
         throw $ex;
     }
 }
-public function addRooms(Cinema $cinema){
-    
-    $sqlQuery ="SELECT * FROM rooms where idcinema = :id;";
-$parameters['id']=$cinema;
-    try{
-        $this->connection= Connection::getInstance();
-        $result =$this->connection->execute($sqlQuery,$parameters);
 
-    }
-    catch(Exception $ex)
-    {
-        throw $ex;
-    }
-    if(empty($result)){
-        return $this->mapout($result);
-    }
-    else {
-        return false;
-    }
+public function getAll(){
+
+$sqlQuery = 'SELECT * FROM cinemas ';
+
+try{
+        $this->connection= Connection::getInstance();
+
+$result =$this->connection->execute($sqlQuery);
+
+}
+catch(Exception $ex)
+{
+    throw $ex;
 }
 
-    public function mapout ($value)
+if(!empty($result)){
+    
+    return $this->mapout($result);
+}
+else {
+    return false;
+}
+}
+public function getCinemaByID($idCinema){
+    $sqlQuery='SELECT * FROM CINEMAS WHERE id= :idCinema';
+$parameters['idCinema']=$idCinema;
+try
+{
+    $this->connection = Connection::getInstance();
+    
+    $resultSet = $this->connection->execute($sqlQuery, $parameters);
+}
+catch(PDOException $ex)
+{
+    throw $ex;
+}
+
+if(!empty($resultSet))
+{
+    $user = $this->mapout($resultSet);
+}
+else
+{
+    $cinema = false;
+}
+
+}
+ public function mapout ($value)
     {
         $value = is_array($value) ? $value : [];
 
         $resp = array_map(function($p){
-            return new Cinema($p['id'],$p['roomsId'], $p['location'],)$p['name'];
+            return new Cinema($p['id'], $p['location'],$p['nameCinema']);
         }, $value);
 
         return count($resp) > 1 ? $resp : $resp['0'];
