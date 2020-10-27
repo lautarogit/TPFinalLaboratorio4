@@ -92,19 +92,19 @@
 
                                                                  <div class="form-group">
                                                                       <label for="location"><h5><strong>Nombre</strong> (3-40 caracteres)</h5></label>
-                                                                      <input class="form-control form-control-lg" type="text" name="name" value="<?php echo $roomValue->getName();?>" placeholder="Ingresar localidad" required>
+                                                                      <input class="form-control form-control-lg" type="text" name="name" value="<?php echo $roomValue->getName();?>" placeholder="Ingresar localidad">
                                                                  </div>
 
                                                                  <div class="form-group">
                                                                       <label for="location"><h5 style="display: inline;"><strong>Tipo de sala</strong></h5></label>
-                                                                      <input class="radioSize" type="radio" name="type" value="Atmos"  required>Atmos
-                                                                      <input class="radioSize" type="radio" name="type" value="2D"  required>2D
-                                                                      <input class="radioSize" type="radio" name="type" value="3D"  required>3D
+                                                                      <input class="radioSize" type="radio" name="type" value="Atmos">Atmos
+                                                                      <input class="radioSize" type="radio" name="type" value="2D">2D
+                                                                      <input class="radioSize" type="radio" name="type" value="3D">3D
                                                                  </div>
 
                                                                  <div class="form-group">
                                                                       <label for="capacity"><h5><strong>Capacidad</strong> (2-3 dígitos)</h5></label>
-                                                                      <input class="form-control form-control-lg" type="number" name="capacity" value="<?php echo $roomValue->getCapacity();?>" placeholder="Ingresar capacidad" required>
+                                                                      <input class="form-control form-control-lg" type="number" name="capacity" value="<?php echo $roomValue->getCapacity();?>" placeholder="Ingresar capacidad">
                                                                  </div>
                                                             </form>
                                                        </div>

@@ -2,6 +2,7 @@
     namespace Controllers;
 
     use DAO\CinemaDAOJSON as CinemaDAOJSON;
+    use DAO\CinemaDAO as CinemaDAO;
     use Models\Cinema as Cinema;
 
     class CinemaController
@@ -10,7 +11,8 @@
 
         public function __construct ()
         {
-            $this->cinemaDAO = new CinemaDAOJSON();
+            //$this->cinemaDAO = new CinemaDAOJSON();
+            $this->cinemaDAO = new CinemaDAO();
         }
 
         public function showPermissionBlocked ($rolId)
@@ -21,6 +23,7 @@
         public function showCinemaDashboard ()
         {
             $rolId = $_SESSION['loggedUser']->getRolId();
+            $cinemaList = $this->cinemaDAO->getAll();
 
             require_once(VIEWS_PATH."validate-session.php");
 
@@ -37,6 +40,7 @@
         public function showClientCinemaDashboard ()
         {
             $rolId = $_SESSION['loggedUser']->getRolId();
+            $cinemaList = $this->cinemaDAO->getAll();
 
             require_once(VIEWS_PATH."validate-session.php");
 
@@ -55,23 +59,12 @@
             require_once(VIEWS_PATH."validate-session.php");
             $cinema = new Cinema();
             $cinemaList = $this->cinemaDAO->getAll();
-            $cinemaListDimension = count($cinemaList);
-            $index = $cinemaListDimension-1;
     
-            if($cinemaListDimension == 0)
-            {
-                $id = 1;
-            }
-            else
-            {
-                $id = $cinemaList[$index]->getId() + 1;
-            }
-                
-            $cinema->setId($id);
             $cinema->setName($name);
             $cinema->setLocation($location);
     
             $this->cinemaDAO->add($cinema);
+
             $this->showCinemaDashboard();
         }
 
@@ -83,7 +76,10 @@
             $cinemaUpdated->setName($name);
             $cinemaUpdated->setLocation($location);
 
-            $this->$cinemaDAO->edit($cinemaUpdated);
+            //$this->$cinemaDAO->edit($cinemaUpdated);
+
+            $cinemaSQL = new CinemaDAO();
+            $cinemaSQL->edit($cinemaUpdated);
             $this->showCinemaDashboard();
         }
 

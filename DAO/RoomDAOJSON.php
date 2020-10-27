@@ -10,21 +10,7 @@
         public function add (Room $newRoom)
         {
             $this->retrieveData();
-
-            $roomListDimension = count($this->roomList);
-            $index = $roomListDimension-1;
-    
-            if($roomListDimension == 0)
-            {
-                $id = 1;
-            }
-            else
-            {
-                $id = $this->roomList[$index]->getId() + 1;
-            }
-    
-            $newRoom->setId($id);
-
+            $newRoom->setId($this->GetNextId());
             array_push($this->roomList, $newRoom);
             $this->saveData();
         }
@@ -133,6 +119,18 @@
 
                 array_push($this->roomList, $room);
             }
+        }
+
+        private function GetNextId ()
+        {
+            $id = 0;
+
+            foreach($this->roomList as $room)
+            {
+                $id = ($room->getId() > $id) ? $room->getId() : $id;
+            }
+
+            return $id + 1;
         }
 
         function getJsonFilePath ()

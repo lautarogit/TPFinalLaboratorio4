@@ -17,6 +17,7 @@ SELECT * FROM users;
 
 CREATE TABLE IF NOT EXISTS cinemas (
     id INT NOT NULL AUTO_INCREMENT,
+    idRoom INT NOT NULL,
     `name` VARCHAR(20),
     location VARCHAR(20),
     CONSTRAINT PK_id PRIMARY KEY (id),
@@ -37,8 +38,8 @@ CREATE TABLE IF NOT EXISTS rooms (
     capacity INT NOT NULL,
     nameRoom INT NOT NULL,
     CONSTRAINT PK_idRoom PRIMARY KEY (id),
-    CONSTRAINT FK_idType FOREIGN KEY (idType) REFERENCES TypesRooms (id),
-    CONSTRAINT FK_idCinema FOREIGN KEY (idCinema) REFERENCES Cinemas (id)
+    CONSTRAINT FK_idType FOREIGN KEY (idType) REFERENCES typesRooms (id),
+    CONSTRAINT FK_idCinema FOREIGN KEY (idCinema) REFERENCES cinemas (id)
 );
 
 CREATE TABLE IF NOT EXISTS genres (
@@ -52,25 +53,33 @@ CREATE TABLE IF NOT EXISTS movies (
 	title VARCHAR(50),
 	overview VARCHAR(200),
 	adult BOOLEAN,
-	genresId INT NOT NULL,
+	idGenre INT NOT NULL,
 	originalLanguage VARCHAR(15),
 	popularity FLOAT,
 	posterPath VARCHAR(50),
 	releaseDate DATETIME,
-	/* statusMovie */
+	`status` BOOLEAN,
 	CONSTRAINT PK_idMovie PRIMARY KEY (id),
-	CONSTRAINT FK_idGenre FOREIGN KEY (genresId) REFERENCES Genres (id)
+	CONSTRAINT FK_idGenre FOREIGN KEY (idGenre) REFERENCES genres (id)
 );
-							
-/*se deberia agregar un pfk*/
+
+CREATE TABLE IF NOT EXISTS moviesXgenres (
+    id INT NOT NULL AUTO_INCREMENT,
+    idMovie INT NOT NULL,
+    idGenre INT NOT NULL,
+    CONSTRAINT PK_id PRIMARY KEY (id),
+    CONSTRAINT PFK_idMovie FOREIGN KEY (idMovie) REFERENCES movies (id),
+    CONSTRAINT PFK_idGenre FOREIGN KEY (idGenre) REFERENCES genres (id)	
+);						
+
 CREATE TABLE IF NOT EXISTS movieXroom (
 	id INT NOT NULL AUTO_INCREMENT,
 	idRoom INT NOT NULL,
 	idMovie INT NOT NULL,
 	showDate DATETIME,
 	CONSTRAINT PK_idFunction PRIMARY KEY (id),
-	CONSTRAINT PFK_idRoom FOREIGN KEY (idRoom) REFERENCES Rooms (id),
-	CONSTRAINT PFK_idMovie FOREIGN KEY (idMovie) REFERENCES Movies (id)
+	CONSTRAINT PFK_idRoom FOREIGN KEY (idRoom) REFERENCES rooms (id),
+	CONSTRAINT PFK_idMovie FOREIGN KEY (idMovie) REFERENCES movies (id)
 );
 									                             
 CREATE TABLE IF NOT EXISTS tickets (

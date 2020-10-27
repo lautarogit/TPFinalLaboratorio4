@@ -63,9 +63,7 @@
             $cinemaController = new CinemaController();
 
             $cinema = $this->cinemaDAO->getCinemaById($idCinema);
-            $id = null;
-
-            $room->setId($id);
+            
             $room->setIdCinema($idCinema);
             $room->setCapacity($capacity);
             $room->setType($type);
@@ -105,6 +103,7 @@
         {
             require_once(VIEWS_PATH."validate-session.php");
             $roomUpdated = new Room();
+            
             $roomUpdated->setId($id);
             $roomUpdated->setIdCinema($idCinema);
             $roomUpdated->setName($name);

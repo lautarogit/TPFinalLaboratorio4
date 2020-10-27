@@ -1,11 +1,14 @@
 <?php 
      require_once("header.php"); 
      require_once("nav.php");
-
-     use DAO\CinemaDAOJSON as CinemaDAOJSON;
-
-     $cinemaDAO = new CinemaDAOJSON();
-     $cinemaList = $cinemaDAO->getAll();
+     
+     var_dump($cinemaList);
+     
+     foreach($cinemaList as $cinemaValue) 
+     {
+          echo $cinemaValue;
+          echo "<br>";
+     }      
 ?>
 
 <main class="d-flex m-2">
@@ -33,12 +36,12 @@
                                         <form class="bg-dark-alpha p-5 text-black" action="<?php echo FRONT_ROOT."Cinema/addCinema"?>" method="POST">
                                              <div class="form-group">
                                                   <label for="name"><h5><strong>Nombre</strong> (3-40 caracteres)</h5></label>
-                                                  <input class="form-control form-control-lg" type="text" name="name" placeholder="Ingresar nombre" required>
+                                                  <input class="form-control form-control-lg" type="text" name="name" placeholder="Ingresar nombre">
                                              </div>
 
                                              <div class="form-group">
                                                   <label for="location"><h5><strong>Dirección</strong> (3-40 caracteres)</h5></label>
-                                                  <input class="form-control form-control-lg" type="text" name="location" placeholder="Ingresar localidad" required>
+                                                  <input class="form-control form-control-lg" type="text" name="location" placeholder="Ingresar localidad">
                                              </div>
 
                                              <button type="submit" class="btn btn-success">
@@ -131,12 +134,12 @@
 
                                                        <div class="form-group">
                                                             <label for="name"><h5><strong>Nombre</strong> (3-40 caracteres)</h5></label>
-                                                            <input class="form-control form-control-lg" type="text" name="name" value="<?php echo $cinemaValue->getName();?>" placeholder="Ingresar nombre" required>
+                                                            <input class="form-control form-control-lg" type="text" name="name" value="<?php echo $cinemaValue->getName();?>" placeholder="Ingresar nombre">
                                                        </div>
 
                                                        <div class="form-group">
                                                             <label for="location"><h5><strong>Dirección</strong> (3-40 caracteres)</h5></label>
-                                                            <input class="form-control form-control-lg" type="text" name="location" value="<?php echo $cinemaValue->getLocation();?>" placeholder="Ingresar localidad" required>
+                                                            <input class="form-control form-control-lg" type="text" name="location" value="<?php echo $cinemaValue->getLocation();?>" placeholder="Ingresar localidad">
                                                        </div>
 
                                                        <button type="submit" class="btn btn-warning">
@@ -175,19 +178,19 @@
 
                                                        <div class="form-group">
                                                             <label for="name"><h5><strong>Capacidad</strong> (3-40 caracteres)</h5></label>
-                                                            <input class="form-control form-control-lg" type="number" name="capacity" placeholder="Ingresar capacidad" required>
+                                                            <input class="form-control form-control-lg" type="number" name="capacity" placeholder="Ingresar capacidad">
                                                        </div>
 
                                                        <div class="form-group">
                                                             <label for="location"><h5 style="display: inline;"><strong>Tipo de sala</strong></h5></label>
-                                                            <input class="radioSize" type="radio" name="type" value="Atmos"  required>Atmos
-                                                            <input class="radioSize" type="radio" name="type" value="2D"  required>2D
-                                                            <input class="radioSize" type="radio" name="type" value="3D"  required>3D
+                                                            <input class="radioSize" type="radio" name="type" value="Atmos">Atmos
+                                                            <input class="radioSize" type="radio" name="type" value="2D">2D
+                                                            <input class="radioSize" type="radio" name="type" value="3D">3D
                                                        </div>
 
                                                        <div class="form-group">
                                                             <label for="capacity"><h5><strong>Nombre</strong> (2-4 dígitos)</h5></label>
-                                                            <input class="form-control form-control-lg" type="text" name="name" placeholder="Ingresar nombre" required>
+                                                            <input class="form-control form-control-lg" type="text" name="name" placeholder="Ingresar nombre">
                                                        </div>
 
                                                        <button type="submit" name="addRoom" class="btn btn-warning">
