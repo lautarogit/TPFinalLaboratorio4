@@ -4,8 +4,9 @@
     use DAO\CinemaDAOJSON as CinemaDAOJSON;
     use DAO\CinemaDAO as CinemaDAO;
     use Models\Cinema as Cinema;
+    use Controllers\iValidation as iValidation;
 
-    class CinemaController
+    class CinemaController implements iValidation
     {
         private $cinemaDAO;
 
@@ -15,12 +16,12 @@
             $this->cinemaDAO = new CinemaDAO();
         }
 
-        public function showPermissionBlocked ($rolId)
+        public function showCinemaPermissionBlocked ($rolId)
         {
-            require_once(VIEWS_PATH."permission-blocked.php");
+            require_once(VIEWS_PATH."cinema-permission-blocked.php");
         }
 
-        public function showCinemaDashboard ()
+        public function showCinemaDashboard ($errorMessage = "")
         {
             $rolId = $_SESSION['loggedUser']->getRolId();
             $cinemaList = $this->cinemaDAO->getAll();
@@ -33,7 +34,7 @@
             }
             else
             {
-                $this->showPermissionBlocked($rolId);
+                $this->showCinemaPermissionBlocked($rolId);
             }
         }
 
@@ -50,47 +51,143 @@
             }
             else
             {
-                $this->showPermissionBlocked($rolId);
+                $this->showCinemaPermissionBlocked($rolId);
             } 
+        }
+
+        public function showDisabledCinemaDashboard ()
+        {
+            $rolId = $_SESSION['loggedUser']->getRolId();
+            $cinemaList = $this->cinemaDAO->getAll();
+
+            require_once(VIEWS_PATH."validate-session.php");
+
+            if($rolId == 1)
+            {
+                require_once(VIEWS_PATH."disabled-cinema-dashboard.php");
+            }
+            else
+            {
+                $this->showCinemaPermissionBlocked($rolId);
+            }
         }
 
         public function addCinema ($name, $location)
         {
             require_once(VIEWS_PATH."validate-session.php");
             $cinema = new Cinema();
-            $cinemaList = $this->cinemaDAO->getAll();
-    
-            $cinema->setName($name);
-            $cinema->setLocation($location);
-    
-            $this->cinemaDAO->add($cinema);
 
-            $this->showCinemaDashboard();
+            $validate = $this->cinemaDAO->validateData($name);
+
+            if($validate)
+            {
+                $cinema = $this->cinemaDAO->getCinemaByName($name);
+
+                if(!$cinema->getStatus())
+                {
+                    $cinema->setStatus(true);
+                    $this->cinemaDAO->edit($cinema);
+                    $errorMessage = "<h4 class="."text-white m-2".">Se ha rehabilitado un cine con el nombre ingresado</h4>";
+                } 
+                else
+                {
+                    $errorMessage = "<h4 class="."text-white m-2".">Ya existe un cine habilitado con ese nombre</h4>";
+                }  
+            }
+            else if($this->validateFormField($name) && $this->validateFormField($location))
+            {
+                $cinema->setName($name);
+                $cinema->setLocation($location);
+                $cinema->setStatus(true);
+
+                $this->cinemaDAO->add($cinema);
+            }
+            
+            if(!empty($errorMessage))
+            {
+                $this->showCinemaDashboard($errorMessage);
+            }
+            else
+            {
+                $this->showCinemaDashboard();
+            } 
         }
 
-        public function editCinema ($id, $name, $location)
+        public function editCinema ($id, $name, $location, $status = '')
         {
             require_once(VIEWS_PATH."validate-session.php");
             $cinemaUpdated = new Cinema();
-            $cinemaUpdated->setId($id);
-            $cinemaUpdated->setName($name);
-            $cinemaUpdated->setLocation($location);
 
-            //$this->$cinemaDAO->edit($cinemaUpdated);
+            $validate = $this->cinemaDAO->validateData($name);
 
-            $cinemaSQL = new CinemaDAO();
-            $cinemaSQL->edit($cinemaUpdated);
-            $this->showCinemaDashboard();
+            if($validate)
+            {
+                $cinema = $this->cinemaDAO->getCinemaByName($name);
+
+                if(!$cinema->getStatus())
+                {
+                    $cinema->setStatus(true);
+                    $this->cinemaDAO->edit($cinemaUpdated);
+                    $errorMessage = "<h4 class="."text-white m-2".">Se ha rehabilitado un cine con el nombre ingresado</h4>";
+                } 
+                else
+                {
+                    $errorMessage = "<h4 class="."text-white m-2".">Ya existe un cine habilitado con ese nombre</h4>";
+                }  
+            }
+            else if($this->validateFormField($name) && $this->validateFormField($location) 
+            && $this->validateFormField($status))
+            {
+                $cinema->setName($name);
+                $cinema->setLocation($location);
+                $cinema->setStatus($status);
+
+                $this->cinemaDAO->edit($cinema);
+            }
+
+            if(!empty($errorMessage))
+            {
+                $this->showCinemaDashboard($errorMessage);
+            }
+            else
+            {
+                $this->showCinemaDashboard();
+            } 
         }
 
-        public function deleteCinema ($id)
+        public function disableCinema ($id)
         {
             require_once(VIEWS_PATH."validate-session.php");
-            $cinemaDeleted = new Cinema();
-            $cinemaDeleted->setId($id);
+            $cinemaDisabled = new Cinema();
+            
+            $cinemaDisabled = $this->cinemaDAO->getCinemaByID($id);
 
-            $this->cinemaDAO->delete($cinemaDeleted);
-            $this->showCinemaDashboard();
+            if($cinemaDisabled->getStatus())
+            {
+                $cinemaDisabled->setStatus(false);
+                $this->cinemaDAO->edit($cinemaDisabled);
+                $this->showCinemaDashboard();
+            }
+            else
+            {
+                $cinemaDisabled->setStatus(true);
+                $this->cinemaDAO->edit($cinemaDisabled);
+                $this->showDisabledCinemaDashboard();
+            }   
+        }
+
+        public function validateFormField ($param_name) 
+        {
+            if(!empty(trim($param_name)))
+            {
+                $flag = true;
+            }
+            else
+            {
+                $flag = false;
+            } 
+
+            return $flag;
         }
     }
 ?>

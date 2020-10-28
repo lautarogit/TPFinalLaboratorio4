@@ -7,41 +7,44 @@
     <div class="card-rows">
         <div class="card-columns">
             <?php 
-                foreach($cinemaList as $cinemaValue) 
+                if($cinemaList != null)
                 {
+                    foreach($cinemaList as $cinemaValue) 
+                    {
             ?>
-                    <div class="card w-15 card-box-shadow text-white background-dark">
-                        <div class="card-header text-white background-linear-gradient">
-                            <h3 class="card-title" style="display: inline;"><?php echo $cinemaValue->getName();?></h3>
-                        </div>
+                        <div class="card w-15 card-box-shadow text-white background-dark">
+                            <div class="card-header text-white background-linear-gradient">
+                                <h3 class="card-title" style="display: inline;"><?php echo $cinemaValue->getName();?></h3>
+                            </div>
 
-                        <div class="card-body">
-                            <p class="card-text"><?php echo "<strong>Dirección: </strong>".$cinemaValue->getLocation();?></p>
-                            <?php 
-                                if($cinemaValue->getRoomsId() != null)
-                                {
-                                    $roomsQuantity = count($cinemaValue->getRoomsId());
-                                }
-                                else
-                                {
-                                    $roomsQuantity = 0;
-                                }  
-                            ?>
-                            <p class="card-text">
-                            <?php echo "<strong>N° de Salas disponibles: </strong>".$roomsQuantity;?></p>
-                        </div>
+                            <div class="card-body">
+                                <p class="card-text"><?php echo "<strong>Dirección: </strong>".$cinemaValue->getLocation();?></p>
+                                <?php 
+                                    if($cinemaValue->getRoomsId() != null)
+                                    {
+                                        $roomsQuantity = count($cinemaValue->getRoomsId());
+                                    }
+                                    else
+                                    {
+                                        $roomsQuantity = 0;
+                                    }  
+                                ?>
+                                <p class="card-text">
+                                <?php echo "<strong>N° de Salas disponibles: </strong>".$roomsQuantity;?></p>
+                            </div>
 
-                        <a class="btn btn-sm btn-outline-info background-dark btn-block" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">
-                            <i class="fas fa-film"></i> Ver catalogo
-                        </a>
+                            <a class="btn btn-sm btn-outline-info background-dark btn-block" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">
+                                <i class="fas fa-film"></i> Ver catalogo
+                            </a>
 
-                        <form method="POST" action="<?php echo FRONT_ROOT."Room/showClientRoomDashboard";?>"> 
-                            <button class="btn btn-sm btn-outline-success background-dark btn-block" value="<?php echo $cinemaValue->getId();?>" name="idCinema">
-                                <i class="fas fa-eye"></i> Ver salas
-                            </button>
-                        </form>
-                    </div> 
+                            <form method="POST" action="<?php echo FRONT_ROOT."Room/showClientRoomDashboard";?>"> 
+                                <button class="btn btn-sm btn-outline-success background-dark btn-block" value="<?php echo $cinemaValue->getId();?>" name="idCinema">
+                                    <i class="fas fa-eye"></i> Ver salas
+                                </button>
+                            </form>
+                        </div> 
             <?php
+                    }
                 } 
             ?> 
         </div>

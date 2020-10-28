@@ -155,7 +155,7 @@
             {  
         ?>
                 <div class="card w-15 m-2 background-dark text-white text-center" style="width: 364px;">
-                    <div class="card-header" style="background: crimson;">
+                    <div class="card-header movie-header-color">
                         <h3 class="card-title" style="text-align:center;"><?= $movieValue->getTitle();?></h3> 
                     </div>
 
@@ -279,7 +279,7 @@
                                 </button>
                             </div>
 
-                            <div class="modal-body" style="background-color: crimson">
+                            <div class="modal-body movie-header-color">
                                 <div class="content d-flex d-center"> 
                                     <h2 style="text-align:center;"><?= $movieValue->getTitle();?></h2>
                                 </div>

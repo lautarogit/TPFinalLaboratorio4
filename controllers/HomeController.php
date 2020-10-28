@@ -5,8 +5,9 @@
     use DAO\UserDAO as UserDAO;
     use Models\User as User;
     use Controllers\CinemaController as CinemaController;
+    use Controllers\iValidation as iValidation;
 
-    class HomeController
+    class HomeController implements iValidation
     {
         private $userDAO;
         private $cinemaController;

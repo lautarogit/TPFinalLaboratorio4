@@ -32,7 +32,7 @@
                {
           ?>
                     <div class="text-center">
-                         <p class="text-white align-center">Cuenta registrada con éxito.</p>
+                         <p class="text-white align-center">Cuenta registrada con éxito</p>
                     </div>
           <?php      
                }   

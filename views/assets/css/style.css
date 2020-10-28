@@ -1,9 +1,13 @@
 .background-linear-gradient{
-    background: linear-gradient(-180deg, #13e997, #0cc54a);
+    background: linear-gradient(-180deg, #13e997, #0cc54a) !important;
+}
+
+.background-blackWhite{
+    background: linear-gradient(-90deg, #202020, #eff1ef) !important; 
 }
 
 .movie-header-color{
-    background: linear-gradient(-180deg, #f0135c, #c50c2b);
+    background: linear-gradient(-180deg, #f0135c, #c50c2b) !important;
 }
 
 .background-aquamarina{

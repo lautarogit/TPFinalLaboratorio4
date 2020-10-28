@@ -101,9 +101,33 @@
             return $cinema;
         }
 
-        public function delete (Cinema $cinemaDeleted)
+        public function getCinemaByName ($name)
         {
+            $sqlQuery = "SELECT * FROM cinemas WHERE name = :name";
+
+            $parameters['name'] = $name;
+
+            try
+            {
+                $this->connection = Connection::getInstance();
+                
+                $resultSet = $this->connection->execute($sqlQuery, $parameters);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
             
+            if(!empty($resultSet))
+            {
+                $cinema = $this->mapout($resultSet);
+            }
+            else
+            {
+                $cinema = false;
+            }
+
+            return $cinema;
         }
 
         public function edit (Cinema $cinemaUpdated)
@@ -111,12 +135,14 @@
             $id = $cinemaUpdated->getId();
             $name = $cinemaUpdated->getName();
             $location = $cinemaUpdated->getLocation();
+            $status = $cinemaUpdated->getStatus();
 
-            $sqlQuery = "UPDATE cinemas SET name = :name, location = :location WHERE (id = :id)";
+            $sqlQuery = "UPDATE cinemas SET name = :name, location = :location, status = :status WHERE (id = :id)";
 
             $parameters['id'] = $id;
             $parameters['name'] = $name;
             $parameters['location'] = $location;
+            $parameters['status'] = $status;
 
             try
             {
@@ -157,12 +183,42 @@
             }
         }
 
+        public function validateData ($name)
+        {
+            $sqlQuery = "SELECT * FROM cinemas
+            WHERE name = :name";
+
+            $parameters['name'] = $name;
+
+            try
+            {
+                $this->connection = Connection::getInstance();
+                
+                $resultSet = $this->connection->execute($sqlQuery, $parameters);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+
+            if(!empty($resultSet))
+            {
+                $flag = true;
+            }
+            else
+            {
+                $flag = false;
+            }
+
+            return $flag;
+        }
+
         public function mapout ($value)
         {
             $value = is_array($value) ? $value : [];
 
             $resp = array_map(function($p){
-                return new Cinema($p['id'],/*$p['roomsId'] no va,*/$p['location'], $p['name']);
+                return new Cinema($p['id'],/*$p['roomId'],*/$p['location'], $p['name'], $p['status']);
             }, $value);
 
             return count($resp) > 1 ? $resp : $resp['0'];
