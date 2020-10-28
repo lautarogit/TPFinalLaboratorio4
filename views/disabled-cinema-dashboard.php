@@ -52,16 +52,6 @@
                                     <p class="card-text">
                                         <?php echo "<strong>N° de Salas disponibles: </strong>".$roomsQuantity;?></p>
                                     </div>
-
-                                    <a class="btn btn-sm btn-outline-info background-dark btn-block" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">
-                                        <i class="fas fa-film"></i> Ver catalogo
-                                    </a>
-
-                                    <form method="POST" action="<?php echo FRONT_ROOT."Room/showRoomDashboard";?>"> 
-                                        <button class="btn btn-sm btn-outline-success background-dark btn-block" value="<?php echo $cinemaValue->getId();?>" name="idCinema">
-                                            <i class="fas fa-eye"></i> Ver salas
-                                        </button>
-                                    </form>
                                 </div>
             <?php
                         }
