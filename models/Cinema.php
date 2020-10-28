@@ -4,7 +4,6 @@
     class Cinema
     {
         private $id;
-        private $roomsId;
         private $location;
         private $name;
         private $status;
@@ -20,11 +19,6 @@
         public function getId ()
         {
             return $this->id;
-        }
-
-        public function getRoomsId ()
-        {
-            return $this->roomsId;
         }
 
         public function getLocation ()
@@ -45,11 +39,6 @@
         public function setId ($id)
         {
             $this->id = $id;
-        }
-
-        public function setRoomsId ($roomsId)
-        {
-            $this->roomsId = $roomsId;
         }
         
         public function setLocation ($location)

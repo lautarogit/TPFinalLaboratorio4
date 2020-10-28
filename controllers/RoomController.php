@@ -1,61 +1,63 @@
 <?php
     namespace Controllers;
 
-    use DAO\RoomDAOJSON as RoomDAOJSON;
-    use Models\Room as Room;
-    use DAO\CinemaDAOJSON as CinemaDAOJSON;
+    use DAO\CinemaDAO as CinemaDAO;
     use Models\Cinema as Cinema;
+    use DAO\RoomDAO as RoomDAO;
+    use Models\Room as Room;
+    use Controllers\iValidation as iValidation;
 
-    class RoomController
+    class RoomController implements iValidation
     {
         private $roomDAO;
         private $cinemaDAO;
 
         public function __construct ()
         {
-            $this->roomDAO = new RoomDAOJSON();
-            $this->cinemaDAO = new CinemaDAOJSON();
+            $this->roomDAO = new RoomDAO();
+            $this->cinemaDAO = new CinemaDAO();
         }
 
-        public function showRoomDashboard ($idCinema = ' ')
+        public function showRoomPermissionBlocked ($rolId)
+        {
+            require_once(VIEWS_PATH."room-permission-blocked.php");
+        }
+
+        public function showRoomDashboard ($idCinema)
         {
             require_once(VIEWS_PATH."validate-session.php");
             $rolId = $_SESSION['loggedUser']->getRolId();
+            $idCinema = intval($idCinema);
+            $roomList = $this->roomDAO->getRoomListByIdCinema($idCinema);
+            //var_dump($roomList);
 
             if($rolId == 1)
             {
-                $_SESSION['idCinema'] = $idCinema;
                 require_once(VIEWS_PATH."room-dashboard.php");
             }
             else
             {
-                ?>
-                    <h4 class="text-white">No tiene los permisos necesarios para ingresar a esta página</h4>
-                    <a class="btn btn-primary" role="button" href="<?php echo FRONT_ROOT."Room/showClientRoomDashboard";?>">Volver</a>
-                <?php   
+                $this->showRoomPermissionBlocked($rolId);   
             }   
         }
 
-        public function showClientRoomDashboard ($idCinema = ' ')
+        public function showClientRoomDashboard ($idCinema)
         {
             require_once(VIEWS_PATH."validate-session.php");
             $rolId = $_SESSION['loggedUser']->getRolId();
+            $roomList = $this->roomDAO->getRoomListByIdCinema($idCinema);
 
             if($rolId == 0)
             {
-                $_SESSION['idCinema'] = $idCinema;
                 require_once(VIEWS_PATH."client-room-dashboard.php");
             }
             else
             {
-                ?>
-                    <h4 class="text-white">No tiene los permisos necesarios para ingresar a esta página</h4>
-                    <a class="btn btn-primary" role="button" href="<?php echo FRONT_ROOT."Room/showRoomDashboard";?>">Volver</a>
-                <?php   
+                $this->showRoomPermissionBlocked($rolId); 
             }   
         }
 
-        public function addRoom ($idCinema, $capacity, $type, $name)
+        public function addRoom ($idCinema, $capacity, $price, $name)
         {
             require_once(VIEWS_PATH."validate-session.php");
             $room = new Room();
@@ -63,95 +65,56 @@
             $cinemaController = new CinemaController();
 
             $cinema = $this->cinemaDAO->getCinemaById($idCinema);
+            $idCinema = $cinema->getId();
             
             $room->setIdCinema($idCinema);
             $room->setCapacity($capacity);
-            $room->setType($type);
+            $room->setPrice($price);
             $room->setName($name);
             $this->roomDAO->add($room);
 
-            /* Filtering new list of rooms with the same id of Cinema */
-            $roomList = $this->roomDAO->getAll();
-            $newRoomList = array();
-
-            foreach($roomList as $roomValue)
-            {
-                if($idCinema == $roomValue->getIdCinema())
-                {
-                    array_push($newRoomList, $roomValue);
-                }
-            }
-
-            /* Pushing rooms ids to list */
-            $roomsId = array();
-            
-            foreach($newRoomList as $roomValue)
-            {
-                $roomId = $roomValue->getId();
-                array_push($roomsId, $roomId);
-            }
-
-            /* setting roomsId in cinema and saving changes in the DAO */
-
-            $cinema->setRoomsId($roomsId);
-
-            $this->cinemaDAO->edit($cinema);
             $cinemaController->showCinemaDashboard();
         }
 
-        public function editRoom ($id, $idCinema, $name, $type, $capacity)
+        public function editRoom ($id, $idCinema, $capacity, $price, $name)
         {
             require_once(VIEWS_PATH."validate-session.php");
             $roomUpdated = new Room();
             
             $roomUpdated->setId($id);
             $roomUpdated->setIdCinema($idCinema);
-            $roomUpdated->setName($name);
-            $roomUpdated->setType($type);
             $roomUpdated->setCapacity($capacity);
-            
+            $roomUpdated->setPrice($price);
+            $roomUpdated->setName($name);
+           
             $this->roomDAO->edit($roomUpdated);
             $this->showRoomDashboard($idCinema);
         }
 
-        public function deleteRoom ($id)
+        public function disableRoom ($id)
         {
-            require_once(VIEWS_PATH."validate-session.php");
-            $roomDeleted = $this->roomDAO->getRoomById($id);
+           
+        }
 
-            /* Retrieving roomId and deleting the room */
-            $idCinema = $roomDeleted->getIdCinema();
-            $this->roomDAO->delete($roomDeleted);
-
-            /* Filtering new list of rooms with the same id of Cinema */
-            $roomList = $this->roomDAO->getAll();
-            $newRoomList = array();
-
-            foreach($roomList as $roomValue)
+        public function validateFormField ($paramName, $minLength, $maxLength) 
+        {
+            if(!empty(trim($paramName)))
             {
-                if($idCinema == $roomValue->getIdCinema())
+                if((strlen($paramName) >= $minLength) && (strlen($paramName) <= $maxLength))
                 {
-                    array_push($newRoomList, $roomValue);
-                }
+                    $flag = true;
+                } 
+                else
+                {
+                    $flag = false;
+                } 
             }
-
-            /* Pushing rooms ids to list */
-            $roomsId = array();
-            
-            foreach($newRoomList as $roomValue)
+            else
             {
-                $roomId = $roomValue->getId();
-                array_push($roomsId, $roomId);
-            }
+                $flag = false;
+            } 
 
-            /* Retrieving cinema, setting roomsId 
-            in it and saving changes in the DAO */
-            $cinema = $this->cinemaDAO->getCinemaById($idCinema);
-            $cinema->setRoomsId($roomsId);
-
-            $this->cinemaDAO->edit($cinema);
-
-            $this->showRoomDashboard($idCinema);
+            return $flag;
         }
     }
 ?>

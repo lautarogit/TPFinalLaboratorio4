@@ -20,7 +20,7 @@
      <div class="card-rows">
           <div class="card-columns">
                <div class="card w-15 card-box-shadow">
-                    <button class="btn btn-outline-dark background-dark text-white" style="width: 619px; height: 225px;" data-toggle="modal" data-target="#addCinema">
+                    <button class="btn btn-outline-dark background-dark text-white" style="width: 619px; height: 264px;" data-toggle="modal" data-target="#addCinema">
                          <h1><i class="fas fa-plus-square"></i></h1>
                     </button>
                </div>
@@ -76,19 +76,19 @@
                                         <div class="card-header text-white background-linear-gradient">
                                              <h3 class="card-title" style="display: inline;"><?php echo $cinemaValue->getName();?></h3>
 
-                                             <form style="float:right; display: inline" method="POST" action="<?php echo FRONT_ROOT."Cinema/disableCinema"?>"> 
+                                             <form style="float:right; display: inline; margin: 2px;" method="POST" action="<?php echo FRONT_ROOT."Cinema/disableCinema"?>"> 
                                                   <button class="btn btn-danger btn-sm" value="<?php echo $cinemaValue->getId(); ?>" name="id">
                                                        <i class="fas fa-trash"></i>
                                                   </button>
                                              </form>
 
-                                             <div style="float:right; display: inline"> 
+                                             <div style="float:right; display: inline; margin: 2px;"> 
                                                   <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="<?php echo "#editCinema".$cinemaValue->getId();?>">
                                                        <i class="fas fa-cogs"></i>
                                                   </button>
                                              </div>
                                              
-                                             <div style="float:right; display: inline"> 
+                                             <div style="float:right; display: inline; margin: 2px;"> 
                                                   <button class="btn btn-success btn-sm" data-toggle="modal" data-target="<?php echo "#addRoom".$cinemaValue->getId();?>">
                                                        Agregar sala
                                                   </button>
@@ -96,19 +96,29 @@
                                         </div>
 
                                         <div class="card-body">
+                                             <p class="card-text">
+                                                  <?php echo "<strong>Estado: </strong>";?><i class="fas fa-check-circle" style="color: green;"></i>
+                                             </p>
+
                                              <p class="card-text"><?php echo "<strong>Dirección: </strong>".$cinemaValue->getLocation();?></p>
+                                             
                                              <?php 
-                                                  if($cinemaValue->getRoomsId() != null)
+                                                  $idCinema = $cinemaValue->getId();
+                                                  $roomList = $this->roomDAO->getRoomListByIdCinema($idCinema);
+
+                                                  if(!empty($roomList))
                                                   {
-                                                       $roomsQuantity = count($cinemaValue->getRoomsId());
+                                                       $roomListSize = count($roomList);
                                                   }
                                                   else
                                                   {
-                                                       $roomsQuantity = 0;
-                                                  }  
+                                                       $roomListSize = 0;
+                                                  }
                                              ?>
+
                                              <p class="card-text">
-                                             <?php echo "<strong>N° de Salas disponibles: </strong>".$roomsQuantity;?></p>
+                                                  <?php echo "<strong>N° de Salas disponibles: </strong>".$roomListSize;?>
+                                             </p>
                                         </div>
 
                                         <a class="btn btn-sm btn-outline-info background-dark btn-block" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">
@@ -192,19 +202,17 @@
                                                                  </div>
 
                                                                  <div class="form-group">
-                                                                      <label for="name"><h5><strong>Capacidad</strong> (3-40 caracteres)</h5></label>
+                                                                      <label for="name"><h5><strong>Capacidad</strong> (3-40 dígitos)</h5></label>
                                                                       <input class="form-control form-control-lg" type="number" name="capacity" placeholder="Ingresar capacidad">
                                                                  </div>
 
                                                                  <div class="form-group">
-                                                                      <label for="location"><h5 style="display: inline;"><strong>Tipo de sala</strong></h5></label>
-                                                                      <input class="radioSize" type="radio" name="type" value="Atmos">Atmos
-                                                                      <input class="radioSize" type="radio" name="type" value="2D">2D
-                                                                      <input class="radioSize" type="radio" name="type" value="3D">3D
+                                                                      <label for="name"><h5><strong>Precio</strong></h5></label>
+                                                                      <input class="form-control form-control-lg" type="number" name="price" placeholder="Ingresar capacidad">
                                                                  </div>
 
                                                                  <div class="form-group">
-                                                                      <label for="capacity"><h5><strong>Nombre</strong> (2-4 dígitos)</h5></label>
+                                                                      <label for="capacity"><h5><strong>Nombre</strong> (2-25 caracteres)</h5></label>
                                                                       <input class="form-control form-control-lg" type="text" name="name" placeholder="Ingresar nombre">
                                                                  </div>
 

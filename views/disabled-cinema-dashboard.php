@@ -30,29 +30,38 @@
                                 <div class="card-header text-white background-blackWhite">
                                     <h3 class="card-title" style="display: inline;"><?php echo $cinemaValue->getName();?></h3>
 
-                                <form style="float:right; display: inline" method="POST" action="<?php echo FRONT_ROOT."Cinema/disableCinema"?>"> 
-                                    <button class="btn btn-danger btn-sm" value="<?php echo $cinemaValue->getId(); ?>" name="id">
-                                        <i class="fas fa-trash-restore"></i>
-                                    </button>
-                                </form>
+                                    <form style="float:right; display: inline; margin: 2px;" method="POST" action="<?php echo FRONT_ROOT."Cinema/disableCinema"?>"> 
+                                        <button class="btn btn-danger btn-sm" value="<?php echo $cinemaValue->getId(); ?>" name="id">
+                                            <i class="fas fa-trash-restore"></i>
+                                        </button>
+                                    </form>
                                 </div>
 
                                 <div class="card-body">
-                                    <p class="card-text"><?php echo "<strong>Dirección: </strong>".$cinemaValue->getLocation();?></p>
-                                        <?php 
-                                            if($cinemaValue->getRoomsId() != null)
-                                            {
-                                                $roomsQuantity = count($cinemaValue->getRoomsId());
-                                            }
-                                            else
-                                            {
-                                                $roomsQuantity = 0;
-                                            }  
-                                        ?>
                                     <p class="card-text">
-                                        <?php echo "<strong>N° de Salas disponibles: </strong>".$roomsQuantity;?></p>
-                                    </div>
+                                        <?php echo "<strong>Estado: </strong>";?><i class="fas fa-ban" style="color: red;"></i>
+                                    </p>
+
+                                    <p class="card-text"><?php echo "<strong>Dirección: </strong>".$cinemaValue->getLocation();?></p>
+                                    <?php 
+                                        $idCinema = $cinemaValue->getId();
+                                        $roomList = $this->roomDAO->getRoomListByIdCinema($idCinema);
+
+                                        if(!empty($roomList))
+                                        {
+                                            $roomListSize = count($roomList);
+                                        }
+                                        else
+                                        {
+                                            $roomListSize = 0;
+                                        }
+                                        ?>
+
+                                        <p class="card-text">
+                                            <?php echo "<strong>N° de Salas disponibles: </strong>".$roomListSize;?>
+                                        </p>
                                 </div>
+                            </div>
             <?php
                         }
                     }

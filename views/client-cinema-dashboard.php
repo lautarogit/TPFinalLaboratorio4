@@ -20,17 +20,10 @@
                             <div class="card-body">
                                 <p class="card-text"><?php echo "<strong>Dirección: </strong>".$cinemaValue->getLocation();?></p>
                                 <?php 
-                                    if($cinemaValue->getRoomsId() != null)
-                                    {
-                                        $roomsQuantity = count($cinemaValue->getRoomsId());
-                                    }
-                                    else
-                                    {
-                                        $roomsQuantity = 0;
-                                    }  
+                                    //Logica 
                                 ?>
                                 <p class="card-text">
-                                <?php echo "<strong>N° de Salas disponibles: </strong>".$roomsQuantity;?></p>
+                                <?php echo "<strong>N° de Salas disponibles: </strong>"."0";?></p>
                             </div>
 
                             <a class="btn btn-sm btn-outline-info background-dark btn-block" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">

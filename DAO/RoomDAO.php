@@ -1,22 +1,23 @@
 <?php
     namespace DAO;
     
-    use Models\Cinema as Cinema;
     use Models\Room as Room;
     use \PDOException as PDOException;
     use DAO\Connection as Connection;
 
-    class CinemaDAO
+    class RoomDAO
     {
         private $connection;
 
-        public function add (Cinema $cinema)
+        public function add (Room $room)
         {
-            $sqlQuery = "INSERT INTO Cinemas (name,location) 
-            VALUES (:name, :location)";
+            $sqlQuery = "INSERT INTO rooms (idCinema, capacity, price, name) 
+            VALUES (:idCinema, :capacity, :price, :name)";
 
-            $parameters['name'] = $cinema->getName();
-            $parameters['location'] = $cinema->getLocation();
+            $parameters['idCinema'] = $room->getIdCinema();
+            $parameters['capacity'] = $room->getCapacity();
+            $parameters['price'] = $room->getPrice();
+            $parameters['name'] = $room->getName();
 
             try
             {
@@ -32,7 +33,7 @@
 
         public function getAll ()
         {
-            $sqlQuery = "SELECT * FROM cinemas";
+            $sqlQuery = "SELECT * FROM rooms";
             
             try
             {
@@ -49,11 +50,11 @@
             {
                 $result = $this->mapout($result);
 
-                $cinemaList = array();
+                $roomList = array();
 
                 if(!is_array($result))
                 {
-                   array_push($cinemaList, $result);
+                   array_push($roomList, $result);
                 }
             }
             else 
@@ -61,9 +62,9 @@
                 $result =  false;
             }
 
-            if(!empty($cinemaList))
+            if(!empty($roomList))
             {
-                $finalResult = $cinemaList;  
+                $finalResult = $roomList;  
             }
             else
             {
@@ -73,9 +74,9 @@
             return $finalResult;
         }
 
-        public function getCinemaByID ($id)
+        public function getRoomByID ($id)
         {
-            $sqlQuery = "SELECT * FROM cinemas WHERE id = :id";
+            $sqlQuery = "SELECT * FROM rooms WHERE id = :id";
 
             $parameters['id'] = $id;
 
@@ -92,19 +93,64 @@
             
             if(!empty($resultSet))
             {
-                $cinema = $this->mapout($resultSet);
+                $room = $this->mapout($resultSet);
             }
             else
             {
-                $cinema = false;
+                $room = false;
             }
 
-            return $cinema;
+            return $room;
         }
 
-        public function getCinemaByName ($name)
+        public function getRoomListByIdCinema ($idCinema)
         {
-            $sqlQuery = "SELECT * FROM cinemas WHERE name = :name";
+            $sqlQuery = "SELECT * FROM rooms WHERE idCinema = :idCinema";
+
+            $parameters['idCinema'] = $idCinema;
+
+            try
+            {
+                $this->connection = Connection::getInstance();
+                
+                $result = $this->connection->execute($sqlQuery, $parameters);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+            
+            if(!empty($result))
+            {
+                $result = $this->mapout($result);
+
+                $roomList = array();
+
+                if(!is_array($result))
+                {
+                   array_push($roomList, $result);
+                }
+            }
+            else 
+            {
+                $result =  false;
+            }
+
+            if(!empty($roomList))
+            {
+                $finalResult = $roomList;  
+            }
+            else
+            {
+                $finalResult = $result;
+            }
+
+            return $finalResult;
+        }
+
+        public function getRoomByName ($name)
+        {
+            $sqlQuery = "SELECT * FROM rooms WHERE name = :name";
 
             $parameters['name'] = $name;
 
@@ -121,29 +167,29 @@
             
             if(!empty($resultSet))
             {
-                $cinema = $this->mapout($resultSet);
+                $room = $this->mapout($resultSet);
             }
             else
             {
-                $cinema = false;
+                $room = false;
             }
 
-            return $cinema;
+            return $room;
         }
 
-        public function edit (Cinema $cinemaUpdated)
+        public function edit (Room $roomUpdated)
         {
-            $id = $cinemaUpdated->getId();
-            $name = $cinemaUpdated->getName();
-            $location = $cinemaUpdated->getLocation();
-            $status = $cinemaUpdated->getStatus();
+            $id = $roomUpdated->getId();
+            $capacity = $roomUpdated->getCapacity();
+            $price = $roomUpdated->getPrice();
+            $name = $roomUpdated->getName();
 
-            $sqlQuery = "UPDATE cinemas SET name = :name, location = :location, status = :status WHERE (id = :id)";
+            $sqlQuery = "UPDATE rooms SET capacity = :capacity, price = :price, name = :name WHERE (id = :id)";
 
             $parameters['id'] = $id;
+            $parameters['capacity'] = $capacity;
+            $parameters['price'] = $price;
             $parameters['name'] = $name;
-            $parameters['location'] = $location;
-            $parameters['status'] = $status;
 
             try
             {
@@ -159,7 +205,7 @@
 
         public function validateData ($name)
         {
-            $sqlQuery = "SELECT * FROM cinemas
+            $sqlQuery = "SELECT * FROM rooms
             WHERE name = :name";
 
             $parameters['name'] = $name;
@@ -192,7 +238,7 @@
             $value = is_array($value) ? $value : [];
 
             $resp = array_map(function($p){
-                return new Cinema($p['id'], $p['location'], $p['name'], $p['status']);
+                return new Room ($p['id'], $p['idCinema'], $p['capacity'], $p['price'], $p['name']);
             }, $value);
 
             return count($resp) > 1 ? $resp : $resp['0'];

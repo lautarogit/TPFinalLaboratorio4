@@ -2,32 +2,17 @@
      require_once("header.php"); 
      require_once("nav.php");
 
-     use DAO\CinemaDAOJSON as CinemaDAOJSON;
+     use DAO\CinemaDAO as CinemaDAO;
      use Models\Cinema as Cinema;
-     use DAO\RoomDAOJSON as RoomDAOJSON;
      use Models\Room as Room;
 
-     $idCinema = $_SESSION['idCinema'];
      $rolId = $_SESSION['loggedUser']->getRolId();
-     $cinemaDAO = new CinemaDAOJSON();
+     $cinemaDAO = new CinemaDAO();
      $cinema = new Cinema();
-     $roomDAO = new RoomDAOJSON();
-     $room = new Room();
 
      $cinema = $cinemaDAO->getCinemaById($idCinema);
-     $roomsId = $cinema->getRoomsId();
-     $roomList = array();
 
-     if($roomsId !=null)
-     {
-          foreach($roomsId as $idRoom)
-          {  
-               $room = $roomDAO->getRoomById($idRoom);
-               array_push($roomList, $room);
-          }
-     }
-
-     if($roomList != null)
+     if(!empty($roomList))
      {
 ?>
      <main class="py-3 text-white">
@@ -37,7 +22,7 @@
                     <table class="table bg-dark text-white">
                          <thead>
                               <th>Nombre de sala</th>
-                              <th>Tipo de sala</th>
+                              <th>Precio</th>
                               <th>Capacidad</th>
                               <th>Editar</th>
                               <th>Eliminar</th>
@@ -50,7 +35,7 @@
                          ?>
                                    <tr>
                                         <td><?php echo $roomValue->getName();?></td>
-                                        <td><?php echo $roomValue->getType();?></td>
+                                        <td><?php echo $roomValue->getPrice();?></td>
                                         <td><?php echo $roomValue->getCapacity();?></td>
                                         <td> 
                                              <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="<?php echo "#editRoom".$roomValue->getId(); ?>">
@@ -58,7 +43,7 @@
                                              </button>
                                         </td>
                                         <td>
-                                             <form method="POST" action="<?php echo FRONT_ROOT."Room/deleteRoom";?>"> 
+                                             <form method="POST" action="<?php echo FRONT_ROOT."Room/disableRoom";?>"> 
                                                   <button class="btn btn-danger btn-sm" value="<?php echo $roomValue->getId(); ?>" name="id">
                                                        <i class="fas fa-trash"></i>
                                                   </button>
@@ -91,30 +76,26 @@
                                                                  </div>
 
                                                                  <div class="form-group">
-                                                                      <label for="location"><h5><strong>Nombre</strong> (3-40 caracteres)</h5></label>
-                                                                      <input class="form-control form-control-lg" type="text" name="name" value="<?php echo $roomValue->getName();?>" placeholder="Ingresar localidad">
+                                                                      <label for="location"><h5><strong>Capacidad</strong> (2-3 dígitos)</h5></label>
+                                                                      <input class="form-control form-control-lg" type="number" name="capacity" value="<?php echo $roomValue->getCapacity();?>" placeholder="Ingresar localidad">
                                                                  </div>
 
                                                                  <div class="form-group">
-                                                                      <label for="location"><h5 style="display: inline;"><strong>Tipo de sala</strong></h5></label>
-                                                                      <input class="radioSize" type="radio" name="type" value="Atmos">Atmos
-                                                                      <input class="radioSize" type="radio" name="type" value="2D">2D
-                                                                      <input class="radioSize" type="radio" name="type" value="3D">3D
+                                                                      <label for="location"><h5><strong>Precio</strong> (3-40 caracteres)</h5></label>
+                                                                      <input class="form-control form-control-lg" type="number" name="price" value="<?php echo $roomValue->getPrice();?>" placeholder="Ingresar localidad">
                                                                  </div>
 
                                                                  <div class="form-group">
-                                                                      <label for="capacity"><h5><strong>Capacidad</strong> (2-3 dígitos)</h5></label>
-                                                                      <input class="form-control form-control-lg" type="number" name="capacity" value="<?php echo $roomValue->getCapacity();?>" placeholder="Ingresar capacidad">
+                                                                      <label for="capacity"><h5><strong>Nombre</strong> (4-25 caracteres)</h5></label>
+                                                                      <input class="form-control form-control-lg" type="text" name="name" value="<?php echo $roomValue->getName();?>" placeholder="Ingresar capacidad">
                                                                  </div>
+
+                                                                 <button type="submit" class="btn btn-warning">
+                                                                      Confirmar cambios
+                                                                 </button>
                                                             </form>
                                                        </div>
                                                   </div>
-
-                                                  <div class="modal-footer">
-                                                       <button type="submit" class="btn btn-warning">
-                                                            Confirmar cambios
-                                                       </button>
-
                                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cerrar</button>
                                                   </div>
                                              </div>

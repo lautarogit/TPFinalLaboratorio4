@@ -77,12 +77,16 @@
         {
             $user = new User();
            
-            $validate = $this->userDAO->validateData($userName, $dni, $email);
+            $userFinded = $this->userDAO->validateData($userName, $dni, $email);
+            $validateFirstName = $this->validateFormField($firstName, 3, 25);
+            $validateLastName = $this->validateFormField($lastName, 3, 25);
+            $validateUserName = $this->validateFormField($userName, 4, 16);
+            $validateEmail = $this->validateFormField($email, 10, 40);
+            $validateDni = $this->validateFormField($dni, 8, 9);
+            $validatePassword = $this->validateFormField($password, 6, 45);
 
-            if(!$validate 
-            && $this->validateFormField($firstName) && $this->validateFormField($lastName)
-            && $this->validateFormField($userName) && $this->validateFormField($email)
-            && $this->validateFormField($dni) && $this->validateFormField($password)
+            if(!$userFinded && $validateFirstName && $validateLastName && $validateUserName
+            && $validateEmail && $validateDni && $validatePassword
             )
             {
                 $user->setUserName($userName);
@@ -104,11 +108,18 @@
             }   
         }
 
-        public function validateFormField ($param_name) 
+        public function validateFormField ($paramName, $minLength, $maxLength) 
         {
-            if(!empty(trim($param_name)))
+            if(!empty(trim($paramName)))
             {
-                $flag = true;
+                if((strlen($paramName) >= $minLength) && (strlen($paramName) <= $maxLength))
+                {
+                    $flag = true;
+                } 
+                else
+                {
+                    $flag = false;
+                } 
             }
             else
             {

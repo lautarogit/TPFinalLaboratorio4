@@ -6,8 +6,17 @@
         private $id;
         private $idCinema;
         private $capacity;
-        private $type;
+        private $price;
         private $name;
+
+        public function __construct($id = ' ', $idCinema = ' ', $capacity = ' ', $price = ' ', $name = ' ')
+        {
+            $this->id = $id;
+            $this->idCinema = $idCinema;
+            $this->capacity = $capacity;
+            $this->price = $price;
+            $this->name = $name;
+        }
 
         public function getId ()
         {
@@ -24,9 +33,9 @@
             return $this->capacity;
         }
 
-        public function getType()
+        public function getPrice ()
         {
-            return $this->type;
+            return $this->price;
         }
 
         public function getName ()
@@ -49,9 +58,9 @@
             $this->capacity = $capacity;
         }
 
-        public function setType($type)
+        public function setPrice ($price)
         {
-            $this->type = $type;
+            $this->price = $price;
         }
 
         public function setName ($name)

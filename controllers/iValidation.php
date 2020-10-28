@@ -3,6 +3,6 @@
     
     interface iValidation
     {
-        function validateFormField ($param_name); 
+        function validateFormField ($param_name, $minLength, $maxLength); 
     }
 ?>

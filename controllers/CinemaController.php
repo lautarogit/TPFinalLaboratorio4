@@ -4,6 +4,7 @@
     use DAO\CinemaDAOJSON as CinemaDAOJSON;
     use DAO\CinemaDAO as CinemaDAO;
     use Models\Cinema as Cinema;
+    use DAO\RoomDAO as RoomDAO;
     use Controllers\iValidation as iValidation;
 
     class CinemaController implements iValidation
@@ -14,6 +15,7 @@
         {
             //$this->cinemaDAO = new CinemaDAOJSON();
             $this->cinemaDAO = new CinemaDAO();
+            $this->roomDAO = new RoomDAO();
         }
 
         public function showCinemaPermissionBlocked ($rolId)
@@ -25,6 +27,7 @@
         {
             $rolId = $_SESSION['loggedUser']->getRolId();
             $cinemaList = $this->cinemaDAO->getAll();
+            $roomList = $this->roomDAO->getAll();
 
             require_once(VIEWS_PATH."validate-session.php");
 
@@ -42,6 +45,7 @@
         {
             $rolId = $_SESSION['loggedUser']->getRolId();
             $cinemaList = $this->cinemaDAO->getAll();
+            $roomList = $this->roomDAO->getAll();
 
             require_once(VIEWS_PATH."validate-session.php");
 
@@ -59,6 +63,7 @@
         {
             $rolId = $_SESSION['loggedUser']->getRolId();
             $cinemaList = $this->cinemaDAO->getAll();
+            $roomList = $this->roomDAO->getAll();
 
             require_once(VIEWS_PATH."validate-session.php");
 
@@ -77,9 +82,11 @@
             require_once(VIEWS_PATH."validate-session.php");
             $cinema = new Cinema();
 
-            $validate = $this->cinemaDAO->validateData($name);
+            $cinemaFinded = $this->cinemaDAO->validateData($name);
+            $validateName = $this->validateFormField($name, 4, 20);
+            $validateLocation = $this->validateFormField($location, 4, 45);
 
-            if($validate)
+            if($cinemaFinded)
             {
                 $cinema = $this->cinemaDAO->getCinemaByName($name);
 
@@ -94,7 +101,7 @@
                     $errorMessage = "<h4 class="."text-white m-2".">Ya existe un cine habilitado con ese nombre</h4>";
                 }  
             }
-            else if($this->validateFormField($name) && $this->validateFormField($location))
+            else if($validateName && $validateLocation && $validateStatus)
             {
                 $cinema->setName($name);
                 $cinema->setLocation($location);
@@ -118,9 +125,12 @@
             require_once(VIEWS_PATH."validate-session.php");
             $cinemaUpdated = new Cinema();
 
-            $validate = $this->cinemaDAO->validateData($name);
+            $cinemaFinded = $this->cinemaDAO->validateData($name);
+            $validateName = $this->validateFormField($name, 4, 20);
+            $validateLocation = $this->validateFormField($location, 4, 45);
+            $validateStatus = $this->validateFormField($status, 1, 25);
 
-            if($validate)
+            if(!$cinemaFinded)
             {
                 $cinema = $this->cinemaDAO->getCinemaByName($name);
 
@@ -135,8 +145,7 @@
                     $errorMessage = "<h4 class="."text-white m-2".">Ya existe un cine habilitado con ese nombre</h4>";
                 }  
             }
-            else if($this->validateFormField($name) && $this->validateFormField($location) 
-            && $this->validateFormField($status))
+            else if($validateName && $validateLocation && $validateStatus)
             {
                 $cinema->setName($name);
                 $cinema->setLocation($location);
@@ -176,11 +185,18 @@
             }   
         }
 
-        public function validateFormField ($param_name) 
+        public function validateFormField ($paramName, $minLength, $maxLength) 
         {
-            if(!empty(trim($param_name)))
+            if(!empty(trim($paramName)))
             {
-                $flag = true;
+                if((strlen($paramName) >= $minLength) && (strlen($paramName) <= $maxLength))
+                {
+                    $flag = true;
+                } 
+                else
+                {
+                    $flag = false;
+                } 
             }
             else
             {

@@ -83,7 +83,6 @@
             foreach ($this->cinemaList as $cinema) 
             {
                 $arrayValue['id'] = $cinema->getId();
-                $arrayValue['roomsId'] = $cinema->getRoomsId();
                 $arrayValue['name'] = $cinema->getName();
                 $arrayValue['location'] = $cinema->getLocation();
 
@@ -106,12 +105,10 @@
                 $cinema = new Cinema();
 
                 $id = $arrayValue['id'];
-                $roomsId = $arrayValue['roomsId'];
                 $name = $arrayValue['name'];
                 $location = $arrayValue['location'];
 
                 $cinema->setId($id);
-                $cinema->setRoomsId($roomsId);
                 $cinema->setName($name);
                 $cinema->setLocation($location);
 
