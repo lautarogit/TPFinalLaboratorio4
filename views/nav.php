@@ -1,11 +1,18 @@
 <?php 
     use Models\User as User;
     use Models\Rol as Rol;
+    use DAO\ImageUserDAO as ImageUserDAO;
+    $stringimg=' ';
+    if($_SESSION["loggedUser"]){
+        $image=new ImageUserDAO();
+        $stringimg=$image->getImage($_SESSION["loggedUser"]);
+    }
+    else{$stringimg= IMG_PATH."logo.png";} 
 ?>
 
 <nav class="navbar navbar-expand-lg bg-dark">
      <span class="navbar-text">
-          <img src="<?php echo IMG_PATH."logo.png"; ?>" style="display: inline;">
+          <img src="<?php echo $stringimg ;?>" style="display: inline;">
           <?php
             if($_SESSION['loggedUser'])
             {

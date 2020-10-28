@@ -1,8 +1,10 @@
 <?php
+namespace DAO;
+
 use DAO\Connection as Connection;
 use \PDOException as PDOExepction;
 use Models\User as User ;
-use DAO\UserDAO as UserDAO;
+
 class ImageUserDAO {
 private $connection;
     public function getImage(User $user){
@@ -26,7 +28,7 @@ if(!empty($resultSet))
 }
 else
 {
-    $cinema = false;
+    $image=IMG_PATH."logo.png" ;
 }
 
 return $image;
@@ -34,9 +36,9 @@ return $image;
 public function mapout ($value)
 {
     $value = is_array($value) ? $value : [];
-$image=array();
+
     $resp = array_map(function($p){
-        return $image=[[$p['dni'],$p['linkImage']];
+        return $image=$p['linkImage'] ;
     }, $value);
 
     return count($resp) > 1 ? $resp : $resp['0'];
