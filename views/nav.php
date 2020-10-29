@@ -1,11 +1,14 @@
 <?php 
     use Models\User as User;
     use Models\Rol as Rol;
+    
+    $user=new User();
+    $user=$_SESSION['loggedUser'];
 ?>
 
 <nav class="navbar navbar-expand-lg bg-dark">
      <span class="navbar-text">
-          <img src="<?php echo IMG_PATH."logo.png"; ?>" style="display: inline;">
+          <img src="<?php echo $_SESSION['loggedUser'] ?$user->getImage() :IMG_PATH."logo.png"; ?>" style="border-radius:200px;display: inline;">
           <?php
             if($_SESSION['loggedUser'])
             {
