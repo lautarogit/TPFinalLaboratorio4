@@ -101,7 +101,7 @@
                     $errorMessage = "<h4 class="."text-white m-2".">Ya existe un cine habilitado con ese nombre</h4>";
                 }  
             }
-            else if($validateName && $validateLocation && $validateStatus)
+            else if($validateName && $validateLocation)
             {
                 $cinema->setName($name);
                 $cinema->setLocation($location);
@@ -120,7 +120,7 @@
             } 
         }
 
-        public function editCinema ($id, $name, $location, $status = '')
+        public function editCinema ($id, $name, $location, $status)
         {
             require_once(VIEWS_PATH."validate-session.php");
             $cinemaUpdated = new Cinema();
@@ -128,15 +128,14 @@
             $cinemaFinded = $this->cinemaDAO->validateData($name);
             $validateName = $this->validateFormField($name, 4, 20);
             $validateLocation = $this->validateFormField($location, 4, 45);
-            $validateStatus = $this->validateFormField($status, 1, 25);
 
-            if(!$cinemaFinded)
+            if($cinemaFinded)
             {
-                $cinema = $this->cinemaDAO->getCinemaByName($name);
+                $cinemaUpdated = $this->cinemaDAO->getCinemaByName($name);
 
-                if(!$cinema->getStatus())
+                if(!$cinemaUpdated->getStatus())
                 {
-                    $cinema->setStatus(true);
+                    $cinemaUpdated->setStatus(true);
                     $this->cinemaDAO->edit($cinemaUpdated);
                     $errorMessage = "<h4 class="."text-white m-2".">Se ha rehabilitado un cine con el nombre ingresado</h4>";
                 } 
@@ -145,13 +144,14 @@
                     $errorMessage = "<h4 class="."text-white m-2".">Ya existe un cine habilitado con ese nombre</h4>";
                 }  
             }
-            else if($validateName && $validateLocation && $validateStatus)
+            else if($validateName && $validateLocation && $status!=null)
             {
-                $cinema->setName($name);
-                $cinema->setLocation($location);
-                $cinema->setStatus($status);
+                $cinemaUpdated->setId($id);
+                $cinemaUpdated->setName($name);
+                $cinemaUpdated->setLocation($location);
+                $cinemaUpdated->setStatus($status);
 
-                $this->cinemaDAO->edit($cinema);
+                $this->cinemaDAO->edit($cinemaUpdated);
             }
 
             if(!empty($errorMessage))
@@ -185,18 +185,25 @@
             }   
         }
 
-        public function validateFormField ($paramName, $minLength, $maxLength) 
+        public function validateFormField ($paramName, $minLength = '', $maxLength = '') 
         {
             if(!empty(trim($paramName)))
             {
-                if((strlen($paramName) >= $minLength) && (strlen($paramName) <= $maxLength))
+                if(!empty($minLenght) && !empty($maxLength))
                 {
-                    $flag = true;
-                } 
+                    if((strlen($paramName) >= $minLength) && (strlen($paramName) <= $maxLength))
+                    {
+                        $flag = true;
+                    } 
+                    else
+                    {
+                        $flag = false;
+                    } 
+                }
                 else
                 {
-                    $flag = false;
-                } 
+                    $flag = true;
+                }  
             }
             else
             {

@@ -108,18 +108,25 @@
             }   
         }
 
-        public function validateFormField ($paramName, $minLength, $maxLength) 
+        public function validateFormField ($paramName, $minLength = '', $maxLength = '') 
         {
             if(!empty(trim($paramName)))
             {
-                if((strlen($paramName) >= $minLength) && (strlen($paramName) <= $maxLength))
+                if(!empty($minLenght) && !empty($maxLength))
                 {
-                    $flag = true;
-                } 
+                    if((strlen($paramName) >= $minLength) && (strlen($paramName) <= $maxLength))
+                    {
+                        $flag = true;
+                    } 
+                    else
+                    {
+                        $flag = false;
+                    } 
+                }
                 else
                 {
-                    $flag = false;
-                } 
+                    $flag = true;
+                }  
             }
             else
             {

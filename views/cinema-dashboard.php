@@ -105,10 +105,19 @@
                                              <?php 
                                                   $idCinema = $cinemaValue->getId();
                                                   $roomList = $this->roomDAO->getRoomListByIdCinema($idCinema);
+                                                  $enableRoomList = array();
 
                                                   if(!empty($roomList))
                                                   {
-                                                       $roomListSize = count($roomList);
+                                                       foreach($roomList as $roomValue)
+                                                       {
+                                                            if($roomValue->getStatus())
+                                                            {
+                                                                 array_push($enableRoomList, $roomValue);
+                                                            }
+                                                       }
+
+                                                       $roomListSize = count($enableRoomList);
                                                   }
                                                   else
                                                   {
@@ -163,8 +172,8 @@
 
                                                                  <div class="form-group">
                                                                       <label for="status"><h5><strong>Estado</strong></h5></label>
-                                                                      <input class="radioSize" type="radio" name="status" value="<?php true; ?>">Habilitado
-                                                                      <input class="radioSize" type="radio" name="status" value="<?php false; ?>">Deshabilitado
+                                                                      <input class="radioSize" type="radio" name="status" value="<?= true; ?>">Habilitado
+                                                                      <input class="radioSize" type="radio" name="status" value="<?= false; ?>">Deshabilitado
                                                                  </div>
 
                                                                  <button type="submit" class="btn btn-warning">

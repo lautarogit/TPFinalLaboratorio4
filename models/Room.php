@@ -8,14 +8,16 @@
         private $capacity;
         private $price;
         private $name;
+        private $status;
 
-        public function __construct($id = ' ', $idCinema = ' ', $capacity = ' ', $price = ' ', $name = ' ')
+        public function __construct($id = ' ', $idCinema = ' ', $capacity = ' ', $price = ' ', $name = ' ', $status = TRUE)
         {
             $this->id = $id;
             $this->idCinema = $idCinema;
             $this->capacity = $capacity;
             $this->price = $price;
             $this->name = $name;
+            $this->status = $status;
         }
 
         public function getId ()
@@ -43,6 +45,11 @@
             return $this->name;
         }
 
+        public function getStatus ()
+        {
+            return $this->status;
+        }
+
         public function setId ($id)
         {
             $this->id = $id;
@@ -66,6 +73,11 @@
         public function setName ($name)
         {
             $this->name = $name;
+        }
+
+        public function setStatus ($status)
+        {
+            $this->status = $status;
         }
 }
 ?>

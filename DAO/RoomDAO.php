@@ -11,13 +11,14 @@
 
         public function add (Room $room)
         {
-            $sqlQuery = "INSERT INTO rooms (idCinema, capacity, price, name) 
-            VALUES (:idCinema, :capacity, :price, :name)";
+            $sqlQuery = "INSERT INTO rooms (idCinema, capacity, price, name, status) 
+            VALUES (:idCinema, :capacity, :price, :name, :status)";
 
             $parameters['idCinema'] = $room->getIdCinema();
             $parameters['capacity'] = $room->getCapacity();
             $parameters['price'] = $room->getPrice();
             $parameters['name'] = $room->getName();
+            $parameters['status'] = $room->getStatus();
 
             try
             {
@@ -148,11 +149,12 @@
             return $finalResult;
         }
 
-        public function getRoomByName ($name)
+        public function getRoomByName ($name, $idCinema)
         {
-            $sqlQuery = "SELECT * FROM rooms WHERE name = :name";
+            $sqlQuery = "SELECT * FROM rooms WHERE name = :name AND idCinema = :idCinema";
 
             $parameters['name'] = $name;
+            $parameters['idCinema'] = $idCinema;
 
             try
             {
@@ -183,13 +185,15 @@
             $capacity = $roomUpdated->getCapacity();
             $price = $roomUpdated->getPrice();
             $name = $roomUpdated->getName();
+            $status = $roomUpdated->getStatus();
 
-            $sqlQuery = "UPDATE rooms SET capacity = :capacity, price = :price, name = :name WHERE (id = :id)";
+            $sqlQuery = "UPDATE rooms SET capacity = :capacity, price = :price, name = :name, status = :status WHERE (id = :id)";
 
             $parameters['id'] = $id;
             $parameters['capacity'] = $capacity;
             $parameters['price'] = $price;
             $parameters['name'] = $name;
+            $parameters['status'] = $status;
 
             try
             {
@@ -203,12 +207,13 @@
             }
         }
 
-        public function validateData ($name)
+        public function validateData ($name, $idCinema)
         {
             $sqlQuery = "SELECT * FROM rooms
-            WHERE name = :name";
+            WHERE name = :name AND idCinema = :idCinema";
 
             $parameters['name'] = $name;
+            $parameters['idCinema'] = $idCinema;
 
             try
             {
@@ -229,7 +234,7 @@
             {
                 $flag = false;
             }
-
+            
             return $flag;
         }
 
@@ -238,7 +243,7 @@
             $value = is_array($value) ? $value : [];
 
             $resp = array_map(function($p){
-                return new Room ($p['id'], $p['idCinema'], $p['capacity'], $p['price'], $p['name']);
+                return new Room ($p['id'], $p['idCinema'], $p['capacity'], $p['price'], $p['name'], $p['status']);
             }, $value);
 
             return count($resp) > 1 ? $resp : $resp['0'];

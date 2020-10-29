@@ -2,7 +2,6 @@
     namespace DAO;
     
     use Models\Cinema as Cinema;
-    use Models\Room as Room;
     use \PDOException as PDOException;
     use DAO\Connection as Connection;
 
@@ -17,6 +16,7 @@
 
             $parameters['name'] = $cinema->getName();
             $parameters['location'] = $cinema->getLocation();
+            $parameters['status'] = $cinema->getStatus();
 
             try
             {

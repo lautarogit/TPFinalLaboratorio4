@@ -31,8 +31,8 @@
                                     <h3 class="card-title" style="display: inline;"><?php echo $cinemaValue->getName();?></h3>
 
                                     <form style="float:right; display: inline; margin: 2px;" method="POST" action="<?php echo FRONT_ROOT."Cinema/disableCinema"?>"> 
-                                        <button class="btn btn-danger btn-sm" value="<?php echo $cinemaValue->getId(); ?>" name="id">
-                                            <i class="fas fa-trash-restore"></i>
+                                        <button class="btn btn-info btn-sm" value="<?php echo $cinemaValue->getId(); ?>" name="id">
+                                            <i class="fas fa-trash-restore" style="color: blue;"></i>
                                         </button>
                                     </form>
                                 </div>
