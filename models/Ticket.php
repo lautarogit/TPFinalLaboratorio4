@@ -6,7 +6,7 @@
     {
         private $id;
         private $codeQR;
-        private $function;
+        private $idShow;
         private $idUser;
 
         public function getId()
@@ -19,9 +19,9 @@
             return $this->codeQR;
         }
 
-        public function getFunction()
+        public function getIdShow()
         {
-            return $this->function;
+            return $this->idShow;
         }
 
         public function getIdUser()
@@ -41,9 +41,9 @@
             return $this;
         }
 
-        public function setFunction($function)
+        public function setIdShow($idShow)
         {
-            $this->function = $function;
+            $this->idShow = $idShow;
 
             return $this;
         }

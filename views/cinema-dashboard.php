@@ -3,11 +3,17 @@
      require_once("nav.php");
 ?>
 
-<div class="m-2">
+<div class="m-2 inline">
      <a class="btn btn-dark" style="display: inline; border-radius: 2px 10px 10px 2px;" role="button" href="
           <?php echo FRONT_ROOT."Cinema/showDisabledCinemaDashboard";?>">Mostrar cines deshabilitados
      </a> 
+
+     <a class="btn btn-sm btn-outline-info background-dark m-1" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">
+          <i class="fas fa-film"></i> Ver catálogo de películas
+     </a>
 </div>
+
+
 
 <?php 
      if(!empty($errorMessage))
@@ -20,7 +26,7 @@
      <div class="card-rows">
           <div class="card-columns">
                <div class="card w-15 card-box-shadow">
-                    <button class="btn btn-outline-dark background-dark text-white" style="width: 619px; height: 264px;" data-toggle="modal" data-target="#addCinema">
+                    <button class="btn btn-outline-dark background-dark text-white" style="width: 619px; height: 233px;" data-toggle="modal" data-target="#addCinema">
                          <h1><i class="fas fa-plus-square"></i></h1>
                     </button>
                </div>
@@ -129,10 +135,6 @@
                                                   <?php echo "<strong>N° de Salas disponibles: </strong>".$roomListSize;?>
                                              </p>
                                         </div>
-
-                                        <a class="btn btn-sm btn-outline-info background-dark btn-block" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">
-                                             <i class="fas fa-film"></i> Ver catalogo
-                                        </a>
 
                                         <form method="POST" action="<?php echo FRONT_ROOT."Room/showRoomDashboard";?>"> 
                                              <button class="btn btn-sm btn-outline-success background-dark btn-block" value="<?php echo $cinemaValue->getId();?>" name="idCinema">

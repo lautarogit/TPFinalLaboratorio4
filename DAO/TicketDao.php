@@ -1,84 +1,93 @@
 <?php 
     namespace DAO;
+
     use Models\Ticket as Ticket;
-    use Models\MovieXroom as MovieXroom;
-use Models\User as User;
-use \PDOException as PDOException;
-use DAO\Connection as Connection;
-use DAO\UserDAO as UserDao;
-use DAO\MovieXRoomDAO as MovieXRoomDAO;
+    use \PDOException as PDOException;
+    use DAO\Connection as Connection;
 
     class TicketDAO
     {
-        private $conecction;
-        private function add (Ticket $ticket){
-        $sqlQuery ='INSERT INTO TICKETS  (id,IdUser,idFunction)   values (:id,:codeQR ,:idUser, :idFunction)';
-    $parameter['id']=$ticket->getId();
-    $parameter ['codeQR']=$ticket->getCodeQR();
-    $parameter['idUser']=$ticket->getIdUser();
-    $parameter['idFunction']=$ticket->getFunction();
-    try {
-        $this->connection=Connection::getInstance();
-        return $this->connection->executeNonQuery($sqlQuery,$parameter);
+        private $connection;
 
-    }   
-    catch(PDOException $ex){
-        throw $ex;
-
-    } 
-
-    }
-    public function getAll ()
-    {
-        $sqlQuery = "SELECT * FROM tickets";
-        
-        try
+        public function add (Ticket $ticket)
         {
-            $this->connection = Connection::getInstance();
-        
-            $result = $this->connection->execute($sqlQuery);
-        }
-        catch(PDOException $ex)
-        {
-            throw $ex;
-        }
-        
-        if(!empty($result))
-        {
-            $result = $this->mapout($result);
+            $id = $ticket->getId();
+            $codeQR = $ticket->getCodeQR();
+            $idShow = $ticket->getIdShow();
+            $idUser = $ticket->getIdUser();
 
-            $cinemaList = array();
+            $sqlQuery ='INSERT INTO TICKETS  (id, codeQR, IdUser, idShow)  
+            VALUES (:id,:codeQR ,:idUser, :idShow)';
 
-            if(!is_array($result))
+            $parameter['id'] = $id; 
+            $parameter['codeQR'] = $codeQR;
+            $parameter['idUser'] = $idUser;
+            $parameter['idShow'] = $idShow;
+
+            try 
             {
-               array_push($ticketList, $result);
+                $this->connection = Connection::getInstance();
+
+                return $this->connection->executeNonQuery($sqlQuery, $parameter);
+            }   
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            } 
+        }
+
+        public function getAll ()
+        {
+            $sqlQuery = "SELECT * FROM tickets";
+            
+            try
+            {
+                $this->connection = Connection::getInstance();
+            
+                $result = $this->connection->execute($sqlQuery);
             }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+            
+            if(!empty($result))
+            {
+                $result = $this->mapout($result);
+
+                $ticketList = array();
+
+                if(!is_array($result))
+                {
+                    array_push($ticketList, $result);
+                }
+            }
+            else 
+            {
+                $result =  false;
+            }
+
+            if(!empty($ticketList))
+            {
+                $finalResult = $ticketList;  
+            }
+            else
+            {
+                $finalResult = $result;
+            }
+
+            return $finalResult;
         }
-        else 
+
+        public function mapout($value)
         {
-            $result =  false;
+            $value = is_array($value) ? $value : [];
+
+            $resp = array_map(function($p){
+                return new Ticket($p['id'], $p['codeQR'], $p['idShow'], $p['idUser']);
+            }, $value);
+
+            return count($resp) > 1 ? $resp : $resp['0'];
         }
-
-        if(!empty($ticketList))
-        {
-            $finalResult = $ticketList;  
-        }
-        else
-        {
-            $finalResult = $result;
-        }
-
-        return $finalResult;
-    }
-     public function mapout($value){
-        $value = is_array($value) ? $value : [];
-
-        $resp = array_map(function($p){
-            return new Ticket($p['id'],$p['codeQR'],$p['idUser'],$p['idFunction']);
-        }, $value);
-
-        return count($resp) > 1 ? $resp : $resp['0'];
-    }
-
     }
  ?>

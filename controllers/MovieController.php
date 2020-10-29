@@ -21,14 +21,26 @@
         {
             $movieList = $this->movieDAO->getAll();
             $genreList = $this->genreDAO->getAll();
+            require_once(VIEWS_PATH."validate-session.php");
             require_once(VIEWS_PATH."movie-dashboard.php");
+        }
+
+        public function showBillboard ($idMovie)
+        {
+            $movie = new Movie();
+            $movie = $this->movieDAO->getMovieById($idMovie);
+            $genreList = $this->genreDAO->getAll();
+
+            require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."billboard.php");
         }
 
         public function showFilterMovieDashboard ($filterMovieList)
         {
             $genreList = $this->genreDAO->getAll();
             $movieList = $filterMovieList;
-
+            
+            require_once(VIEWS_PATH."validate-session.php");
             require_once(VIEWS_PATH."movie-dashboard.php");
         }
 
