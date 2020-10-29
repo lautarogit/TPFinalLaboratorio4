@@ -35,12 +35,12 @@
         }
 public function setImage($userName,$image )
 {
-    $sqlQuery ="UPDATE USERS SET linkImage = :image WHERE dni =:dni";
+    $sqlQuery ="UPDATE USERS SET linkImage = :imagen WHERE dni =:dni";
     $parameters['dni']=$userName->getDni();
-    $parameters['image']=$image;
+    $parameters['imagen']=$image;
     try{
         $this->connection=Connection::getInstance();
-        $resultSet=$this->connection->excuteNonQuery($sqlQuery,$parameters);
+        $resultSet=$this->connection->executeNonQuery($sqlQuery,$parameters);
 
     }  catch(PDOException $ex)
             {
