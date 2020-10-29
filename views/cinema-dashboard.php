@@ -2,6 +2,11 @@
      require_once("header.php"); 
      require_once("nav.php");
 ?>
+  <a class="btn btn-dark" style="display: inline; border-radius: 2px 10px 10px 2px;" role="button" href="
+          <?php echo FRONT_ROOT."User/addProfilePicture";?>">add image
+     </a> 
+
+
 
 <div class="m-2">
      <a class="btn btn-dark" style="display: inline; border-radius: 2px 10px 10px 2px;" role="button" href="

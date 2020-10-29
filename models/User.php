@@ -8,15 +8,22 @@
         private $userName;
         private $password;
         private $rolId;
+        private $image;
 
-        public function __construct ($userName = ' ', $password = ' ', $rolId = ' ', $firstName = ' ', $lastName = ' ', $dni = ' ', $email = ' ')
+        public function __construct ($userName = ' ', $password = ' ', $rolId = ' ',$image=' ', $firstName = ' ', $lastName = ' ', $dni = ' ', $email = ' ')
         {
             parent::__construct($firstName, $lastName, $dni, $email);
             $this->userName = $userName;
             $this->password = $password;
             $this->rolId = $rolId;
+            $this->image=$image;
         }
- 
+ public function getImage(){
+     return $this->image;
+ }
+ public function setImage($image){
+     $this->$image=$image;
+ }
         public function getUserName ()
         {
             return $this->userName;

@@ -33,7 +33,20 @@
                 throw $ex;
             }
         }
+public function setImage($userName,$image )
+{
+    $sqlQuery ="UPDATE USERS SET linkImage = :image WHERE dni =:dni";
+    $parameters['dni']=$userName->getDni();
+    $parameters['image']=$image;
+    try{
+        $this->connection=Connection::getInstance();
+        $resultSet=$this->connection->excuteNonQuery($sqlQuery,$parameters);
 
+    }  catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+}
         public function getUserByUserName ($userName)
         {
             $sqlQuery = "SELECT * FROM users 
@@ -103,7 +116,7 @@
             $value = is_array($value) ? $value : [];
 
             $resp = array_map(function($p){
-                return new User($p['userName'], $p['password'], $p['rolId'], $p['firstName'], $p['lastName'], $p['dni'], $p['email']);
+                return new User($p['userName'], $p['password'], $p['rolId'],$p['linkImage'], $p['firstName'], $p['lastName'], $p['dni'], $p['email']);
             }, $value);
 
             return count($resp) > 1 ? $resp : $resp['0'];

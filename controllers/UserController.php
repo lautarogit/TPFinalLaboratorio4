@@ -25,5 +25,8 @@
             require_once(VIEWS_PATH."validate-session.php");
             $userList = $this->userDAO->getAll();
         }
+        public function addProfilePicture(){
+            require_once(VIEWS_PATH."addImage.php");
+        }
     }
 ?>
