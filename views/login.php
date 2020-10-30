@@ -1,3 +1,4 @@
+
 <main class="d-flex align-items-center justify-content-center height-100 transparent-box">
      <div class="content">
           <form action="<?php echo FRONT_ROOT."Home/login";?>" method="POST" class="login-form bg-dark-alpha p-2 text-white">
@@ -10,12 +11,17 @@
                </div>
 
                <button class="btn btn-dark btn-block btn-lg" style="border-radius:25px 25px 3px 3px;" type="submit">Iniciar sesion</button>
+               <div class="container" style="background-color: #3b5998;">
+    <a class="btn btn-lg btn-social btn-facebook" href="<?php echo FRONT_ROOT."User/showLoginFacebook"; ?>">
+    <i class="fa fa-facebook fa-fw"></i> Sign in with Facebook
+    </a>
+</div>
           </form>
 
           <div class="text-center">
                <button class="btn btn-primary btn-lg text-center background-green" style="border-radius:3px 3px 25px 25px; width: 292px;" data-toggle="modal" data-target="#signUpModal">Únete ahora</button>
           </div>
-
+         
           <?php 
                if(!empty($errorMessage) && $errorMessage)
                {

@@ -25,5 +25,11 @@
             require_once(VIEWS_PATH."validate-session.php");
             $userList = $this->userDAO->getAll();
         }
+        public function showLoginFacebook(){
+            require_once("fbConfig.php");
+            require_once __DIR__ . '/facebook-php-sdk/autoload.php';
+            require_once __DIR__ . '/polyfills.php';
+
+        }
     }
 ?>
