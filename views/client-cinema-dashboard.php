@@ -24,10 +24,6 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <p class="card-text">
-                                        <?php echo "<strong>Estado: </strong>";?><i class="fas fa-check-circle" style="color: green;"></i>
-                                    </p>
-
                                     <p class="card-text"><?php echo "<strong>Dirección: </strong>".$cinemaValue->getLocation();?></p>    
 
                                     <?php 

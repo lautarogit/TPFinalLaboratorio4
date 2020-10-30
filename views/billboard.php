@@ -3,6 +3,19 @@
     require_once("nav.php");
 ?>
 
+<div class="btn-toolbar m-2" style="display: inline;" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group mr-2" role="group" aria-label="First group">
+        <?php   
+            for($i = 0; $i < 7; $i++)
+            { 
+        ?>
+                <button class="btn btn-dark" style="color: crimson; border-radius: 20px 20px 0px 0px;" type="button"><?= "dayName ".($i+1);?></button>
+        <?php
+            }
+        ?>
+    </div>
+</div>
+
 <main class="d-flex m-2">
     <div class="card-columns">
         <div class="card w-15 background-dark text-white text-center" style="width: 364px;">
@@ -15,23 +28,7 @@
             </div>
 
             <div class="card-body">
-                <p class="card-text">
-                    <?php 
-                        $movieOverview = $movie->getOverview(); 
-                        $movieOverviewLength = strlen($movieOverview);
-                        $overviewMaxCharacters = 150;
-                        $limitedMovieOverview = substr($movieOverview, 0, $overviewMaxCharacters);
-
-                        if($movieOverviewLength < $overviewMaxCharacters)
-                        {
-                            echo $movieOverview;
-                        }
-                        else
-                        {
-                            echo $limitedMovieOverview;?><a class="color-red" data-toggle="modal" data-target="<?= "#movieInfo".$movie->getId();?>">(...)</a>
-                    <?php 
-                        }   
-                    ?></p>       
+                <p class="card-text"><?= $movie->getOverview();?></p>       
             </div>
 
             <div class="modal-footer">
@@ -77,19 +74,6 @@
                     <p><?= "<strong>Fecha de lanzamiento: </strong>".$movie->getReleaseDate();?></p>
                 </div>
             </div> 
-        </div>
-        
-        <div class="btn-toolbar" style="display: inline;" role="toolbar" aria-label="Toolbar with button groups">
-            <div class="btn-group mr-2" role="group" aria-label="First group">
-                <?php   
-                    for($i = 0; $i < 7; $i++)
-                    { 
-                ?>
-                        <button class="btn btn-dark" style="color: crimson; border-radius: 20px 20px 0px 0px;" type="button"><?= "dayName ".($i+1);?></button>
-                <?php
-                    }
-                ?>
-            </div>
         </div>
     </div>
 </main>

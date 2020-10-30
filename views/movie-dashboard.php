@@ -247,7 +247,7 @@
 
                             <div class="modal-body movie-header-color">
                                 <div class="content d-flex d-center"> 
-                                    <h2 style="text-align:center;"><?= $movieValue->getTitle();?></h2>
+                                    <h2><?= $movieValue->getTitle();?></h2>
                                 </div>
                             </div>
 

@@ -30,7 +30,18 @@
                   <div class="dropdown-menu background-dark" aria-labelledby="dropdownMenuButton">
                     <button class="dropdown-item btn btn-dark text-center" style="color: crimson;" data-toggle="modal" data-target="#infoModal">
                       <i class="fas fa-info"></i>  Datos de la cuenta
-                    </button>  
+                    </button> 
+
+                    <?php 
+                      if($_SESSION['loggedUser']->getRolId() == 1)
+                      { 
+                    ?>
+                        <a class="dropdown-item btn btn-dark text-center" style="color: crimson;" role="button" href="<?= FRONT_ROOT."Home/showAdministratorPanel"?>">
+                          <i class="fas fa-sliders-h"></i>  Panel de administrador
+                        </a>  
+                    <?php 
+                      }
+                    ?>
 
                     <a class="dropdown-item btn btn-dark text-center" style="color: crimson;" role="button" href="<?php echo FRONT_ROOT."Home/logout"?>">
                       <i class="fas fa-sign-out-alt"></i>  Cerrar sesión

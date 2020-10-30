@@ -24,6 +24,16 @@
             require_once(VIEWS_PATH."home.php");
         }
 
+        public function showAdministratorPanel ()
+        {
+            require_once(VIEWS_PATH."validate-session.php");
+
+            if($_SESSION["loggedUser"]->getRolId() == 1)
+            {
+                require_once(VIEWS_PATH."administrator-panel.php");
+            } 
+        }
+
         public function showLoginView ($errorMessage = "")
         {
             require_once(VIEWS_PATH."login.php");

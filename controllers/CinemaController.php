@@ -10,10 +10,10 @@
     class CinemaController implements iValidation
     {
         private $cinemaDAO;
+        private $roomDAO;
 
         public function __construct ()
         {
-            //$this->cinemaDAO = new CinemaDAOJSON();
             $this->cinemaDAO = new CinemaDAO();
             $this->roomDAO = new RoomDAO();
         }

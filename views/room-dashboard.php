@@ -30,6 +30,7 @@
                               <th>Precio</th>
                               <th>Capacidad</th>
                               <th>Estado</th>
+                              <th>Agregar show</th>
                               <th>Editar</th>
                               <th>Eliminar</th>
                          </thead>
@@ -43,17 +44,24 @@
                          ?>
                                         <tr>
                                              <td><?php echo $roomValue->getName();?></td>
-                                             <td><?php echo $roomValue->getPrice();?></td>
+                                             <td><?php echo "<strong>$</strong>".$roomValue->getPrice();?></td>
                                              <td><?php echo $roomValue->getCapacity();?></td>
                                              <td><i class="fas fa-check-circle" style="color: green;"></i></td>
                                              <td> 
-                                                  <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="<?php echo "#editRoom".$roomValue->getId(); ?>">
+                                                  <form method="POST" action="<?= FRONT_ROOT."Show/showAddView";?>"> 
+                                                       <button class="btn btn-primary btn-sm" type="submit" name="idRoom" value="<?= $roomValue->getId();?>">
+                                                            <i class="fas fa-calendar-plus"></i>
+                                                       </button>
+                                                  </form>    
+                                             </td>
+                                             <td> 
+                                                  <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="<?= "#editRoom".$roomValue->getId(); ?>">
                                                        <i class="fas fa-cogs"></i>
                                                   </button>
                                              </td>
                                              <td>
                                                   <form method="POST" action="<?php echo FRONT_ROOT."Room/disableRoom";?>"> 
-                                                       <button class="btn btn-danger btn-sm" value="<?php echo $roomValue->getId(); ?>" name="id">
+                                                       <button class="btn btn-danger btn-sm" value="<?= $roomValue->getId(); ?>" name="id">
                                                             <i class="fas fa-trash"></i>
                                                        </button>
                                                   </form>
@@ -61,7 +69,7 @@
                                         </tr>
 
                                         <!-- Edit room Modal -->
-                                        <div class="modal fade" tabindex="-1" role="dialog" id="<?php echo "editRoom".$roomValue->getId();?>">
+                                        <div class="modal fade" tabindex="-1" role="dialog" id="<?= "editRoom".$roomValue->getId();?>">
                                              <div class="modal-dialog modal-lg" role="document">
                                                   <div class="modal-content background-dark text-white">
                                                        <div class="modal-header">
@@ -73,30 +81,30 @@
 
                                                        <div class="modal-body">
                                                             <div class="content d-flex d-center" style="justify-content: center;"> 
-                                                                 <form class="bg-dark-alpha p-5 text-black" action="<?php echo FRONT_ROOT."Room/editRoom"?>" method="POST">
+                                                                 <form class="bg-dark-alpha p-5 text-black" action="<?= FRONT_ROOT."Room/editRoom"?>" method="POST">
                                                                       <div class="form-group">
                                                                            <label for="id"><h5><strong>ID de sala</strong> (No editable)</h5></label>
-                                                                           <input class="form-control form-control-lg" type="number" name="id" value="<?php echo $roomValue->getId();?>" readonly/>
+                                                                           <input class="form-control form-control-lg" type="number" name="id" value="<?= $roomValue->getId();?>" readonly/>
                                                                       </div>
 
                                                                       <div class="form-group">
                                                                            <label for="idCinema"><h5><strong>ID del cine</strong> (No editable)</h5></label>
-                                                                           <input class="form-control form-control-lg" type="number" name="idCinema" value="<?php echo $roomValue->getIdCinema();?>" readonly/>
+                                                                           <input class="form-control form-control-lg" type="number" name="idCinema" value="<?= $roomValue->getIdCinema();?>" readonly/>
                                                                       </div>
 
                                                                       <div class="form-group">
                                                                            <label for="capacity"><h5><strong>Capacidad</strong> (2-3 dígitos)</h5></label>
-                                                                           <input class="form-control form-control-lg" type="number" name="capacity" value="<?php echo $roomValue->getCapacity();?>" placeholder="Ingresar localidad">
+                                                                           <input class="form-control form-control-lg" type="number" name="capacity" value="<?= $roomValue->getCapacity();?>" placeholder="Ingresar localidad">
                                                                       </div>
 
                                                                       <div class="form-group">
                                                                            <label for="price"><h5><strong>Precio</strong> (2-10 dígitos)</h5></label>
-                                                                           <input class="form-control form-control-lg" type="number" name="price" value="<?php echo $roomValue->getPrice();?>" placeholder="Ingresar localidad">
+                                                                           <input class="form-control form-control-lg" type="number" name="price" value="<?= $roomValue->getPrice();?>" placeholder="Ingresar localidad">
                                                                       </div>
 
                                                                       <div class="form-group">
                                                                            <label for="name"><h5><strong>Nombre</strong> (2-25 caracteres)</h5></label>
-                                                                           <input class="form-control form-control-lg" type="text" name="name" value="<?php echo $roomValue->getName();?>" placeholder="Ingresar capacidad">
+                                                                           <input class="form-control form-control-lg" type="text" name="name" value="<?= $roomValue->getName();?>" placeholder="Ingresar capacidad">
                                                                       </div>
 
                                                                       <div class="form-group">

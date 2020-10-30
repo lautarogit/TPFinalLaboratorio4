@@ -22,7 +22,7 @@
                          <table class="table bg-dark text-white">
                               <thead>
                                    <th>Nombre de sala</th>
-                                   <th>Tipo de sala</th>
+                                   <th>Precio</th>
                                    <th>Capacidad</th>
                               </thead>
                               
@@ -33,7 +33,7 @@
                               ?>
                                         <tr>
                                              <td><?php echo $roomValue->getName();?></td>
-                                             <td><?php echo $roomValue->getPrice();?></td>
+                                             <td><?php echo "<strong>$</strong>".$roomValue->getPrice();?></td>
                                              <td><?php echo $roomValue->getCapacity();?></td>
                                         </tr>       
                               <?php 
