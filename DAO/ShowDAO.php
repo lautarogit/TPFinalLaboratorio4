@@ -111,6 +111,35 @@
             return $show;
         }
 
+        public function getShowByIdMovie ($idMovie)
+        {
+            $sqlQuery = "SELECT * FROM shows WHERE idMovie = :idMovie";
+
+            $parameters['idMovie'] = $idMovie;
+
+            try
+            {
+                $this->connection = Connection::getInstance();
+                
+                $resultSet = $this->connection->execute($sqlQuery, $parameters);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+            
+            if(!empty($resultSet))
+            {
+                $show = $this->mapout($resultSet);
+            }
+            else
+            {
+                $show = false;
+            }
+
+            return $show;
+        }
+
         public function getShowById ($id)
         {
             $sqlQuery = "SELECT * FROM shows WHERE id = :id";

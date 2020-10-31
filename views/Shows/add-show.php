@@ -11,10 +11,6 @@
     $genreDAO = new GenreDAOJSON();
     $movieList = $movieDAO->getAll();
     $genreList = $genreDAO->getAll();
-    $movieSelected = false;
-
-    #$movie = new Movie;
-    #$movie = $movieDAO->getMovieById(528085);  #período de prueba, elijo una sola película manualmente
 ?>
 
 <form action="<?php echo FRONT_ROOT."Room/showRoomDashboard";?>">
@@ -23,6 +19,13 @@
     </button>
 </form>
 
+<?php 
+    if(!empty($errorMessage))
+    {
+        echo $errorMessage;
+    }
+?>
+
 <div class="content d-flex m-2" style="justify-content: center;"> 
     <form class="bg-dark-alpha p-5 text-white" action="<?php echo FRONT_ROOT."Show/addShow";?>" method="POST">
         <div class="form-group">
@@ -30,7 +33,7 @@
             <input type="text" name="idRoom" value="<?= $room->getId();?>" readonly/>
         </div>
 
-        <h4 class="m-2">Elija una película: </h4>
+        <h4 class="m-2">Seleccione una película: </h4>
 
         <div class="grid">
             <?php 
@@ -39,81 +42,63 @@
                         foreach($movieList as $movieValue)
                         {  
             ?>
-                        <div class="card w-15 m-2 background-dark text-white text-center" style="width: 364px;">
-                            <div class="card-header movie-header-color">
-                                <h3 class="card-title" style="text-align:center;"><?= $movieValue->getTitle();?></h3> 
-                            </div>
-
-                            <div class="card-header" style="display:block; margin:auto;">
-                                <img style="width: 300px; height: 400px;" src='<?= TMDB_IMG_PATH.$movieValue->getPosterPath(); ?>'/>
-                            </div>
-
-                            <div class="card-body">
-                                <p class="card-text">
-                                    <?php 
-                                        $movieOverview = $movieValue->getOverview(); 
-                                        $movieOverviewLength = strlen($movieOverview);
-                                        $overviewMaxCharacters = 150;
-                                        $limitedMovieOverview = substr($movieOverview, 0, $overviewMaxCharacters);
-
-                                        if($movieOverviewLength < $overviewMaxCharacters)
-                                        {
-                                            echo $movieOverview;
-                                        }
-                                        else
-                                        {
-                                            echo $limitedMovieOverview;?><a class="color-red" data-toggle="modal" data-target="<?= "#movieInfo".$movieValue->getId();?>">(...)</a>
-                                    <?php 
-                                        }   
-                                    ?></p>       
-                            </div>
-
-                            <div class="modal-footer">
-                                <div style="display:block; margin:auto;">
-                                    <?php 
-                                        $genresId = $movieValue->getGenresId();
-                                        $genreNameList = array();
-
-                                        foreach($genresId as $genreId)
-                                        {
-                                            foreach($genreList as $genre)
-                                            {
-                                                if($genreId == $genre->getId())
-                                                {
-                                                    $genreName = $genre->getName();
-                                                    array_push($genreNameList, $genreName);
-                                                } 
-                                            }     
-                                        }   
-                                    ?>
-                                
-                                    <p><?php 
-                                        echo "<strong>Géneros: </strong>"; 
-
-                                        $genreNameListDimension = count($genreNameList);
-                                        $i = 0;
-                                        
-                                        foreach($genreNameList as $genreName)
-                                        {
-                                            $i ++;
-
-                                            if($i == $genreNameListDimension)
-                                            {  
-                                                echo $genreName;
-                                            }
-                                            else
-                                            {
-                                                echo $genreName.", ";
-                                            } 
-                                        }
-                                    ?></p>
-
-                                    <p><?= "<strong>Fecha de lanzamiento: </strong>".$movieValue->getReleaseDate();?></p>
+                            <div class="card w-15 m-2 background-dark text-white text-center" style="width: 364px;">
+                                <div class="card-header movie-header-color">
+                                    <h3 class="card-title" style="text-align:center;"><?= $movieValue->getTitle();?></h3> 
                                 </div>
-                            </div> 
 
-                            <input class="radioSize" type="radio" name="idMovie" value="<?= $movieValue->getId();?>">Seleccionar
-                        </div>
+                                <div class="card-header" style="display:block; margin:auto;">
+                                    <img style="width: 300px; height: 400px;" src='<?= TMDB_IMG_PATH.$movieValue->getPosterPath(); ?>'/>
+                                </div>
+
+                                
+
+                                <div class="modal-footer">
+                                    <div style="display:block; margin:auto;">
+                                        <?php 
+                                            $genresId = $movieValue->getGenresId();
+                                            $genreNameList = array();
+
+                                            foreach($genresId as $genreId)
+                                            {
+                                                foreach($genreList as $genre)
+                                                {
+                                                    if($genreId == $genre->getId())
+                                                    {
+                                                        $genreName = $genre->getName();
+                                                        array_push($genreNameList, $genreName);
+                                                    } 
+                                                }     
+                                            }   
+                                        ?>
+                                    
+                                        <p><?php 
+                                            echo "<strong>Géneros: </strong>"; 
+
+                                            $genreNameListDimension = count($genreNameList);
+                                            $i = 0;
+                                            
+                                            foreach($genreNameList as $genreName)
+                                            {
+                                                $i ++;
+
+                                                if($i == $genreNameListDimension)
+                                                {  
+                                                    echo $genreName;
+                                                }
+                                                else
+                                                {
+                                                    echo $genreName.", ";
+                                                } 
+                                            }
+                                        ?></p>
+
+                                        <p><?= "<strong>Fecha de lanzamiento: </strong>".$movieValue->getReleaseDate();?></p>
+                                    </div>
+                                </div> 
+
+                                <input class="radioSize" type="radio" name="idMovie" value="<?= $movieValue->getId();?>">Seleccionar
+                            </div>
             <?php
                         } 
                     }
@@ -126,7 +111,7 @@
 
         <div class="form-group">
             <label for="dateTime">Fecha del show</label>
-            <input type="date" name="dateTime">
+            <input type="datetime-local" name="dateTime">
         </div>
 
         <div class="form-group">

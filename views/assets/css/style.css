@@ -72,10 +72,17 @@
 .hover-box:hover{
     border-color: seagreen;
 }
+
 footer{
     bottom: 0;
     width: 100%;
     background-color: red;
     color: white;
     text-align: center;
+}
+
+.show-box{
+    background: rgba(0, 0, 0, .7);
+    width: 550px;
+    border-radius: 30px 5px 30px 5px;
 }

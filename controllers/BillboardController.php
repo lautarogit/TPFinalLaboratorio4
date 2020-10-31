@@ -6,7 +6,7 @@
     use Models\Movie as Movie;
     use Models\Genre as Genre;
 
-    class MovieController
+    class BillboardController
     {
         private $movieDAO;
         private $genreDAO;
@@ -17,21 +17,14 @@
             $this->genreDAO = new GenreDAOJSON();
         }
 
-        public function showMovieDashboard ()
+        public function showBillboard ($idMovie)
         {
-            $movieList = $this->movieDAO->getAll();
+            $movie = new Movie();
+            $movie = $this->movieDAO->getMovieById($idMovie);
             $genreList = $this->genreDAO->getAll();
-            require_once(VIEWS_PATH."Session/validate-session.php");
-            require_once(VIEWS_PATH."Movies/movie-dashboard.php");
-        }
 
-        public function showFilterMovieDashboard ($filterMovieList)
-        {
-            $genreList = $this->genreDAO->getAll();
-            $movieList = $filterMovieList;
-            
             require_once(VIEWS_PATH."Session/validate-session.php");
-            require_once(VIEWS_PATH."Movies/movie-dashboard.php");
+            require_once(VIEWS_PATH."Billboard/billboard.php");
         }
 
         public function filterByGenre ($paramGenreId)

@@ -25,7 +25,7 @@
      <main class="py-3 text-white">
           <section>
                <div class="container">
-                    <h2 class="mb-4">Salas habilitadas de <?php echo $cinema->getName();?></h2>
+                    <h2 class="mb-4">Salas habilitadas de <p style="color: red; display: inline;"><?php echo $cinema->getName();?></p></h2>
                     <table class="table bg-dark text-white">
                          <thead>
                               <th>Nombre de sala</th>
@@ -151,7 +151,7 @@
                          </tbody>
                     </table>
 
-                    <h2 class="mb-4">Salas deshabilitadas de <?php echo $cinema->getName();?></h2>
+                    <h2 class="mb-4">Salas deshabilitadas de <p style="color: red; display: inline;"><?php echo $cinema->getName();?></p></h2>
                     <table class="table bg-dark text-white">
                          <thead>
                               <th>Nombre de sala</th>

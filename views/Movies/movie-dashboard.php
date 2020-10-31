@@ -227,7 +227,7 @@
                         </div>
                     </div>
 
-                    <form action="<?= FRONT_ROOT."Movie/showBillboard"?>" method="POST">
+                    <form action="<?= FRONT_ROOT."Billboard/showBillboard"?>" method="POST">
                         <button class="btn btn-sm btn-success m-1" style="width: 354px;" type="submit" name="idMovie" value="<?= $movieValue->getId();?>">
                             Comprar entrada
                         </button>   

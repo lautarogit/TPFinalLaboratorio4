@@ -34,27 +34,28 @@
     $show->setRemainingTickets($remainingTickets);
 ?>
 
-<h4 class="text-white" style="display: inline;">Mostrando show de la sala <strong><?php echo $show->getRoom()->getName();?></strong></h4>
-<br><br>
-<div class="text-white">
-    <p>
-        <?php echo "<strong>ID: </strong>".$show->getId();?>
-    </p>
+<div class="m-3 text-white show-box" style="width: 550px;">
+    <h4 style="display: inline;">Mostrando show de la sala <strong style="color: red"><?php echo $show->getRoom()->getName();?></strong></h4>
+
+    <br><br>
+
+    <div class="text-center">
+        <p>
+            <h3><?php echo "<strong>Película: </strong>".$show->getMovie()->getTitle();?></h3>
+        </p>
+        <img style="width: 400px; height: 530px;" src='<?= TMDB_IMG_PATH.$show->getMovie()->getPosterPath(); ?>'/>
+    </div>
 
     <p>
-        <?php echo "<strong>ID de Sala: </strong>".$show->getRoom()->getId();?>
+        <i class="fa fa-calendar-day"></i><?php echo "  ".substr($show->getDateTime(), 0, 10);?>
     </p>
 
-    <p class="card-text">
-        <?php echo "<strong>Película: </strong>".$show->getMovie()->getTitle();?>
+    <p>
+        <i class="fa fa-clock"></i><?php echo "  ".substr($show->getDateTime(), 11);?>
     </p>
-
-    <p class="card-text">
-        <?php echo "<strong>Fecha y hora: </strong>".$show->getDateTime();?>
-    </p>
-
-    <p class="card-text">
-        <?php echo "<strong>Tickets restantes: </strong>".$show->getRemainingTickets();?>
+    
+    <p>
+        <i class="fa fa-ticket-alt"></i><?php echo "  ".$show->getRemainingTickets();?><strong> Tickets restantes </strong>
     </p>
 </div>
 
