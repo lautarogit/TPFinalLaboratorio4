@@ -3,12 +3,14 @@
      require_once("nav.php");
 
      use DAO\CinemaDAO as CinemaDAO;
+     use DAO\ShowDAO as ShowDAO;
      use Models\Cinema as Cinema;
      use Models\Room as Room;
 
      $rolId = $_SESSION['loggedUser']->getRolId();
      $cinemaDAO = new CinemaDAO();
      $cinema = new Cinema();
+     $showDAO = new ShowDAO();
 
      $cinema = $cinemaDAO->getCinemaById($idCinema);
       
@@ -30,7 +32,7 @@
                               <th>Precio</th>
                               <th>Capacidad</th>
                               <th>Estado</th>
-                              <th>Agregar show</th>
+                              <th>Show</th>
                               <th>Editar</th>
                               <th>Eliminar</th>
                          </thead>
@@ -48,11 +50,28 @@
                                              <td><?php echo $roomValue->getCapacity();?></td>
                                              <td><i class="fas fa-check-circle" style="color: green;"></i></td>
                                              <td> 
-                                                  <form method="POST" action="<?= FRONT_ROOT."Show/showAddView";?>"> 
-                                                       <button class="btn btn-primary btn-sm" type="submit" name="idRoom" value="<?= $roomValue->getId();?>">
-                                                            <i class="fas fa-calendar-plus"></i>
-                                                       </button>
-                                                  </form>    
+                                                  <?php 
+                                                       if(!empty($roomValue->getIdShow()))
+                                                       {
+                                                  ?>
+                                                            <form method="POST" action="<?= FRONT_ROOT."Show/showDataView";?>"> 
+                                                                 <button class="btn btn-info btn-sm" type="submit" name="idShow" value="<?= $roomValue->getIdShow();?>">
+                                                                      <i class="fas fa-eye"></i>  Ver show
+                                                                 </button>
+                                                            </form> 
+                                                  <?php
+                                                       }
+                                                       else
+                                                       {          
+                                                  ?>
+                                                            <form method="POST" action="<?= FRONT_ROOT."Show/showAddView";?>"> 
+                                                                 <button class="btn btn-success btn-sm" type="submit" name="idRoom" value="<?= $roomValue->getId();?>">
+                                                                      <i class="fas fa-calendar-plus"></i>  Agregar show
+                                                                 </button>
+                                                            </form> 
+                                                  <?php      
+                                                       } 
+                                                  ?>
                                              </td>
                                              <td> 
                                                   <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="<?= "#editRoom".$roomValue->getId(); ?>">

@@ -5,17 +5,25 @@
     use Models\Cinema as Cinema;
     use DAO\RoomDAO as RoomDAO;
     use Models\Room as Room;
+    use DAO\ShowDAO as ShowDAO;
+    use Models\Show as Show;
+    use DAO\MovieDAOJSON as MovieDAOJSON;
+    use Models\Movie as Movie;
     use Controllers\iValidation as iValidation;
 
     class RoomController implements iValidation
     {
         private $roomDAO;
         private $cinemaDAO;
+        private $showDAO;
+        private $movieDAO;
 
         public function __construct ()
         {
             $this->roomDAO = new RoomDAO();
             $this->cinemaDAO = new CinemaDAO();
+            $this->showDAO = new ShowDAO();
+            $this->movieDAO = new MovieDAOJSON;
         }
 
         public function showRoomPermissionBlocked ($rolId)
@@ -29,8 +37,37 @@
             $rolId = $_SESSION['loggedUser']->getRolId();
             $idCinema = intval($idCinema);
             $roomList = $this->roomDAO->getRoomListByIdCinema($idCinema);
-            //var_dump($roomList);
-
+            $showMapout = $this->showDAO->getAll();
+            $newShowList = array();
+            
+            if(!empty($showMapout))
+            {
+                foreach($showMapout as $showValue)
+                {
+                    $id = $showValue->getId();
+                    $room = new Room();
+                    $idRoom = $showValue->getIdRoom();
+                    $room = $this->roomDAO->getRoomByID($idRoom);
+                    $movie = new Movie();
+                    $idMovie = $showValue->getIdMovie();
+                    $movie = $this->movieDAO->getMovieByID($idMovie);
+                    $dateTime = $showValue->getDateTime();
+                    $remainingTickets = $showValue->getRemainingTickets();
+    
+                    $show = new Show();
+    
+                    $show->setId($id);
+                    $show->setRoom($room);
+                    $show->setMovie($movie);
+                    $show->setDateTime($dateTime);
+                    $show->setRemainingTickets($remainingTickets);
+    
+                    array_push($newShowList, $show);
+                }
+            }
+        
+            $showList = $newShowList;
+            
             if($rolId == 1)
             {
                 require_once(VIEWS_PATH."room-dashboard.php");
