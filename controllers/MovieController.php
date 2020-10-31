@@ -21,8 +21,8 @@
         {
             $movieList = $this->movieDAO->getAll();
             $genreList = $this->genreDAO->getAll();
-            require_once(VIEWS_PATH."validate-session.php");
-            require_once(VIEWS_PATH."movie-dashboard.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
+            require_once(VIEWS_PATH."Movies/movie-dashboard.php");
         }
 
         public function showBillboard ($idMovie)
@@ -31,8 +31,8 @@
             $movie = $this->movieDAO->getMovieById($idMovie);
             $genreList = $this->genreDAO->getAll();
 
-            require_once(VIEWS_PATH."validate-session.php");
-            require_once(VIEWS_PATH."billboard.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
+            require_once(VIEWS_PATH."Billboard/billboard.php");
         }
 
         public function showFilterMovieDashboard ($filterMovieList)
@@ -40,8 +40,8 @@
             $genreList = $this->genreDAO->getAll();
             $movieList = $filterMovieList;
             
-            require_once(VIEWS_PATH."validate-session.php");
-            require_once(VIEWS_PATH."movie-dashboard.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
+            require_once(VIEWS_PATH."Movies/movie-dashboard.php");
         }
 
         public function filterByGenre ($paramGenreId)

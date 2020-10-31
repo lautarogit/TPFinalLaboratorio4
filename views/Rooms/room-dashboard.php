@@ -1,6 +1,6 @@
 <?php 
-     require_once("header.php"); 
-     require_once("nav.php");
+     require_once(VIEWS_PATH."header.php"); 
+     require_once(VIEWS_PATH."nav.php");
 
      use DAO\CinemaDAO as CinemaDAO;
      use DAO\ShowDAO as ShowDAO;
@@ -205,5 +205,5 @@
 </a>
 
 <?php 
-     require_once("footer.php");
+     require_once(VIEWS_PATH."footer.php");
 ?>

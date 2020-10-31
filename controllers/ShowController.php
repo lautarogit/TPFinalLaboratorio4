@@ -27,13 +27,13 @@
             $room = new Room();
             $room = $this->roomDAO->getRoomByID($idRoom);
 
-            require_once(VIEWS_PATH."validate-session.php");
-            require_once(VIEWS_PATH."add-show.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
+            require_once(VIEWS_PATH."Shows/add-show.php");
         }
 
         public function showDataView ($idShow)
         {
-            require_once(VIEWS_PATH."show-data.php");
+            require_once(VIEWS_PATH."Shows/show-data.php");
         }
 
         public function addShow ($idRoom, $idMovie, $dateTime, $remainingTickets)

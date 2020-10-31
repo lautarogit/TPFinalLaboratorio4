@@ -1,6 +1,6 @@
 <?php 
-    require_once("header.php"); 
-    require_once("nav.php");
+    require_once(VIEWS_PATH."header.php"); 
+    require_once(VIEWS_PATH."nav.php");
 ?>
 
 <a class="btn btn-sm btn-outline-info background-dark m-2" role="button" href="<?php echo FRONT_ROOT."Movie/showMovieDashboard";?>">
@@ -70,5 +70,5 @@
 </main>
 
 <?php 
-    require_once("footer.php");
+    require_once(VIEWS_PATH."footer.php");
 ?>

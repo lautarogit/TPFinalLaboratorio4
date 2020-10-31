@@ -28,12 +28,12 @@
 
         public function showRoomPermissionBlocked ($rolId)
         {
-            require_once(VIEWS_PATH."room-permission-blocked.php");
+            require_once(VIEWS_PATH."Rooms/room-permission-blocked.php");
         }
 
         public function showRoomDashboard ($idCinema, $errorMessage = '')
         {
-            require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
             $rolId = $_SESSION['loggedUser']->getRolId();
             $idCinema = intval($idCinema);
             $roomList = $this->roomDAO->getRoomListByIdCinema($idCinema);
@@ -70,7 +70,7 @@
             
             if($rolId == 1)
             {
-                require_once(VIEWS_PATH."room-dashboard.php");
+                require_once(VIEWS_PATH."Rooms/room-dashboard.php");
             }
             else
             {
@@ -80,13 +80,13 @@
 
         public function showClientRoomDashboard ($idCinema)
         {
-            require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
             $rolId = $_SESSION['loggedUser']->getRolId();
             $roomList = $this->roomDAO->getRoomListByIdCinema($idCinema);
 
             if($rolId == 0)
             {
-                require_once(VIEWS_PATH."client-room-dashboard.php");
+                require_once(VIEWS_PATH."Rooms/client-room-dashboard.php");
             }
             else
             {
@@ -96,7 +96,7 @@
 
         public function addRoom ($idCinema, $capacity, $price, $name)
         {
-            require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
             $room = new Room();
             $cinemaController = new CinemaController();
 
@@ -143,7 +143,7 @@
 
         public function editRoom ($id, $idCinema, $capacity, $price, $name, $status)
         {
-            require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
             $roomUpdated = new Room();
 
             $roomFinded = $this->roomDAO->validateData($name, $idCinema);
@@ -190,7 +190,7 @@
 
         public function disableRoom ($id)
         {
-            require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
             $roomDisabled = new Room();
             
             $roomDisabled = $this->roomDAO->getRoomByID($id);

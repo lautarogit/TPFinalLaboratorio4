@@ -1,6 +1,6 @@
 <?php 
-    require_once("header.php"); 
-    require_once("nav.php");
+    require_once(VIEWS_PATH."header.php"); 
+    require_once(VIEWS_PATH."nav.php");
 ?>
 <div class="m-2">
     <a class="btn btn-info" style="display: inline; border-radius: 2px 10px 10px 2px;" role="button" href="
@@ -95,5 +95,5 @@
 </main>
 
 <?php 
-    require_once("footer.php");
+    require_once(VIEWS_PATH."footer.php");
 ?>

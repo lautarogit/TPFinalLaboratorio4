@@ -16,13 +16,13 @@
         public function showAddView ($message=" ")
         {
         
-            require_once(VIEWS_PATH."validate-session.php");
-            require_once(VIEWS_PATH."login.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
+            require_once(VIEWS_PATH."Home/login.php");
         }
 
         public function showListView ()
         {
-            require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
             $userList = $this->userDAO->getAll();
         }
     }

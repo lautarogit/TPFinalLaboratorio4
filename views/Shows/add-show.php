@@ -1,6 +1,6 @@
 <?php 
-    require_once("header.php");
-    require_once("nav.php");
+    require_once(VIEWS_PATH."header.php");
+    require_once(VIEWS_PATH."nav.php");
 
     use Models\Movie as Movie;
     use Models\Genre as Genre;
@@ -139,5 +139,5 @@
 </div>
 
 <?php 
-    require_once("footer.php");
+    require_once(VIEWS_PATH."footer.php");
 ?>
