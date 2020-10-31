@@ -1,4 +1,4 @@
-<form action="ACA PONES movie/addMoviesToDB">    
+<form action="<?php echo FRONT_ROOT."movie/addMoviesToDB"?>">    
     <button class="btn btn-success m-2" type="submit">  <!-- fijate como queres hacerlo -->
         Agregar peliculas a la BDD
     </button>

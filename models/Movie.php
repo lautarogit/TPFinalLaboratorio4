@@ -26,12 +26,12 @@
             return $this->title;
         }
 
-        public function getOverview ()
+        public function getOverview()
         {
             return $this->overview;
         }
 
-        public function getAdult ()
+        public function getAdult()
         {
             return $this->adult;
         }
@@ -51,12 +51,12 @@
             return $this->popularity;
         }
 
-        public function getPosterPath ()
+        public function getPosterPath()
         {
             return $this->posterPath;
         }
 
-        public function getReleaseDate ()
+        public function getReleaseDate()
         {
             return $this->releaseDate;
         }
