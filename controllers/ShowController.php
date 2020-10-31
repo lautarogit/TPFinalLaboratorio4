@@ -2,9 +2,13 @@
     namespace Controllers;
 
     use Models\Room as Room;
-    use Models\Show as Show;
     use DAO\RoomDAO as RoomDAO;
+    use Models\Show as Show;
+    use DAO\ShowDAO as ShowDAO;
+    use Models\Movie as Movie;
+    use DAO\MovieDAOJSON as MovieDAOJSON;
     use Controllers\iValidation as iValidation;
+    use Controllers\RoomController as RoomController;
 
     class ShowController implements iValidation
     {
@@ -12,23 +16,49 @@
 
         public function __construct ()
         {
+            $this->showDAO = new ShowDAO();
             $this->roomDAO = new RoomDAO();
+            $this->movieDAO = new MovieDAOJSON();
+            $this->roomController = new RoomController();
         }
 
-        public function showAddView ()
+        public function showAddView ($idRoom)
         {
-            require_once(VIEWS_PATH."validate-session.php");
-            require_once(VIEWS_PATH."add-show.php");
+            $room = new Room();
+            $room = $this->roomDAO->getRoomByID($idRoom);
+
+            require_once(VIEWS_PATH."Session/validate-session.php");
+            require_once(VIEWS_PATH."Shows/add-show.php");
         }
 
-        public function showClientCinemaDashboard ()
+        public function showDataView ($idShow)
         {
+            require_once(VIEWS_PATH."Shows/show-data.php");
+        }
+
+        public function addShow ($idRoom, $idMovie, $dateTime, $remainingTickets)
+        {
+            $room = new Room();
+            $movie = new Movie();
+            $show = new Show();
+
+            $room = $this->roomDAO->getRoomByID($idRoom);
+            $movie = $this->movieDAO->getMovieById($idMovie);
+
+            $show->setRoom($room);
+            $show->setMovie($movie);
+            $show->setDateTime($dateTime);
+            $show->setRemainingTickets($remainingTickets);
+
+            $this->showDAO->add($show);
+            $idCinema = $show->getRoom()->getIdCinema();
+
+            $show = $this->showDAO->getShowByIdRoom($idRoom);
+            $idShow = $show->getId();
+            $room->setIdShow($idShow);
+            $this->roomDAO->edit($room);
             
-        }
-
-        public function addShow ($name, $location)
-        {
-            
+            $this->roomController->showRoomDashboard($idCinema);
         }
 
         public function editShow ($id, $name, $location, $status)

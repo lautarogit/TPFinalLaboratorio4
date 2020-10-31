@@ -21,22 +21,22 @@
 
         public function index ($message = "")
         {
-            require_once(VIEWS_PATH."home.php");
+            require_once(VIEWS_PATH."Home/home.php");
         }
 
         public function showAdministratorPanel ()
         {
-            require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
 
             if($_SESSION["loggedUser"]->getRolId() == 1)
             {
-                require_once(VIEWS_PATH."administrator-panel.php");
+                require_once(VIEWS_PATH."Home/administrator-panel.php");
             } 
         }
 
         public function showLoginView ($errorMessage = "")
         {
-            require_once(VIEWS_PATH."login.php");
+            require_once(VIEWS_PATH."Home/login.php");
         }
 
         public function setSession ($user)

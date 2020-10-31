@@ -1,22 +1,19 @@
 <?php
     namespace Models;
 
-    use Models\Room as Room;
-    use Models\Movie as Movie;
-
-    class Show
+    class ShowMapout 
     {          
         private $id;
-        private $room;
-        private $movie;
+        private $idRoom;
+        private $idMovie;
         private $dateTime;            
         private $remainingTickets; 
 
-        public function __construct ($id = '', $room = '', $movie = '', $dateTime = '', $remainingTickets = '')
+        public function __construct ($id = '', $idRoom = '', $idMovie = '', $dateTime = '', $remainingTickets = '')
         {
             $this->id = $id;
-            $this->room = new Room();
-            $this->movie = new Movie();
+            $this->idRoom = $idRoom;
+            $this->idMovie = $idMovie;
             $this->dateTime = $dateTime;
             $this->remainingTickets = $remainingTickets;
         }
@@ -26,14 +23,14 @@
             return $this->id;
         }
 
-        public function getRoom ()
+        public function getIdRoom ()
         {
-            return $this->room;
+            return $this->idRoom;
         }
 
-        public function getMovie ()
+        public function getIdMovie ()
         {
-            return $this->movie;
+            return $this->idMovie;
         }
 
         public function getDateTime ()
@@ -51,14 +48,14 @@
             $this->id = $id;
         }
 
-        public function setRoom ($room)
+        public function setIdRoom ($room)
         {
-            $this->room = $room;
+            $this->idRoom = $idRoom;
         }
 
-        public function setMovie ($movie)
+        public function setMovie ($idMovie)
         {
-            $this->movie = $movie;
+            $this->idMovie = $idMovie;
         }
 
         public function setDateTime ($dateTime)

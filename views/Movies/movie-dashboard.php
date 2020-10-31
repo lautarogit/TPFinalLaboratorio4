@@ -1,6 +1,6 @@
 <?php 
-    require_once("header.php"); 
-    require_once("nav.php");
+    require_once(VIEWS_PATH."header.php"); 
+    require_once(VIEWS_PATH."nav.php");
 
     $rolId = $_SESSION['loggedUser']->getRolId();
     use Controllers\MovieController as MovieController;
@@ -316,5 +316,5 @@
 </div>
 
 <?php 
-    require_once("footer.php");
+    require_once(VIEWS_PATH."footer.php");
 ?>

@@ -186,14 +186,16 @@
             $price = $roomUpdated->getPrice();
             $name = $roomUpdated->getName();
             $status = $roomUpdated->getStatus();
+            $idShow = $roomUpdated->getIdShow();
 
-            $sqlQuery = "UPDATE rooms SET capacity = :capacity, price = :price, name = :name, status = :status WHERE (id = :id)";
+            $sqlQuery = "UPDATE rooms SET capacity = :capacity, price = :price, name = :name, status = :status, idShow = :idShow WHERE (id = :id)";
 
             $parameters['id'] = $id;
             $parameters['capacity'] = $capacity;
             $parameters['price'] = $price;
             $parameters['name'] = $name;
             $parameters['status'] = $status;
+            $parameters['idShow'] = $idShow;
 
             try
             {
@@ -243,7 +245,7 @@
             $value = is_array($value) ? $value : [];
 
             $resp = array_map(function($p){
-                return new Room ($p['id'], $p['idCinema'], $p['capacity'], $p['price'], $p['name'], $p['status']);
+                return new Room ($p['id'], $p['idCinema'], $p['capacity'], $p['price'], $p['name'], $p['status'], $p['idShow']);
             }, $value);
 
             return count($resp) > 1 ? $resp : $resp['0'];

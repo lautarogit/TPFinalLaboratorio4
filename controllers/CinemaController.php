@@ -20,7 +20,7 @@
 
         public function showCinemaPermissionBlocked ($rolId)
         {
-            require_once(VIEWS_PATH."cinema-permission-blocked.php");
+            require_once(VIEWS_PATH."Cinemas/cinema-permission-blocked.php");
         }
 
         public function showCinemaDashboard ($errorMessage = "")
@@ -29,11 +29,11 @@
             $cinemaList = $this->cinemaDAO->getAll();
             $roomList = $this->roomDAO->getAll();
 
-            require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
 
             if($rolId == 1)
             {
-                require_once(VIEWS_PATH."cinema-dashboard.php");
+                require_once(VIEWS_PATH."Cinemas/cinema-dashboard.php");
             }
             else
             {
@@ -47,11 +47,11 @@
             $cinemaList = $this->cinemaDAO->getAll();
             $roomList = $this->roomDAO->getAll();
 
-            require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
 
             if($rolId == 0)
             {
-                require_once(VIEWS_PATH."client-cinema-dashboard.php");
+                require_once(VIEWS_PATH."Cinemas/client-cinema-dashboard.php");
             }
             else
             {
@@ -65,11 +65,11 @@
             $cinemaList = $this->cinemaDAO->getAll();
             $roomList = $this->roomDAO->getAll();
 
-            require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
 
             if($rolId == 1)
             {
-                require_once(VIEWS_PATH."disabled-cinema-dashboard.php");
+                require_once(VIEWS_PATH."Cinemas/disabled-cinema-dashboard.php");
             }
             else
             {
@@ -79,7 +79,7 @@
 
         public function addCinema ($name, $location)
         {
-            require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
             $cinema = new Cinema();
 
             $cinemaFinded = $this->cinemaDAO->validateData($name);
@@ -122,7 +122,7 @@
 
         public function editCinema ($id, $name, $location, $status)
         {
-            require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
             $cinemaUpdated = new Cinema();
 
             $cinemaFinded = $this->cinemaDAO->validateData($name);
@@ -166,7 +166,7 @@
 
         public function disableCinema ($id)
         {
-            require_once(VIEWS_PATH."validate-session.php");
+            require_once(VIEWS_PATH."Session/validate-session.php");
             $cinemaDisabled = new Cinema();
             
             $cinemaDisabled = $this->cinemaDAO->getCinemaByID($id);

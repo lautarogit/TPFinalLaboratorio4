@@ -1,6 +1,6 @@
 <?php
-    require_once("header.php");
-    require_once("nav.php");
+    require_once(VIEWS_PATH."header.php");
+    require_once(VIEWS_PATH."nav.php");
 ?>
 
 <div class="btn-toolbar m-2" style="display: inline;" role="toolbar" aria-label="Toolbar with button groups">
@@ -81,5 +81,5 @@
 <a class="btn btn-info m-2" style="display: inline; border-radius: 2px 10px 10px 2px;" role="button" href="<?= FRONT_ROOT."Movie/showMovieDashboard";?>">Volver</a>
 
 <?php
-    require_once("footer.php");
+    require_once(VIEWS_PATH."footer.php");
 ?>
