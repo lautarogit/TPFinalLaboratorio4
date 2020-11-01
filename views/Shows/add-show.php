@@ -3,9 +3,13 @@
     require_once(VIEWS_PATH."nav.php");
 
     use Models\Movie as Movie;
-    use Models\Genre as Genre;
     use DAO\MovieDAOJSON as MovieDAOJSON;
     use DAO\GenreDAOJSON as GenreDAOJSON;
+    use Models\Show as Show;
+    use Models\Room as Room;
+    use DAO\CinemaDAO as CinemaDAO;
+    use DAO\RoomDAO as RoomDAO;
+    use DAO\ShowDAO as ShowDAO;
 
     $movieDAO = new MovieDAOJSON();
     $genreDAO = new GenreDAOJSON();
@@ -20,10 +24,15 @@
 </form>
 
 <?php 
-    if(!empty($errorMessage))
-    {
-        echo $errorMessage;
-    }
+     if(!empty($errorMessage))
+     {
+?>
+          <div class="alert alert-danger alert-dismissible" style="width: 230px;">
+               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+               <strong><?php echo $errorMessage;?></strong>
+          </div>
+<?php      
+     }   
 ?>
 
 <div class="content d-flex m-2" style="justify-content: center;"> 

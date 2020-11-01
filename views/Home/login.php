@@ -14,31 +14,33 @@
 
           <div class="text-center">
                <button class="btn btn-primary btn-lg text-center background-green" style="border-radius:3px 3px 25px 25px; width: 292px;" data-toggle="modal" data-target="#signUpModal">Únete ahora</button>
-          </div>
-
-          <?php 
-               if(!empty($errorMessage) && $errorMessage)
-               {
-          ?>
-                    <div class="text-center">
-                         <p class="text-white align-center">Datos incorrectos. Ingrese nuevamente</p>
-                    </div>
-          <?php      
-               }   
-          ?>
-
-          <?php 
-               if(!empty($errorMessage) && !$errorMessage)
-               {
-          ?>
-                    <div class="text-center">
-                         <p class="text-white align-center">Cuenta registrada con éxito</p>
-                    </div>
-          <?php      
-               }   
-          ?>  
+          </div> 
      </div>
 </main>
+
+<?php 
+     if(!empty($errorMessage) && $errorMessage)
+     {
+?>
+          <div class="alert alert-danger alert-dismissible d-relative" style="width: 385px; top: 437px; left: 745px;">
+               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+               <strong>Datos incorrectos. Ingrese nuevamente</strong>
+          </div>
+<?php      
+     }   
+?>
+
+<?php 
+     if(!empty($errorMessage) && !$errorMessage)
+     {
+?>
+          <div class="alert alert-success alert-dismissible d-relative" style="width: 385px; top: 437px; left: 745px;">
+               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+               <strong>Cuenta registrada con éxito.</strong>
+          </div>
+<?php      
+     }   
+?> 
 
 <!-- Sign up Modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="signUpModal">
@@ -55,26 +57,32 @@
                     <div class="content d-flex" style="justify-content: center;"> 
                          <form action="<?php echo FRONT_ROOT."Home/signUp";?>" method="POST" class="login-form bg-dark-alpha p-5 text-white">
                               <div class="form-group">
+                                   <label for="firstName">Nombre (3-25 caracteres)</label>
                                    <input class="form-control form-control-lg" type="text" name="firstName" placeholder="Nombre" required>
                               </div>
 
                               <div class="form-group">
+                                   <label for="lastName">Apellido (3-25 caracteres)</label>
                                    <input class="form-control form-control-lg" type="text" name="lastName" placeholder="Apellido" required>
                               </div>
 
                               <div class="form-group">
+                                   <label for="userName">Nombre de usuario (4-16 caracteres)</label>
                                    <input class="form-control form-control-lg" type="text" name="userName" placeholder="Nombre de usuario" required>
                               </div>
 
                               <div class="form-group">
+                              <label for="email">E-mail (10-40 caracteres)</label>
                                    <input class="form-control form-control-lg" type="email" name="email" placeholder="E-Mail" required>
                               </div>
 
                               <div class="form-group">
+                              <label for="dni">DNI (8-9 dígitos)</label>
                                    <input class="form-control form-control-lg" type="number" name="dni" placeholder="DNI" required>
                               </div>
 
                               <div class="form-group">
+                              <label for="password">Contraseña (6-45 caracteres)</label>
                                    <input class="form-control form-control-lg" type="password" name="password" placeholder="Contraseña" required>
                               </div>
 

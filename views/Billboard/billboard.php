@@ -1,15 +1,49 @@
 <?php
     require_once(VIEWS_PATH."header.php");
     require_once(VIEWS_PATH."nav.php");
+
+    use Models\Show as Show;
+    use Models\Room as Room;
+    use Models\Movie as Movie;
+    use DAO\CinemaDAO as CinemaDAO;
+    use DAO\RoomDAO as RoomDAO;
+    use DAO\MovieDAOJSON as MovieDAOJSON;
+    use DAO\ShowDAO as ShowDAO;
+
+    $cinemaDAO = new CinemaDAO();
+    $roomDAO = new RoomDAO();
+    $movieDAO = new MovieDAOJSON();
+    $showDAO = new ShowDAO();
+    $showList = array();
+    $showMapoutList = $showDAO->getAll();
+
+    foreach($showMapoutList as $showMapout)
+    {
+        $show = new Show();
+        $room = new Room();
+        $movie = new Movie();
+
+        $show->setId($showMapout->getId());
+        $room = $roomDAO->getRoomByID($showMapout->getIdRoom());
+        $show->setRoom($room);
+        $movie = $movieDAO->getMovieById($showMapout->getIdMovie());
+        $show->setMovie($movie);
+        $show->setDateTime($showMapout->getDateTime());
+        $show->setRemainingTickets($showMapout->getRemainingTickets());
+
+        array_push($showList, $show);
+    }
+
+    $cinemaList = $cinemaDAO->getAll();
 ?>
 
-<div class="btn-toolbar m-2" style="display: inline;" role="toolbar" aria-label="Toolbar with button groups">
+<div class="btn-toolbar m-2 position-relative" style="left: 400px; top: 47px;" role="toolbar" aria-label="Toolbar with button groups">
     <div class="btn-group mr-2" role="group" aria-label="First group">
         <?php   
-            for($i = 0; $i < 7; $i++)
+            foreach($showList as $show)
             { 
         ?>
-                <button class="btn btn-dark" style="color: crimson; border-radius: 20px 20px 0px 0px;" type="button"><?= "dayName ".($i+1);?></button>
+                <button class="btn btn-dark" style="color: crimson; border-radius: 20px 20px 0px 0px;" type="button"><?= "dayName ";?></button>
         <?php
             }
         ?>

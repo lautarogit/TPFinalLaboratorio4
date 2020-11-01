@@ -13,12 +13,21 @@
      $showDAO = new ShowDAO();
 
      $cinema = $cinemaDAO->getCinemaById($idCinema);
-      
+?>
+
+<?php 
      if(!empty($errorMessage))
      {
-          echo $errorMessage;
-     }
+?>
+          <div class="alert alert-danger alert-dismissible" style="width: 575px;">
+               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+               <strong><?php echo $errorMessage;?></strong>
+          </div>
+<?php      
+     }   
+?>
 
+<?php
      if(!empty($roomList))
      {
 ?>

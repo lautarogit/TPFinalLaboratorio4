@@ -101,8 +101,8 @@
                 $this->showDAO->add($show);
                 $idCinema = $show->getRoom()->getIdCinema();
     
-                $show = $this->showDAO->getShowByIdRoom($idRoom);
-                $idShow = $show->getId();
+                $showMapout = $this->showDAO->getShowByIdRoom($idRoom);
+                $idShow = $showMapout->getId();
                 $room->setIdShow($idShow);
                 $this->roomDAO->edit($room);
 
@@ -110,7 +110,7 @@
             }
             else
             {
-                $errorMessage = "<h4 class="."text-white".">Datos incorrectos</h4>"; 
+                $errorMessage = "Datos incorrectos"; 
                 $this->showAddView($idRoom, $errorMessage);
             }   
         }
