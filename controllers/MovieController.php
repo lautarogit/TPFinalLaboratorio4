@@ -1,7 +1,7 @@
 <?php
     namespace Controllers;
 
-    use DAO\MovieDAOJSON as MovieDAOJSON;
+    use DAO\MovieDAO as MovieDAO;
     use DAO\GenreDAOJSON as GenreDAOJSON;
     use Models\Movie as Movie;
     use Models\Genre as Genre;
@@ -13,16 +13,34 @@
 
         public function __construct ()
         {
-            $this->movieDAO = new MovieDAOJSON();
+            $this->movieDAO = new MovieDAO();
             $this->genreDAO = new GenreDAOJSON();
         }
 
+<<<<<<< HEAD
         public function showMovieDashboard ($errorMessage = '')
+=======
+        public function showMovieDashboard()
+>>>>>>> d36517637109c5595e3a2119e0706f4a3bd42f0e
         {
             $movieList = $this->movieDAO->getAll();
             $genreList = $this->genreDAO->getAll();
             require_once(VIEWS_PATH."Session/validate-session.php");
             require_once(VIEWS_PATH."Movies/movie-dashboard.php");
+        }
+        public function addMoviesToDB()
+        {
+        require_once(VIEWS_PATH."add-movies.php");
+           // $this->movieDAO->retrieveDataFromAPI();
+        }
+        public function showBillboard ($idMovie)
+        {
+            $movie = new Movie();
+            $movie = $this->movieDAO->getMovieById($idMovie);
+            $genreList = $this->genreDAO->getAll();
+
+            require_once(VIEWS_PATH."Session/validate-session.php");
+            require_once(VIEWS_PATH."Billboard/billboard.php");
         }
 
         public function showFilterMovieDashboard ($filterMovieList)

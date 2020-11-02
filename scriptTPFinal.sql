@@ -20,12 +20,42 @@ CREATE TABLE IF NOT EXISTS cinemas (
     `name` VARCHAR(20),
     location VARCHAR(45),
     `status` BOOLEAN,
-    CONSTRAINT PK_id PRIMARY KEY (id),
-    CONSTRAINT FK_idRoom FOREIGN KEY (idRoom) REFERENCES rooms (id)
+    CONSTRAINT PK_id PRIMARY KEY (id)
 );
-
 SELECT * FROM cinemas;
 
+
+
+
+
+CREATE TABLE IF NOT EXISTS genres (
+	id INT NOT NULL unique,
+	nameGenre VARCHAR(15),
+	CONSTRAINT PK_idGenre PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS movies (
+	id INT NOT NULL unique,
+	title VARCHAR(50),
+	overview VARCHAR(200),
+	adult BOOLEAN,
+	genres_ids INT NOT NULL,
+	originalLanguage VARCHAR(15),
+	popularity FLOAT,
+	posterPath VARCHAR(50),
+	releaseDate DATETIME,
+	`status` BOOLEAN,
+	CONSTRAINT PK_idMovie PRIMARY KEY (id)
+);
+drop table movies;
+select * from movies;
+CREATE TABLE IF NOT EXISTS moviesXgenres (
+	id INT NOT NULL AUTO_INCREMENT,
+	idMovie INT NOT NULL,
+	idGenre INT NOT NULL,
+	CONSTRAINT PK_id PRIMARY KEY (id)	
+);						
+select * from moviesXgenres;
 CREATE TABLE IF NOT EXISTS rooms (
     id INT NOT NULL AUTO_INCREMENT,
     idCinema INT NOT NULL,
@@ -38,7 +68,7 @@ CREATE TABLE IF NOT EXISTS rooms (
 	CONSTRAINT FK_idCinema FOREIGN KEY (idCinema) REFERENCES cinemas (id)
 );
 
-SELECT * FROM rooms;
+SELECT * FROM moviesXgenres;
 
 CREATE TABLE IF NOT EXISTS shows (
 	id INT NOT NULL AUTO_INCREMENT,
@@ -52,41 +82,11 @@ CREATE TABLE IF NOT EXISTS shows (
 );
 
 SELECT * FROM shows;
-
-CREATE TABLE IF NOT EXISTS genres (
-	id INT NOT NULL AUTO_INCREMENT,
-	nameGenre VARCHAR(15),
-	CONSTRAINT PK_id PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS movies (
-	id INT NOT NULL AUTO_INCREMENT,
-	title VARCHAR(50),
-	overview VARCHAR(200),
-	adult BOOLEAN,
-	idGenre INT NOT NULL,
-	originalLanguage VARCHAR(15),
-	popularity FLOAT,
-	posterPath VARCHAR(50),
-	releaseDate DATETIME,
-	`status` BOOLEAN,
-	CONSTRAINT PK_id PRIMARY KEY (id),
-	CONSTRAINT FK_idGenre FOREIGN KEY (idGenre) REFERENCES genres (id)
-);
-
-CREATE TABLE IF NOT EXISTS moviesXgenres (
-	id INT NOT NULL AUTO_INCREMENT,
-	idMovie INT NOT NULL,
-	idGenre INT NOT NULL,
-	CONSTRAINT PK_id PRIMARY KEY (id),
-	CONSTRAINT PFK_idMovie FOREIGN KEY (idMovie) REFERENCES movies (id),
-	CONSTRAINT PFK_idGenre FOREIGN KEY (idGenre) REFERENCES genres (id)	
-);						
 									                             
 CREATE TABLE IF NOT EXISTS tickets (
     id INT NOT NULL AUTO_INCREMENT,
     codeQR VARCHAR(200),
     idUser INT NOT NULL,
-    CONSTRAINT PK_id PRIMARY KEY (id),
+    CONSTRAINT PK_idTicket PRIMARY KEY (id),
     CONSTRAINT FK_idUser FOREIGN KEY (idUser) REFERENCES Users (id)
 );
