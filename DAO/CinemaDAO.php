@@ -11,8 +11,8 @@
 
         public function add (Cinema $cinema)
         {
-            $sqlQuery = "INSERT INTO Cinemas (name,location) 
-            VALUES (:name, :location)";
+            $sqlQuery = "INSERT INTO Cinemas (name,location,status) 
+            VALUES (:name, :location,:status)";
 
             $parameters['name'] = $cinema->getName();
             $parameters['location'] = $cinema->getLocation();
