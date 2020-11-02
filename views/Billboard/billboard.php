@@ -3,52 +3,128 @@
     require_once(VIEWS_PATH."nav.php");
 
     use Models\Show as Show;
-    use Models\Room as Room;
-    use Models\Movie as Movie;
     use DAO\CinemaDAO as CinemaDAO;
     use DAO\RoomDAO as RoomDAO;
     use DAO\MovieDAOJSON as MovieDAOJSON;
     use DAO\ShowDAO as ShowDAO;
+    use Controllers\MovieController as MovieController;
 
     $cinemaDAO = new CinemaDAO();
     $roomDAO = new RoomDAO();
     $movieDAO = new MovieDAOJSON();
     $showDAO = new ShowDAO();
-    $showList = array();
-    $showMapoutList = $showDAO->getAll();
+    $movieController = new MovieController();
 
-    foreach($showMapoutList as $showMapout)
-    {
-        $show = new Show();
-        $room = new Room();
-        $movie = new Movie();
+    $showMapout = $showDAO->getShowByIdMovie($idMovie);
 
-        $show->setId($showMapout->getId());
-        $room = $roomDAO->getRoomByID($showMapout->getIdRoom());
-        $show->setRoom($room);
-        $movie = $movieDAO->getMovieById($showMapout->getIdMovie());
-        $show->setMovie($movie);
-        $show->setDateTime($showMapout->getDateTime());
-        $show->setRemainingTickets($showMapout->getRemainingTickets());
-
-        array_push($showList, $show);
-    }
-
+    $cinemaDAO = new CinemaDAO();
     $cinemaList = $cinemaDAO->getAll();
+
+    $showList = array();
+
+    if(!empty($showMapout))
+    {
+        if(!is_array($showMapout))
+        {
+            $room = $roomDAO->getRoomById($showMapout->getIdRoom());
+            $movie = $movieDAO->getMovieById($showMapout->getIdMovie());
+        
+            $show = new Show();
+            $show->setId($showMapout->getId());
+            $show->setRoom($room);
+            $show->setMovie($movie);
+            $show->setDateTime($showMapout->getDateTime());
+            $show->setRemainingTickets($showMapout->getRemainingTickets());
+
+            array_push($showList, $show);
+        }
+        else
+        {
+            foreach($showMapout as $showValue)
+            {
+                $room = $roomDAO->getRoomById($showValue->getIdRoom());
+                $movie = $movieDAO->getMovieById($showValue->getIdMovie());
+
+                $show = new Show();
+                $show->setId($showValue->getId());
+                $show->setRoom($room);
+                $show->setMovie($movie);
+                $show->setDateTime($showValue->getDateTime());
+                $show->setRemainingTickets($showValue->getRemainingTickets());
+
+                array_push($showList, $show);
+            }     
+        } 
+    }
+    else
+    {
+        $errorMessage = "No hay shows de esta película";
+
+        $movieController->showMovieDashboard($errorMessage);
+    } 
 ?>
 
-<div class="btn-toolbar m-2 position-relative" style="left: 400px; top: 47px;" role="toolbar" aria-label="Toolbar with button groups">
-    <div class="btn-group mr-2" role="group" aria-label="First group">
+<div class="btn-toolbar m-2 position-relative" style="left: 400px; top: 47px;" role="toolbar">
+    <div class="btn-group mr-2" role="group">
         <?php   
-            foreach($showList as $show)
-            { 
+            $i = 0;
+
+            foreach($cinemaList as $cinemaValue)
+            {
+                if($i < count($showList))
+                { 
+                    $idCinema = $cinemaValue->getId();
+                    $showIdCinema = $showList[$i]->getRoom()->getIdCinema();
+                    
+                    if($idCinema == $showIdCinema)
+                    { 
+                        
         ?>
-                <button class="btn btn-dark" style="color: crimson; border-radius: 20px 20px 0px 0px;" type="button"><?= "dayName ";?></button>
+                        <button class="btn btn-dark" style="color: chocolate; border-radius: 20px 20px 0px 0px;" type="button" data-toggle="collapse" data-target="<?= "#cinemaCollapseId".$showIdCinema;?>">
+                            <?= substr($showList[$i]->getDateTime(), 0, 10);?>
+                        </button>
         <?php
+                        $i++;
+                    }   
+                }  
             }
         ?>
     </div>
 </div>
+
+<?php   
+    $i = 0;
+
+    foreach($cinemaList as $cinemaValue)
+    {
+        $idCinema = $cinemaValue->getId();
+
+        if($i < count($showList))
+        {
+            $showIdCinema = $showList[$i]->getRoom()->getIdCinema();
+
+            if($idCinema == $showIdCinema)
+            {    
+?>
+                <div class="card card-box-shadow collapse text-white background-dark d-relative" style="width: 400px; left: 406px; top: 173px;" id="<?= "cinemaCollapseId".$showIdCinema;?>">
+                    <div class="card-header text-white background-linear-gradient">
+                        <h3 class="card-title" style="display: inline;"><?php echo $cinemaValue->getName();?></h3>
+                    </div>
+
+                    <div class="card-body">
+                        <p class="card-text">
+                            <?php echo "<strong>Estado: </strong>";?><i class="fas fa-check-circle" style="color: green;"></i>
+                        </p>
+
+                        <p class="card-text"><?php echo "<strong>Dirección: </strong>".$cinemaValue->getLocation();?></p> 
+                    </div>                   
+                </div>
+<?php 
+                $i++;
+            } 
+        }  
+    }       
+?>
 
 <main class="d-flex m-2">
     <div class="card-columns">

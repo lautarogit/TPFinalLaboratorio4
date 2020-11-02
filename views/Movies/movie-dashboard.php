@@ -50,6 +50,18 @@
     </div>
 </div>
 
+<?php 
+     if(!empty($errorMessage))
+     {
+?>
+          <div class="alert alert-danger alert-dismissible" style="width: 340px;">
+               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+               <strong><?php echo $errorMessage;?></strong>
+          </div>
+<?php      
+     }   
+?>
+
 <div class="container text-center" style="width: 100%; height: 100px;">
     <h1 class="text-crimson text-shadow">Top 5 películas mas populares</h1>
 </div>

@@ -1,7 +1,5 @@
 <?php
-
     namespace Models;
-    use Models\Genre as Genre;
 
     class Movie
     {
@@ -15,6 +13,7 @@
         private $posterPath;
         private $releaseDate;
         private $status;
+        private $runtime;
 
         public function getId ()
         {
@@ -66,6 +65,11 @@
             return $this->status;
         }
 
+        public function getRuntime ()
+        {
+            return $this->runtime;
+        }
+
         public function setId ($id)
         {
             $this->id = $id;
@@ -114,6 +118,11 @@
         public function setStatus ($status)
         {
             $this->status = $status;
+        }
+
+        public function setRuntime ($runtime)
+        {
+            $this->runtime = $runtime;
         }
     }
 

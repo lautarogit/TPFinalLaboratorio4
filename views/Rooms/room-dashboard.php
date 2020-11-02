@@ -137,8 +137,8 @@
 
                                                                       <div class="form-group">
                                                                            <label for="status"><h5><strong>Estado</strong></h5></label>
-                                                                           <input class="radioSize" type="radio" name="status" value="<?= true;?>">Habilitado
-                                                                           <input class="radioSize" type="radio" name="status" value="<?= false;?>">Deshabilitado
+                                                                           <input type="radio" name="status" value="<?= true;?>">Habilitado
+                                                                           <input type="radio" name="status" value="<?= false;?>">Deshabilitado
                                                                       </div>
 
                                                                       <button type="submit" class="btn btn-warning">

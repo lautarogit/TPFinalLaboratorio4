@@ -1,10 +1,10 @@
 <?php
     namespace Controllers;
 
-    use Models\Room as Room;
-    use DAO\RoomDAO as RoomDAO;
     use Models\Show as Show;
     use DAO\ShowDAO as ShowDAO;
+    use Models\Room as Room;
+    use DAO\RoomDAO as RoomDAO;
     use Models\Movie as Movie;
     use DAO\MovieDAOJSON as MovieDAOJSON;
     use Controllers\iValidation as iValidation;
@@ -37,18 +37,25 @@
             require_once(VIEWS_PATH."Shows/show-data.php");
         }
 
-        public function validateShow ($idMovie, $dateTime, $remainingTickets)
+        public function validateShow ($idCinema, $idMovie, $dateTime, $remainingTickets)
         {
             $flag = false;
             $validateIdMovie = $this->validateFormField($idMovie);
             #$validateDateTime = $this->validateDateTime();
             $validateRemainingTickets = $this->validateFormField($remainingTickets);
+
             $movieFinded = $this->showDAO->getShowByIdMovie($idMovie);
 
-            if($validateIdMovie && !empty($dateTime) && $validateRemainingTickets
-            && !$movieFinded)
-            {
-                $flag = true;
+            if($validateIdMovie && !empty($dateTime) && $validateRemainingTickets)
+            {  
+                if(!$movieFinded)
+                {
+                    $flag = true;
+                }    
+                else
+                {
+                    $flag = false;  
+                } 
             }
             
             return $flag;
@@ -88,16 +95,17 @@
 
             $room = $this->roomDAO->getRoomByID($idRoom);
             $movie = $this->movieDAO->getMovieById($idMovie);
+            $idCinema = $room->getIdCinema();
             
-            $validateShow = $this->validateShow($idMovie, $dateTime, $remainingTickets);
+            $validateShow = $this->validateShow($idCinema, $idMovie, $dateTime, $remainingTickets);
 
             if($validateShow)
             {
-                $show->setRoom($room);
+                /*$show->setRoom($room);
                 $show->setMovie($movie);
                 $show->setDateTime($dateTime);
                 $show->setRemainingTickets($remainingTickets);
-    
+
                 $this->showDAO->add($show);
                 $idCinema = $show->getRoom()->getIdCinema();
     
@@ -105,7 +113,7 @@
                 $idShow = $showMapout->getId();
                 $room->setIdShow($idShow);
                 $this->roomDAO->edit($room);
-
+                */
                 $this->roomController->showRoomDashboard($idCinema);
             }
             else

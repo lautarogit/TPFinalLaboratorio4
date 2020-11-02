@@ -48,7 +48,7 @@
             $this->id = $id;
         }
 
-        public function setIdRoom ($room)
+        public function setIdRoom ($idRoom)
         {
             $this->idRoom = $idRoom;
         }

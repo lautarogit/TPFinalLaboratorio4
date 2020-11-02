@@ -35,9 +35,9 @@
      }   
 ?>
 
-<div class="content d-flex m-2" style="justify-content: center;"> 
-    <form class="bg-dark-alpha p-5 text-white" action="<?php echo FRONT_ROOT."Show/addShow";?>" method="POST">
-        <div class="form-group">
+<div class="content d-flex" style="justify-content: center;"> 
+    <form class="bg-dark-alpha text-white" action="<?php echo FRONT_ROOT."Show/addShow";?>" method="POST">
+        <div class="form-group m-2">
             <label for="idRoom">ID de Sala (No editable)</label>
             <input type="text" name="idRoom" value="<?= $room->getId();?>" readonly/>
         </div>
@@ -106,7 +106,13 @@
                                     </div>
                                 </div> 
 
-                                <input class="radioSize" type="radio" name="idMovie" value="<?= $movieValue->getId();?>">Seleccionar
+                                <div class="text-center">
+                                    Seleccionar
+                                </div>
+
+                                <div class="text-center">
+                                    <input type="radio" name="idMovie" value="<?= $movieValue->getId();?>">
+                                </div>
                             </div>
             <?php
                         } 

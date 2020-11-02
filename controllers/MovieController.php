@@ -17,7 +17,7 @@
             $this->genreDAO = new GenreDAOJSON();
         }
 
-        public function showMovieDashboard ()
+        public function showMovieDashboard ($errorMessage = '')
         {
             $movieList = $this->movieDAO->getAll();
             $genreList = $this->genreDAO->getAll();
