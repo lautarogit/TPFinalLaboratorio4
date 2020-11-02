@@ -26,7 +26,8 @@
         }
         public function addMoviesToDB()
         {
-            require_once(VIEWS_PATH."add-movies.php");
+        require_once(VIEWS_PATH."add-movies.php");
+           // $this->movieDAO->retrieveDataFromAPI();
         }
         public function showBillboard ($idMovie)
         {

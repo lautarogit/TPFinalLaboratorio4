@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <?php
-    use DAO\MovieDAO as MovieDAO;
-   $MovieDAO =new MovieDAO();
-    var_dump($MovieDAO->retrieveDataFromAPI());
-    ?>
-</body>
-</html>
+ <?php
+        use DAO\MovieDAO as MovieDAO;
+       $movieDAO=new MovieDAO();
+        use DAO\GenreDAO as GenreDAO;
+        $genreDAO= new GenreDAO();
+        var_dump($genreDAO->retrieveDataFromApi());
+        use DAO\MoviesXGenresDAO as MoviesXGenresDAO;
+     /*   $moviesXGenresDAO=new MoviesXGenresDAO();
+        var_dump($moviesXGenresDAO->retrieveDataFromApi());*/
+?>
