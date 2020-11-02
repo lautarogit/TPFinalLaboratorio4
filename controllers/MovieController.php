@@ -24,10 +24,10 @@
             require_once(VIEWS_PATH."Session/validate-session.php");
             require_once(VIEWS_PATH."Movies/movie-dashboard.php");
         }
-<<<<<<< HEAD
         public function addMoviesToDB()
         {
-            require_once(VIEWS_PATH."add-movies.php");
+        require_once(VIEWS_PATH."add-movies.php");
+           // $this->movieDAO->retrieveDataFromAPI();
         }
         public function showBillboard ($idMovie)
         {
@@ -38,8 +38,6 @@
             require_once(VIEWS_PATH."Session/validate-session.php");
             require_once(VIEWS_PATH."Billboard/billboard.php");
         }
-=======
->>>>>>> 543e342f2d9b2e2a433bf664710b15c613ede774
 
         public function showFilterMovieDashboard ($filterMovieList)
         {

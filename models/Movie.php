@@ -16,6 +16,10 @@
         private $releaseDate;
         private $status;
 
+        public function __construct($id=0,$)
+        {
+            
+        }
         public function getId ()
         {
             return $this->id;
