@@ -83,18 +83,17 @@ class GenreDAO
         }
         public function retrieveDataFromApi (){
             $moviedb = file_get_contents(API_HOST . '/movie/now_playing?api_key=' . TMDB_API_KEY . '&language=' . LANG . '&page=1');
-            $movieList = ($moviedb) ? json_decode($moviedb, true)['results'] : array();
-            $finalList=array();
-            foreach ($movieList as $movie) {
+            $genreList = ($moviedb) ? json_decode($moviedb, true)['runtime'] : array();
+        /*    $finalList=array();
+            foreach ($genreList as $gnr) {
                
-               // $idMovie = $movie['id'];
-                $IdGenre = $movie['genre_ids'];
-                foreach($IdGenre as $genre){
-              
+               $name= $gnr['name'];
+                $IdGenre = $gnr['id'];
+         $genre=new Genre($IdGenre,$name);
                 array_push($finalList,$genre);
-                }
-            }
-            return $finalList;
+                
+            }*/
+            return $genreList;
     }
 }
 

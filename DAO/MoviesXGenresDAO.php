@@ -9,12 +9,12 @@ class MoviesXGenresDAO
 {
     private $connection;
 
-   /* public function add (MoviesXGenres $movieXGenre)
+    public function add (MoviesXGenres $movieXGenre)
     {
         $sqlQuery = "INSERT INTO moviesXgenres (idMovie,idGenre) 
         VALUES (:idMovie,:idGenre)";
         $parameters["idMovie"]=$movieXGenre->getIdMovie();
-        $parameters['id'] = $movieXGenre->getIdGenre();
+        $parameters['idGenre'] = $movieXGenre->getIdGenre();
         try
         {
             $this->connection = Connection::getInstance();
@@ -78,7 +78,7 @@ class MoviesXGenresDAO
         }, $value);
 
         return count($resp) > 1 ? $resp : $resp['0'];
-        }*/
+        }
         public function retrieveDataFromApi (){
             $moviedb = file_get_contents(API_HOST . '/movie/now_playing?api_key=' . TMDB_API_KEY . '&language=' . LANG . '&page=1');
             $movieList = ($moviedb) ? json_decode($moviedb, true)['results'] : array();
@@ -89,10 +89,10 @@ class MoviesXGenresDAO
                 $IdGenre = $movie['genre_ids'];
                 foreach($IdGenre as $genre){
                 $newMovie = new MoviesXGenres($idMovie,$genre);
-                array_push($finalList,$newMovie);
+               $this->add($newMovie);
                 }
             }
-            return $finalList;
+   
     }
 }
 ?>

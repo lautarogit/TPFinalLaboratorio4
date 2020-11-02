@@ -105,7 +105,7 @@ class MovieDAO
         $movieList = ($moviedb) ? json_decode($moviedb, true)['results'] : array();
 
         foreach ($movieList as $movie) {
-            $newMovie = new Movie();
+    
             $id = $movie['id'];
             $title = $movie['title'];
             $overview = $movie['overview'];
@@ -117,8 +117,8 @@ class MovieDAO
             $posterPath = $movie['poster_path'];
             $releaseDate = $movie['release_date'];
             $status = null;
-
-            $newMovie->setId($id);
+            $newMovie = new Movie($id,$title,$overview,$adult,null,$originalLanguage,$popularity,$posterPath,$releaseDate,$status);
+    /*        $newMovie->setId($id);
             $newMovie->setTitle($title);
             $newMovie->setOverview($overview);
             $newMovie->setAdult($adult);
@@ -127,12 +127,39 @@ class MovieDAO
             $newMovie->setPopularity($popularity);
             $newMovie->setPosterPath($posterPath);
             $newMovie->setReleaseDate($releaseDate);
-            $newMovie->setStatus($status);
+            $newMovie->setStatus($status);*/
 
 
             $this->add($newMovie);
         }
     }
+    public function retrieveDataFromAPI2()
+    {
+        $moviedb = file_get_contents(API_HOST . '/movie/now_playing?api_key=' . TMDB_API_KEY . '&language=' . LANG . '&page=1');
+        $movieList = ($moviedb) ? json_decode($moviedb, true) : array();
+$finalResult=array();
+        foreach ($movieList as $movie) {
+   $runtime= $movie["Runtime"];
+      /*      $id = $movie['id'];
+            $title = $movie['title'];
+            $overview = $movie['overview'];
+            $adult = $movie['adult'];
+
+            $genresId = $movie['genre_ids'];
+            $originalLanguage = $movie['original_language'];
+            $popularity = $movie['popularity'];
+            $posterPath = $movie['poster_path'];
+            $releaseDate = $movie['release_date'];
+            $status = null;
+            $newMovie = new Movie($id,$title,$overview,$adult,null,$originalLanguage,$popularity,$posterPath,$releaseDate,$status);
+  
+*/
+        //    $this->add($newMovie);
+    array_push($finalResult,$runtime);   
+    }
+    return $finalResult;
+    }
+
     public function mapout($value)
     {
         $value = is_array($value) ? $value : [];
