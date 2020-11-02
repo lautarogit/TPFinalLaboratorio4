@@ -15,10 +15,22 @@
         private $status;
         private $runtime;
 
-        public function __construct($id=0,$)
+        public function __construct($id = '', $title = '', $overview = '', $adult = '', $genresId = '', 
+        $originalLanguage = '', $popularity = '', $posterPath = '', $releaseDate = '', $status = '', $runtime = '')
         {
-            
+            $this->id = $id;
+            $this->title = $title;
+            $this->overview = $overview;
+            $this->adult = $adult;
+            $this->genresId = $genresId;
+            $this->originalLanguage = $originalLanguage;
+            $this->popularity = $popularity;
+            $this->posterPath = $posterPath;
+            $this->releaseDate = $releaseDate;
+            $this->status = $status;
+            $this->runtime = $runtime;
         }
+        
         public function getId ()
         {
             return $this->id;
