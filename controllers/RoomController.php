@@ -98,7 +98,6 @@
         {
             require_once(VIEWS_PATH."Session/validate-session.php");
             $room = new Room();
-            $cinemaController = new CinemaController();
 
             $roomFinded = $this->roomDAO->validateData($name, $idCinema);
             $validateCapacity = $this->validateFormField($capacity, 2, 3);
@@ -113,11 +112,11 @@
                 {
                     $room->setStatus(true);
                     $this->roomDAO->edit($room);
-                    $errorMessage = "<h4 class="."text-white m-2".">Se ha rehabilitado una sala con el nombre ingresado</h4>";
+                    $errorMessage = "Se ha rehabilitado una sala con el nombre ingresado";
                 } 
                 else
                 {
-                    $errorMessage = "<h4 class="."text-white m-2".">Ya existe una sala habilitada con ese nombre</h4>";
+                    $errorMessage = "Ya existe una sala habilitada con ese nombre";
                 } 
             }
             else if($validateCapacity && $validatePrice && $validateName)
@@ -133,11 +132,11 @@
             
             if(!empty($errorMessage))
             {
-                $cinemaController->showCinemaDashboard($idCinema, $errorMessage);
+                $this->showRoomDashboard($idCinema, $errorMessage);
             }
             else
             {
-                $cinemaController->showCinemaDashboard($idCinema);
+                $this->showRoomDashboard($idCinema);
             }
         }
 
@@ -158,12 +157,12 @@
                 if(!$roomUpdated->getStatus())
                 {
                     $roomUpdated->setStatus(true);
-                    $this->roomDAO->edit($room);
-                    $errorMessage = "<h4 class="."text-white m-2".">Se ha rehabilitado una sala con el nombre ingresado</h4>";
+                    $this->roomDAO->edit($roomUpdated);
+                    $errorMessage = "Se ha rehabilitado una sala con el nombre ingresado";
                 } 
                 else
                 {
-                    $errorMessage = "<h4 class="."text-white m-2".">Ya existe una sala habilitada con ese nombre</h4>";
+                    $errorMessage = "Ya existe una sala habilitada con ese nombre";
                 } 
             }
             else if($validateCapacity && $validatePrice && $validateName && $status!=null)

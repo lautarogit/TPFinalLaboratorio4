@@ -13,19 +13,28 @@
      $showDAO = new ShowDAO();
 
      $cinema = $cinemaDAO->getCinemaById($idCinema);
-      
+?>
+
+<?php 
      if(!empty($errorMessage))
      {
-          echo $errorMessage;
-     }
+?>
+          <div class="alert alert-danger alert-dismissible" style="width: 575px;">
+               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+               <strong><?php echo $errorMessage;?></strong>
+          </div>
+<?php      
+     }   
+?>
 
+<?php
      if(!empty($roomList))
      {
 ?>
      <main class="py-3 text-white">
           <section>
                <div class="container">
-                    <h2 class="mb-4">Salas habilitadas de <?php echo $cinema->getName();?></h2>
+                    <h2 class="mb-4">Salas habilitadas de <p style="color: red; display: inline;"><?php echo $cinema->getName();?></p></h2>
                     <table class="table bg-dark text-white">
                          <thead>
                               <th>Nombre de sala</th>
@@ -151,7 +160,7 @@
                          </tbody>
                     </table>
 
-                    <h2 class="mb-4">Salas deshabilitadas de <?php echo $cinema->getName();?></h2>
+                    <h2 class="mb-4">Salas deshabilitadas de <p style="color: red; display: inline;"><?php echo $cinema->getName();?></p></h2>
                     <table class="table bg-dark text-white">
                          <thead>
                               <th>Nombre de sala</th>

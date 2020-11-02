@@ -96,8 +96,7 @@
             $validatePassword = $this->validateFormField($password, 6, 45);
 
             if(!$userFinded && $validateFirstName && $validateLastName && $validateUserName
-            && $validateEmail && $validateDni && $validatePassword
-            )
+            && $validateEmail && $validateDni && $validatePassword)
             {
                 $user->setUserName($userName);
                 $user->setPassword($password);

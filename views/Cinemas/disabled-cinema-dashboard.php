@@ -8,13 +8,6 @@
     </a>
 </div>
 
-<?php 
-    if(!empty($errorMessage))
-    {
-        echo $errorMessage;
-    }
-?>
-
 <main class="d-flex m-2">
     <div class="card-rows">
         <div class="card-columns">

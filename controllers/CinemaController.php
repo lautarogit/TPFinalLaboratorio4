@@ -94,11 +94,11 @@
                 {
                     $cinema->setStatus(true);
                     $this->cinemaDAO->edit($cinema);
-                    $errorMessage = "<h4 class="."text-white m-2".">Se ha rehabilitado un cine con el nombre ingresado</h4>";
+                    $errorMessage = "Se ha rehabilitado un cine con el nombre ingresado";
                 } 
                 else
                 {
-                    $errorMessage = "<h4 class="."text-white m-2".">Ya existe un cine habilitado con ese nombre</h4>";
+                    $errorMessage = "Ya existe un cine habilitado con ese nombre";
                 }  
             }
             else if($validateName && $validateLocation)
@@ -137,11 +137,11 @@
                 {
                     $cinemaUpdated->setStatus(true);
                     $this->cinemaDAO->edit($cinemaUpdated);
-                    $errorMessage = "<h4 class="."text-white m-2".">Se ha rehabilitado un cine con el nombre ingresado</h4>";
+                    $errorMessage = "Se ha rehabilitado un cine con el nombre ingresado";
                 } 
                 else
                 {
-                    $errorMessage = "<h4 class="."text-white m-2".">Ya existe un cine habilitado con ese nombre</h4>";
+                    $errorMessage = "Ya existe un cine habilitado con ese nombre";
                 }  
             }
             else if($validateName && $validateLocation && $status!=null)
