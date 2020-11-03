@@ -8,6 +8,7 @@
     class GenreDAO
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         private $connection;
 =======
         $sqlQuery = "INSERT INTO Genres (id,nameGenre) 
@@ -16,6 +17,9 @@
         $parameters['id'] = $genre->getId();
      
 >>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
+=======
+        private $connection;
+>>>>>>> lautaro2
 
         public function add (Genre $genre)
         {
@@ -64,6 +68,7 @@
                 }
             }
             else 
+<<<<<<< HEAD
             {
                 $result =  false;
             }
@@ -77,6 +82,21 @@
                 $finalResult = $result;
             }
 
+=======
+            {
+                $result =  false;
+            }
+
+            if(!empty($genreList))
+            {
+                $finalResult = $genreList;  
+            }
+            else
+            {
+                $finalResult = $result;
+            }
+
+>>>>>>> lautaro2
             return $finalResult;
         }
 
@@ -183,6 +203,7 @@
         public function mapout ($value)
         {
             $value = is_array($value) ? $value : [];
+<<<<<<< HEAD
 
             $resp = array_map(function($p){
                 return new Genre($p['id'], $p['nameGenre']);
@@ -261,5 +282,14 @@
             }
             
 >>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
+=======
+
+            $resp = array_map(function($p){
+                return new Genre($p['id'], $p['nameGenre']);
+            }, $value);
+
+            return count($resp) > 1 ? $resp : $resp['0'];
+        }
+>>>>>>> lautaro2
     }
 ?>

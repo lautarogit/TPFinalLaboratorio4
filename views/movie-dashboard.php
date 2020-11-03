@@ -1,14 +1,12 @@
 <?php 
-    require_once(VIEWS_PATH."header.php"); 
-    require_once(VIEWS_PATH."nav.php");
+    require_once("header.php"); 
+    require_once("nav.php");
 
     $rolId = $_SESSION['loggedUser']->getRolId();
     use Controllers\MovieController as MovieController;
-    use DAO\GenreDAO as GenreDAO;
 
-$movieController = new MovieController();
+    $movieController = new MovieController();
     $topRatedMovieList = $movieController->filterTopRated($movieList);
-    $genreDAO= new GenreDAO();
 ?>
 
 <div class="movie-buttons-div">
@@ -51,18 +49,6 @@ $movieController = new MovieController();
         </div>
     </div>
 </div>
-
-<?php 
-     if(!empty($errorMessage))
-     {
-?>
-          <div class="alert alert-danger alert-dismissible" style="width: 340px;">
-               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-               <strong><?php echo $errorMessage;?></strong>
-          </div>
-<?php      
-     }   
-?>
 
 <div class="container text-center" style="width: 100%; height: 100px;">
     <h1 class="text-crimson text-shadow">Top 5 películas mas populares</h1>
@@ -123,7 +109,6 @@ $movieController = new MovieController();
                         </div>
             <?php
                     }
-                    
                     $i++;
                 }
             ?>
@@ -145,24 +130,20 @@ $movieController = new MovieController();
 
 <main class="d-flex align-items-center height-100">
     <?php 
-        if(!empty($movieList))
+        if(count($movieList) >= 5)
         {
-            if(count($movieList) >= 5)
-            {
     ?>
-                <div class="grid">
+    <div class="grid">
     <?php   
-            }
-            else if(count($movieList) <= 4)
-            {
-            
+        }
+        else if(count($movieList) <= 4)
+        {
     ?>
-                <div class="card-columns">
+    <div class="card-columns">
     <?php 
-            }
         } 
 
-        if(empty($movieList))
+        if($movieList == null)
         {
             ?>
                 <h2 class="text-white">No hay películas con el género elegido</h2>
@@ -202,17 +183,11 @@ $movieController = new MovieController();
                             ?></p>       
                     </div>
 
-                    <div class="card-footer">
+                    <div class="modal-footer">
                         <div style="display:block; margin:auto;">
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
                             <?php 
-                            /*modificar esto*/
-                              $genresId =$genreDAO->getGenres($movieValue);
-                                
-                               
-                               $genreNameList = array();
+                                $genresId = $movieValue->getGenresId();
+                                $genreNameList = array();
 
                                 foreach($genresId as $genreId)
                                 {
@@ -226,50 +201,72 @@ $movieController = new MovieController();
                                     }     
                                 }   
                             ?>
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
                         
-                        <?php 
-                            $genres = $genreDAO->getGenres($movieValue);
-                        
-=======
-                        
-                        <?php 
-                            $genres = $genreDAO->getGenres($movieValue);
-                        
->>>>>>> lautaro2
-                        ?>
-
-                        <p><?php 
+                            <p><?php 
                                 echo "<strong>Géneros: </strong>"; 
 
-                                $genresDimension = count($genres);
+                                $genreNameListDimension = count($genreNameList);
                                 $i = 0;
                                 
-                                foreach($genres as $genre)
+                                foreach($genreNameList as $genreName)
                                 {
                                     $i ++;
 
-                                    if($i == $genresDimension)
+                                    if($i == $genreNameListDimension)
                                     {  
-                                        echo $genre->getName();
+                                        echo $genreName;
                                     }
                                     else
                                     {
-                                        echo $genre->getName().", ";
+                                        echo $genreName.", ";
                                     } 
                                 }
                             ?></p>
 
-                            <p><?= "<strong>Fecha de lanzamiento: </strong>".substr($movieValue->getReleaseDate(), 0, 10);?></p>
+                            <p><?= "<strong>Fecha de lanzamiento: </strong>".$movieValue->getReleaseDate();?></p>
                         </div>
                     </div>
 
-                    <form action="<?= FRONT_ROOT."Billboard/showBillboard"?>" method="POST">
-                        <button class="btn btn-sm btn-success m-1" style="width: 354px;" type="submit" name="idMovie" value="<?= $movieValue->getId();?>">
-                            Consultar por entrada
-                        </button>   
-                    </form>  
+                    <div class="modal-footer">
+                        <button class="btn btn-sm btn-outline-success background-dark btn-block" data-toggle="modal" data-target="<?= "#buyTicket";?>">
+                            Comprar entrada
+                        </button>
+                    </div>
                 </div>                              
+
+                <!-- Buy ticket Modal -->
+                <div class="modal fade" tabindex="-1" role="dialog" id="buyTicket">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content background-dark text-white">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Ticket</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="content d-flex d-center" style="justify-content: center;"> 
+                                    <h4>Sala 8</h4>
+                                    <h3>ADULTO  $63.00</h3>
+                                    <h2>TITULO PELICULA</h2>
+                                    <p>Funcion: 30/12/2011 07:00 pm Asiento E-8</p>
+                                    <p>Usuario: lautarolp27</p>
+                                    <form class="bg-dark-alpha p-5 text-black" action="" method="POST">
+                                        <button type="submit" class="btn btn-success">
+                                            Comprar entrada
+                                        </button>   
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ---------------- -->
                 
                 <!-- Movie info Modal -->
                 <div class="modal fade" tabindex="-1" role="dialog" id="<?= "movieInfo".$movieValue->getId();?>">
@@ -284,7 +281,7 @@ $movieController = new MovieController();
 
                             <div class="modal-body movie-header-color">
                                 <div class="content d-flex d-center"> 
-                                    <h2><?= $movieValue->getTitle();?></h2>
+                                    <h2 style="text-align:center;"><?= $movieValue->getTitle();?></h2>
                                 </div>
                             </div>
 
@@ -353,5 +350,5 @@ $movieController = new MovieController();
 </div>
 
 <?php 
-    require_once(VIEWS_PATH."footer.php");
+    require_once("footer.php");
 ?>

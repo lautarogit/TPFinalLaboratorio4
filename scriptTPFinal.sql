@@ -27,38 +27,9 @@ CREATE TABLE IF NOT EXISTS cinemas (
 SELECT * FROM cinemas;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
-
-CREATE TABLE IF NOT EXISTS genres (
-	id INT NOT NULL unique,
-	nameGenre VARCHAR(15),
-	CONSTRAINT PK_idGenre PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS movies (
-	id INT NOT NULL unique,
-	title VARCHAR(50),
-	overview VARCHAR(200),
-	adult BOOLEAN,
-	originalLanguage VARCHAR(15),
-	popularity FLOAT,
-	posterPath VARCHAR(50),
-	releaseDate DATETIME,
-	`status` BOOLEAN,
-    runtime int ,
-	CONSTRAINT PK_idMovie PRIMARY KEY (id)
-);
-drop table movies;
-select * from movies;
-SELECT g.id,g.nameGenre FROM genres g inner join MoviesXgenres r on g.id=r.idGenre inner join movies m on r.idMovie =m.id where m.id=337401 ;
-CREATE TABLE IF NOT EXISTS moviesXgenres (
-	id INT NOT NULL AUTO_INCREMENT,
-	idMovie INT NOT NULL,
-	idGenre INT NOT NULL,
-	CONSTRAINT PK_id PRIMARY KEY (id)	
-);						
-select * from moviesXgenres;
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
+=======
 CREATE TABLE IF NOT EXISTS rooms (
     id INT NOT NULL AUTO_INCREMENT,
     idCinema INT NOT NULL,
@@ -84,6 +55,73 @@ CREATE TABLE IF NOT EXISTS shows (
 	#CONSTRAINT PFK_idMovie FOREIGN KEY (idMovie) REFERENCES movies (id)
 );
 
+SELECT * FROM shows;
+>>>>>>> lautaro2
+
+CREATE TABLE IF NOT EXISTS genres (
+	id INT NOT NULL unique,
+	nameGenre VARCHAR(15),
+	CONSTRAINT PK_idGenre PRIMARY KEY (id)
+);
+
+SELECT * FROM genres;
+
+CREATE TABLE IF NOT EXISTS movies (
+	id INT NOT NULL AUTO_INCREMENT,
+	title VARCHAR(50),
+	overview VARCHAR(200),
+	adult BOOLEAN,
+<<<<<<< HEAD
+=======
+	idGenre INT NOT NULL,
+>>>>>>> lautaro2
+	originalLanguage VARCHAR(15),
+	popularity FLOAT,
+	posterPath VARCHAR(50),
+	releaseDate DATETIME,
+	`status` BOOLEAN,
+<<<<<<< HEAD
+    runtime int ,
+	CONSTRAINT PK_idMovie PRIMARY KEY (id)
+);
+drop table movies;
+select * from movies;
+SELECT g.id,g.nameGenre FROM genres g inner join MoviesXgenres r on g.id=r.idGenre inner join movies m on r.idMovie =m.id where m.id=337401 ;
+CREATE TABLE IF NOT EXISTS moviesXgenres (
+	id INT NOT NULL AUTO_INCREMENT,
+	idMovie INT NOT NULL,
+	idGenre INT NOT NULL,
+	CONSTRAINT PK_id PRIMARY KEY (id)	
+);						
+select * from moviesXgenres;
+>>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
+CREATE TABLE IF NOT EXISTS rooms (
+    id INT NOT NULL AUTO_INCREMENT,
+    idCinema INT NOT NULL,
+    price FLOAT NOT NULL,
+    capacity INT NOT NULL,
+    `name` VARCHAR (25),
+    `status` BOOLEAN,
+    idShow INT NOT NULL,
+    CONSTRAINT PK_id PRIMARY KEY (id),
+	CONSTRAINT FK_idCinema FOREIGN KEY (idCinema) REFERENCES cinemas (id)
+=======
+    runtime INT,
+	CONSTRAINT PK_id PRIMARY KEY (id)
+	#CONSTRAINT FK_idGenre FOREIGN KEY (idGenre) REFERENCES genres (id)
+>>>>>>> lautaro2
+);
+
+SELECT * FROM movies;
+
+CREATE TABLE IF NOT EXISTS moviesXgenres (
+	id INT NOT NULL AUTO_INCREMENT,
+	idMovie INT NOT NULL,
+	idGenre INT NOT NULL,
+	CONSTRAINT PK_id PRIMARY KEY (id)	
+);		
+
+<<<<<<< HEAD
 SELECT * FROM shows;
 
 CREATE TABLE IF NOT EXISTS genres (
@@ -119,6 +157,8 @@ CREATE TABLE IF NOT EXISTS moviesXgenres (
 	CONSTRAINT PK_id PRIMARY KEY (id)	
 );		
 
+=======
+>>>>>>> lautaro2
 SELECT * FROM moviesXgenres;				
 									                             
 CREATE TABLE IF NOT EXISTS tickets (

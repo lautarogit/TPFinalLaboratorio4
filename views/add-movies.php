@@ -1,5 +1,8 @@
  <?php
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> lautaro2
         /*use DAO\MovieDAO as MovieDAO;
         $movieDAO = new MovieDAO();
         var_dump($movieDAO->retrieveDataFromAPI());*/
@@ -13,6 +16,7 @@
 
         
 ?>
+<<<<<<< HEAD
 =======
     /*  use DAO\MovieDAO as MovieDAO;
        $movieDAO=new MovieDAO();
@@ -26,3 +30,5 @@
 
         ?>
 >>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
+=======
+>>>>>>> lautaro2
