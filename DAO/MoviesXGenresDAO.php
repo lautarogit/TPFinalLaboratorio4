@@ -29,7 +29,7 @@ class MoviesXGenresDAO
     
         public function getAll ()
         {
-        $sqlQuery = "SELECT * FROM MovieXgenres";
+        $sqlQuery = "SELECT * FROM MoviesXgenres";
         
         try
         {
@@ -46,28 +46,16 @@ class MoviesXGenresDAO
         {
             $result = $this->mapout($result);
 
-            $cinemaList = array();
-
-            if(!is_array($result))
-            {
-               array_push($genreList, $result);
-            }
+       
         }
         else 
         {
             $result =  false;
         }
 
-        if(!empty($genreList))
-        {
-            $finalResult = $genreList;  
-        }
-        else
-        {
-            $finalResult = $result;
-        }
+  
 
-        return $finalResult;
+        return $result;
         }
         public function mapout ($value)
         {
@@ -78,6 +66,58 @@ class MoviesXGenresDAO
         }, $value);
 
         return count($resp) > 1 ? $resp : $resp['0'];
+        }
+        public function relateGender(){
+            $sqlQuery = "SELECT * FROM MoviesXgenres r inner join movies m on r.idMovie = m.id";
+        
+            try
+            {
+                $this->connection = Connection::getInstance();
+            
+                $result = $this->connection->execute($sqlQuery);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+            
+            if(!empty($result))
+            {
+                $result = $this->mapout($result);
+            }
+            else 
+            {
+                $result =  false;
+            }
+
+            return $result;
+
+        }
+        public function filterGenre($id){
+            $sqlQuery = "SELECT * FROM MoviesXgenres r inner join movies m on r.idMovie = m.id where r.idGenre = :id";
+            $parameters['id']=$id;
+            try
+            {
+                $this->connection = Connection::getInstance();
+            
+                $result = $this->connection->execute($sqlQuery,$parameters);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+            
+            if(!empty($result))
+            {
+                $result = $this->mapout($result);
+            }
+            else 
+            {
+                $result =  false;
+            }
+
+            return $result;
+
         }
         public function retrieveDataFromApi (){
             $moviedb = file_get_contents(API_HOST . '/movie/now_playing?api_key=' . TMDB_API_KEY . '&language=' . LANG . '&page=1');

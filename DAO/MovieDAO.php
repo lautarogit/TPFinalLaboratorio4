@@ -16,7 +16,6 @@
             $title = $movie->getTitle();
             $overview = $movie->getOverview();
             $adult = $movie->getAdult();
-            $genreId = $movie->getGenresId();
             $originalLanguage = $movie->getOriginalLanguage();
             $popularity = $movie->getPopularity();
             $posterPath = $movie->getPosterPath();
@@ -24,14 +23,13 @@
             $status = $movie->getStatus();
             $runtime = $movie->getRuntime();
 
-            $sqlQuery = "INSERT INTO MOVIES (id, title, overview, adult, idGenre, originalLanguage, popularity, posterPath, releaseDate, status, runtime) 
-            VALUES(:id, :title, :overview, :adult, :genreId, :originalLanguage, :popularity, :posterPath, :releaseDate, :status, :runtime)";
+            $sqlQuery = "INSERT INTO MOVIES (id, title, overview, adult, originalLanguage, popularity, posterPath, releaseDate, status, runtime) 
+            VALUES(:id, :title, :overview, :adult, :originalLanguage, :popularity, :posterPath, :releaseDate, :status, :runtime)";
 
             $parameters['id'] = $id;
             $parameters['title'] = $title;
             $parameters['overview'] = $overview;
             $parameters['adult'] = $adult;
-            $parameters['genreId'] = $genreId;
             $parameters['originalLanguage'] = $originalLanguage;
             $parameters['popularity'] = $popularity;
             $parameters['posterPath'] = $posterPath;
@@ -57,6 +55,7 @@
                 $this->connection = Connection::getInstance();
 
                 $result = $this->connection->execute($sqlQuery);
+           
             } catch (PDOException $ex) {
                 throw $ex;
             }
@@ -65,18 +64,14 @@
 
                 $movieList = array();
             }
-            if (!is_array($result)) {
-                array_push($movieList, $result);
-            } else {
-                $result = false;
-            }
-            if (!empty($movieList)) {
-                $finalResult = $movieList;
-            } else {
-                $finalResult = $result;
-            }
+         
+            else{
 
-            return $finalResult;
+            $result=false;
+
+             }
+
+            return $result;
         }
         public function getMovieById($idMovie)
         {
@@ -115,15 +110,36 @@
 
             $runtime = $movie['runtime'];
 
-            echo "<br>";
-            echo "RUNTIME: ".$runtime;
-            echo "<br>";
-            echo "ID: ".$id;
-            echo "<br>";
 
             intval($runtime);
 
             return $runtime;
+        }
+        public function getGenres (Movie $movie){
+            
+            $sqlQuery =     "SELECT g.id, g.nameGenre FROM genres g inner join MoviesXgenres r on g.id=r.idGenre inner join movies m on r.idMovie = m.id where m.id= :id";
+       $parameters['id']=$movie->getId();
+            try
+            {
+                $this->connection = Connection::getInstance();
+            
+                $result = $this->connection->execute($sqlQuery,$parameters);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+            
+            if(!empty($result))
+            {
+                $result = $this->mapout($result);
+            }
+            else 
+            {
+                $result =  false;
+            }
+
+            return $result;
         }
 
         public function retrieveDataFromAPI()
@@ -137,7 +153,6 @@
                 $title = $movie['title'];
                 $overview = $movie['overview'];
                 $adult = $movie['adult'];
-                $genresId = 0;
                 $originalLanguage = $movie['original_language'];
                 $popularity = $movie['popularity'];
                 $posterPath = $movie['poster_path'];
@@ -145,7 +160,7 @@
                 $status = 0;
                 $runtime = $this->setRuntime($id);
 
-                $newMovie = new Movie($id, $title, $overview, $adult, $genresId, 
+                $newMovie = new Movie($id, $title, $overview, $adult,
                 $originalLanguage, $popularity, $posterPath, $releaseDate, $status, $runtime);
        
                 $this->add($newMovie);
@@ -157,11 +172,10 @@
             $value = is_array($value) ? $value : [];
 
             $resp = array_map(function ($p) {
-                return new Movie($p['id'], $p['title'], $p['overview'], $p['adult'], $p['genre_ids'], $p['originalLanguage'], $p['popularity'], 
+                return new Movie($p['id'], $p['title'], $p['overview'], $p['adult'], $p['originalLanguage'], $p['popularity'], 
                 $p['posterPath'], $p['releaseDate'], $p['status'], $p['runtime']);
             }, $value);
 
             return count($resp) > 1 ? $resp : $resp['0'];
         }
     }
-?>

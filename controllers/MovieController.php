@@ -2,19 +2,24 @@
     namespace Controllers;
 
     use DAO\MovieDAO as MovieDAO;
-    use DAO\GenreDAOJSON as GenreDAOJSON;
-    use Models\Movie as Movie;
+    use DAO\GenreDAO as GenreDAO;
+    use DAO\MoviesXGenresDAO as MoviesXGenreDAO;
+use DAO\MoviesXGenresDAO as MoviesXGenresDAO;
+use Models\Movie as Movie;
     use Models\Genre as Genre;
+    use Models\MoviesXGenres as MoviesXGenres;
 
     class MovieController
     {
         private $movieDAO;
         private $genreDAO;
+        private $moviesXgenresDAO;
 
         public function __construct ()
         {
             $this->movieDAO = new MovieDAO();
-            $this->genreDAO = new GenreDAOJSON();
+            $this->genreDAO = new GenreDAO();
+            $this->moviesXgenresDAO=new MoviesXGenresDAO();
         }
 
         public function showMovieDashboard ($errorMessage = '')
@@ -55,7 +60,7 @@
             $movieList = $this->movieDAO->getAll();
             $filterMovieList = array();
             $genresId = array();
-
+// mod
             foreach($movieList as $movieValue)
             {
                 $genresId = $movieValue->getGenresId();

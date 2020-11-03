@@ -39,16 +39,17 @@ CREATE TABLE IF NOT EXISTS movies (
 	title VARCHAR(50),
 	overview VARCHAR(200),
 	adult BOOLEAN,
-	genres_ids INT NOT NULL,
 	originalLanguage VARCHAR(15),
 	popularity FLOAT,
 	posterPath VARCHAR(50),
 	releaseDate DATETIME,
 	`status` BOOLEAN,
+    runtime int ,
 	CONSTRAINT PK_idMovie PRIMARY KEY (id)
 );
 drop table movies;
 select * from movies;
+SELECT g.id,g.nameGenre FROM genres g inner join MoviesXgenres r on g.id=r.idGenre inner join movies m on r.idMovie =m.id where m.id=337401 ;
 CREATE TABLE IF NOT EXISTS moviesXgenres (
 	id INT NOT NULL AUTO_INCREMENT,
 	idMovie INT NOT NULL,

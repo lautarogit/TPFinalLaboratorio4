@@ -4,9 +4,11 @@
 
     $rolId = $_SESSION['loggedUser']->getRolId();
     use Controllers\MovieController as MovieController;
+    use DAO\GenreDAO as GenreDAO;
 
-    $movieController = new MovieController();
+$movieController = new MovieController();
     $topRatedMovieList = $movieController->filterTopRated($movieList);
+    $genreDAO= new GenreDAO();
 ?>
 
 <div class="movie-buttons-div">
@@ -198,8 +200,11 @@
                     <div class="modal-footer">
                         <div style="display:block; margin:auto;">
                             <?php 
-                                $genresId = $movieValue->getGenresId();
-                                $genreNameList = array();
+                            /*modificar esto*/
+                              $genresId =$genreDAO->getGenres($movieValue);
+                                
+                               
+                               $genreNameList = array();
 
                                 foreach($genresId as $genreId)
                                 {

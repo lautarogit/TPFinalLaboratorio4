@@ -7,7 +7,7 @@
         private $title;
         private $overview;
         private $adult;
-        private $genresId;
+   
         private $originalLanguage;
         private $popularity;
         private $posterPath;
@@ -15,14 +15,13 @@
         private $status;
         private $runtime;
 
-        public function __construct($id = '', $title = '', $overview = '', $adult = '', $genresId = '', 
+        public function __construct($id = '', $title = '', $overview = '', $adult = '',
         $originalLanguage = '', $popularity = '', $posterPath = '', $releaseDate = '', $status = '', $runtime = '')
         {
             $this->id = $id;
             $this->title = $title;
             $this->overview = $overview;
             $this->adult = $adult;
-            $this->genresId = $genresId;
             $this->originalLanguage = $originalLanguage;
             $this->popularity = $popularity;
             $this->posterPath = $posterPath;
@@ -51,10 +50,7 @@
             return $this->adult;
         }
 
-        public function getGenresId ()
-        {
-            return $this->genresId;
-        }
+
 
         public function getOriginalLanguage ()
         {
@@ -106,10 +102,7 @@
             $this->adult = $adult;
         }
 
-        public function setGenresId ($genresId)
-        {
-            $this->genresId = $genresId;
-        }
+  
 
         public function setOriginalLanguage ($originalLanguage)
         {
