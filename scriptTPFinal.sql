@@ -26,6 +26,39 @@ CREATE TABLE IF NOT EXISTS cinemas (
 
 SELECT * FROM cinemas;
 
+<<<<<<< HEAD
+=======
+
+CREATE TABLE IF NOT EXISTS genres (
+	id INT NOT NULL unique,
+	nameGenre VARCHAR(15),
+	CONSTRAINT PK_idGenre PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS movies (
+	id INT NOT NULL unique,
+	title VARCHAR(50),
+	overview VARCHAR(200),
+	adult BOOLEAN,
+	originalLanguage VARCHAR(15),
+	popularity FLOAT,
+	posterPath VARCHAR(50),
+	releaseDate DATETIME,
+	`status` BOOLEAN,
+    runtime int ,
+	CONSTRAINT PK_idMovie PRIMARY KEY (id)
+);
+drop table movies;
+select * from movies;
+SELECT g.id,g.nameGenre FROM genres g inner join MoviesXgenres r on g.id=r.idGenre inner join movies m on r.idMovie =m.id where m.id=337401 ;
+CREATE TABLE IF NOT EXISTS moviesXgenres (
+	id INT NOT NULL AUTO_INCREMENT,
+	idMovie INT NOT NULL,
+	idGenre INT NOT NULL,
+	CONSTRAINT PK_id PRIMARY KEY (id)	
+);						
+select * from moviesXgenres;
+>>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
 CREATE TABLE IF NOT EXISTS rooms (
     id INT NOT NULL AUTO_INCREMENT,
     idCinema INT NOT NULL,

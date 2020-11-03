@@ -7,6 +7,10 @@
         private $title;
         private $overview;
         private $adult;
+<<<<<<< HEAD
+=======
+   
+>>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
         private $originalLanguage;
         private $popularity;
         private $posterPath;
@@ -14,7 +18,12 @@
         private $status;
         private $runtime;
 
+<<<<<<< HEAD
         public function __construct($id = '', $title = '', $overview = '', $adult = '', $originalLanguage = '', $popularity = '', $posterPath = '', $releaseDate = '', $status = '', $runtime = '')
+=======
+        public function __construct($id = '', $title = '', $overview = '', $adult = '',
+        $originalLanguage = '', $popularity = '', $posterPath = '', $releaseDate = '', $status = '', $runtime = '')
+>>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
         {
             $this->id = $id;
             $this->title = $title;
@@ -48,6 +57,11 @@
             return $this->adult;
         }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
         public function getOriginalLanguage ()
         {
             return $this->originalLanguage;
@@ -98,6 +112,11 @@
             $this->adult = $adult;
         }
 
+<<<<<<< HEAD
+=======
+  
+
+>>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
         public function setOriginalLanguage ($originalLanguage)
         {
             $this->originalLanguage = $originalLanguage;
