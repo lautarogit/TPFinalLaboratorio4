@@ -28,17 +28,6 @@
                 throw $ex;
             }
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    }
-    
-        public function getAll ()
-        {
-        $sqlQuery = "SELECT * FROM MoviesXgenres";
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
-=======
->>>>>>> lautaro2
         
         public function getAll ()
         {
@@ -72,10 +61,6 @@
         
         public function relateGender ()
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> lautaro2
             $sqlQuery = "SELECT * FROM MoviesXgenres r 
             INNER JOIN movies m 
             ON r.idMovie = m.id";
@@ -104,25 +89,6 @@
         }
 
         public function filterGenre ($id)
-<<<<<<< HEAD
-=======
-            $result = $this->mapout($result);
-
-       
-        }
-        else 
-        {
-            $result =  false;
-        }
-
-  
-
-        return $result;
-        }
-        public function mapout ($value)
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
-=======
->>>>>>> lautaro2
         {
             $sqlQuery = "SELECT m.id, r.idGenre FROM MoviesXgenres r 
             INNER JOIN movies m 
@@ -153,71 +119,9 @@
 
             return $result;
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         public function retrieveDataFromApi ()
         {
-=======
-        public function relateGender(){
-            $sqlQuery = "SELECT * FROM MoviesXgenres r inner join movies m on r.idMovie = m.id";
-        
-            try
-            {
-                $this->connection = Connection::getInstance();
-            
-                $result = $this->connection->execute($sqlQuery);
-            }
-            catch(PDOException $ex)
-            {
-                throw $ex;
-            }
-            
-            if(!empty($result))
-            {
-                $result = $this->mapout($result);
-            }
-            else 
-            {
-                $result =  false;
-            }
-
-            return $result;
-
-        }
-        public function filterGenre($id){
-            $sqlQuery = "SELECT * FROM MoviesXgenres r inner join movies m on r.idMovie = m.id where r.idGenre = :id";
-            $parameters['id']=$id;
-            try
-            {
-                $this->connection = Connection::getInstance();
-            
-                $result = $this->connection->execute($sqlQuery,$parameters);
-            }
-            catch(PDOException $ex)
-            {
-                throw $ex;
-            }
-            
-            if(!empty($result))
-            {
-                $result = $this->mapout($result);
-            }
-            else 
-            {
-                $result =  false;
-            }
-
-            return $result;
-
-        }
-        public function retrieveDataFromApi (){
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
-=======
-
-        public function retrieveDataFromApi ()
-        {
->>>>>>> lautaro2
             $moviedb = file_get_contents(API_HOST . '/movie/now_playing?api_key=' . TMDB_API_KEY . '&language=' . LANG . '&page=1');
             $movieList = ($moviedb) ? json_decode($moviedb, true)['results'] : array();
             $finalList = array();

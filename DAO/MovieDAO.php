@@ -58,20 +58,9 @@
                 $this->connection = Connection::getInstance();
 
                 $result = $this->connection->execute($sqlQuery);
-<<<<<<< HEAD
-<<<<<<< HEAD
             }
             catch(PDOException $ex) 
             {
-=======
-           
-            } catch (PDOException $ex) {
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
-=======
-            }
-            catch(PDOException $ex) 
-            {
->>>>>>> lautaro2
                 throw $ex;
             }
 
@@ -85,20 +74,11 @@
                 {
                    array_push($movieList, $result);
                 }
-<<<<<<< HEAD
             }
             else 
             {
                 $result =  false;
             }
-<<<<<<< HEAD
-=======
-            }
-            else 
-            {
-                $result =  false;
-            }
->>>>>>> lautaro2
 
             if(!empty($movieList))
             {
@@ -108,16 +88,8 @@
             {
                 $finalResult = $result;
             }
-=======
-         
-            else{
 
-            $result=false;
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
-
-             }
-
-            return $result;
+            return $finalResult;
         }
 
         public function getMovieById ($id)
@@ -191,19 +163,11 @@
             if(!empty($genreList))
             {
                 $finalResult = $genreList;  
-<<<<<<< HEAD
             }
             else
             {
                 $finalResult = $result;
             }
-=======
-            }
-            else
-            {
-                $finalResult = $result;
-            }
->>>>>>> lautaro2
 
             return $finalResult;
         }
@@ -215,42 +179,9 @@
 
             $runtime = $movie['runtime'];
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
-=======
->>>>>>> lautaro2
             intval($runtime);
 
             return $runtime;
-        }
-        public function getGenres (Movie $movie){
-            
-            $sqlQuery =     "SELECT g.id, g.nameGenre FROM genres g inner join MoviesXgenres r on g.id=r.idGenre inner join movies m on r.idMovie = m.id where m.id= :id";
-       $parameters['id']=$movie->getId();
-            try
-            {
-                $this->connection = Connection::getInstance();
-            
-                $result = $this->connection->execute($sqlQuery,$parameters);
-            }
-            catch(PDOException $ex)
-            {
-                throw $ex;
-            }
-            
-            if(!empty($result))
-            {
-                $result = $this->mapout($result);
-            }
-            else 
-            {
-                $result =  false;
-            }
-
-            return $result;
         }
 
         public function retrieveDataFromAPI ()
@@ -271,15 +202,7 @@
                 $status = 0;
                 $runtime = $this->setRuntime($id);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                 $newMovie = new Movie($id, $title, $overview, $adult, 
-=======
-                $newMovie = new Movie($id, $title, $overview, $adult,
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
-=======
-                $newMovie = new Movie($id, $title, $overview, $adult, 
->>>>>>> lautaro2
                 $originalLanguage, $popularity, $posterPath, $releaseDate, $status, $runtime);
        
                 $this->add($newMovie);
@@ -290,15 +213,7 @@
         {
             $value = is_array($value) ? $value : [];
 
-<<<<<<< HEAD
-<<<<<<< HEAD
             $resp = array_map(function ($p){
-=======
-            $resp = array_map(function ($p) {
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
-=======
-            $resp = array_map(function ($p){
->>>>>>> lautaro2
                 return new Movie($p['id'], $p['title'], $p['overview'], $p['adult'], $p['originalLanguage'], $p['popularity'], 
                 $p['posterPath'], $p['releaseDate'], $p['status'], $p['runtime']);
             }, $value);
@@ -306,3 +221,4 @@
             return count($resp) > 1 ? $resp : $resp['0'];
         }
     }
+?>

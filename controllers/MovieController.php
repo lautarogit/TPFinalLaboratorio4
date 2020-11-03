@@ -3,39 +3,20 @@
 
     use DAO\MovieDAO as MovieDAO;
     use DAO\GenreDAO as GenreDAO;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> lautaro2
     use DAO\MoviesXGenresDAO as MoviesXGenresDAO;
     use Models\Movie as Movie;
-=======
-    use DAO\MoviesXGenresDAO as MoviesXGenreDAO;
-use DAO\MoviesXGenresDAO as MoviesXGenresDAO;
-use Models\Movie as Movie;
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
     use Models\Genre as Genre;
-    use Models\MoviesXGenres as MoviesXGenres;
 
     class MovieController
     {
         private $movieDAO;
         private $genreDAO;
-        private $moviesXgenresDAO;
 
         public function __construct ()
         {
             $this->movieDAO = new MovieDAO();
             $this->genreDAO = new GenreDAO();
-<<<<<<< HEAD
-<<<<<<< HEAD
             $this->moviesXgenresDAO = new MoviesXGenresDAO();
-=======
-            $this->moviesXgenresDAO=new MoviesXGenresDAO();
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
-=======
-            $this->moviesXgenresDAO = new MoviesXGenresDAO();
->>>>>>> lautaro2
         }
 
         public function showMovieDashboard ($errorMessage = '')
@@ -66,21 +47,7 @@ use Models\Movie as Movie;
 
         public function filterByGenre ($idGenre)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
             $movieList = $this->movieDAO->getMoviesXgenres($idGenre);
-=======
-            $movieList = $this->movieDAO->getAll();
-            $filterMovieList = array();
-            $genresId = array();
-// mod
-            foreach($movieList as $movieValue)
-            {
-                $genresId = $movieValue->getGenresId();
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
-=======
-            $movieList = $this->movieDAO->getMoviesXgenres($idGenre);
->>>>>>> lautaro2
 
             $this->showFilterMovieDashboard($movieList);     
         }

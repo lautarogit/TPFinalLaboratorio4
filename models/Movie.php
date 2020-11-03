@@ -7,13 +7,6 @@
         private $title;
         private $overview;
         private $adult;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-   
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
-=======
->>>>>>> lautaro2
         private $originalLanguage;
         private $popularity;
         private $posterPath;
@@ -21,16 +14,7 @@
         private $status;
         private $runtime;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         public function __construct($id = '', $title = '', $overview = '', $adult = '', $originalLanguage = '', $popularity = '', $posterPath = '', $releaseDate = '', $status = '', $runtime = '')
-=======
-        public function __construct($id = '', $title = '', $overview = '', $adult = '',
-        $originalLanguage = '', $popularity = '', $posterPath = '', $releaseDate = '', $status = '', $runtime = '')
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
-=======
-        public function __construct($id = '', $title = '', $overview = '', $adult = '', $originalLanguage = '', $popularity = '', $posterPath = '', $releaseDate = '', $status = '', $runtime = '')
->>>>>>> lautaro2
         {
             $this->id = $id;
             $this->title = $title;
@@ -64,14 +48,6 @@
             return $this->adult;
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
-=======
->>>>>>> lautaro2
         public function getOriginalLanguage ()
         {
             return $this->originalLanguage;
@@ -122,14 +98,6 @@
             $this->adult = $adult;
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  
-
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
-=======
->>>>>>> lautaro2
         public function setOriginalLanguage ($originalLanguage)
         {
             $this->originalLanguage = $originalLanguage;

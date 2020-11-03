@@ -4,11 +4,9 @@
 
     $rolId = $_SESSION['loggedUser']->getRolId();
     use Controllers\MovieController as MovieController;
-    use DAO\GenreDAO as GenreDAO;
 
-$movieController = new MovieController();
+    $movieController = new MovieController();
     $topRatedMovieList = $movieController->filterTopRated($movieList);
-    $genreDAO= new GenreDAO();
 ?>
 
 <div class="movie-buttons-div">
@@ -204,39 +202,10 @@ $movieController = new MovieController();
 
                     <div class="card-footer">
                         <div style="display:block; margin:auto;">
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                            <?php 
-                            /*modificar esto*/
-                              $genresId =$genreDAO->getGenres($movieValue);
-                                
-                               
-                               $genreNameList = array();
-
-                                foreach($genresId as $genreId)
-                                {
-                                    foreach($genreList as $genre)
-                                    {
-                                        if($genreId == $genre->getId())
-                                        {
-                                            $genreName = $genre->getName();
-                                            array_push($genreNameList, $genreName);
-                                        } 
-                                    }     
-                                }   
-                            ?>
->>>>>>> 4d40689db52b9707d72e2ba89254201cb50a4f62
                         
                         <?php 
                             $genres = $genreDAO->getGenres($movieValue);
                         
-=======
-                        
-                        <?php 
-                            $genres = $genreDAO->getGenres($movieValue);
-                        
->>>>>>> lautaro2
                         ?>
 
                         <p><?php 
