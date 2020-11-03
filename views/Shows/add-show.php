@@ -3,16 +3,16 @@
     require_once(VIEWS_PATH."nav.php");
 
     use Models\Movie as Movie;
-    use DAO\MovieDAOJSON as MovieDAOJSON;
-    use DAO\GenreDAOJSON as GenreDAOJSON;
+    use DAO\MovieDAO as MovieDAO;
+    use DAO\GenreDAO as GenreDAO;
     use Models\Show as Show;
     use Models\Room as Room;
     use DAO\CinemaDAO as CinemaDAO;
     use DAO\RoomDAO as RoomDAO;
     use DAO\ShowDAO as ShowDAO;
 
-    $movieDAO = new MovieDAOJSON();
-    $genreDAO = new GenreDAOJSON();
+    $movieDAO = new MovieDAO();
+    $genreDAO = new GenreDAO();
     $movieList = $movieDAO->getAll();
     $genreList = $genreDAO->getAll();
 ?>
@@ -62,45 +62,9 @@
 
                                 
 
-                                <div class="modal-footer">
+                                <div class="card-footer">
                                     <div style="display:block; margin:auto;">
-                                        <?php 
-                                            $genresId = $movieValue->getGenresId();
-                                            $genreNameList = array();
-
-                                            foreach($genresId as $genreId)
-                                            {
-                                                foreach($genreList as $genre)
-                                                {
-                                                    if($genreId == $genre->getId())
-                                                    {
-                                                        $genreName = $genre->getName();
-                                                        array_push($genreNameList, $genreName);
-                                                    } 
-                                                }     
-                                            }   
-                                        ?>
-                                    
-                                        <p><?php 
-                                            echo "<strong>Géneros: </strong>"; 
-
-                                            $genreNameListDimension = count($genreNameList);
-                                            $i = 0;
-                                            
-                                            foreach($genreNameList as $genreName)
-                                            {
-                                                $i ++;
-
-                                                if($i == $genreNameListDimension)
-                                                {  
-                                                    echo $genreName;
-                                                }
-                                                else
-                                                {
-                                                    echo $genreName.", ";
-                                                } 
-                                            }
-                                        ?></p>
+                                        <p>Géneros: Example</p>
 
                                         <p><?= "<strong>Fecha de lanzamiento: </strong>".$movieValue->getReleaseDate();?></p>
                                     </div>

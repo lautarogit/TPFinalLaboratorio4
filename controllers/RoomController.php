@@ -7,7 +7,7 @@
     use Models\Room as Room;
     use DAO\ShowDAO as ShowDAO;
     use Models\Show as Show;
-    use DAO\MovieDAOJSON as MovieDAOJSON;
+    use DAO\MovieDAO as MovieDAO;
     use Models\Movie as Movie;
     use Controllers\iValidation as iValidation;
 
@@ -23,7 +23,7 @@
             $this->roomDAO = new RoomDAO();
             $this->cinemaDAO = new CinemaDAO();
             $this->showDAO = new ShowDAO();
-            $this->movieDAO = new MovieDAOJSON;
+            $this->movieDAO = new MovieDAO();
         }
 
         public function showRoomPermissionBlocked ($rolId)

@@ -6,7 +6,7 @@
     use Models\Room as Room;
     use DAO\RoomDAO as RoomDAO;
     use Models\Movie as Movie;
-    use DAO\MovieDAOJSON as MovieDAOJSON;
+    use DAO\MovieDAO as MovieDAO;
     use Controllers\iValidation as iValidation;
     use Controllers\RoomController as RoomController;
     use DateTime;
@@ -19,7 +19,7 @@
         {
             $this->showDAO = new ShowDAO();
             $this->roomDAO = new RoomDAO();
-            $this->movieDAO = new MovieDAOJSON();
+            $this->movieDAO = new MovieDAO();
             $this->roomController = new RoomController();
         }
 
@@ -41,33 +41,34 @@
         {
             $flag = false;
             $validateIdMovie = $this->validateFormField($idMovie);
-            #$validateDateTime = $this->validateDateTime();
+            #$validateDateTime = $this->validateDateTime($dateTime);
             $validateRemainingTickets = $this->validateFormField($remainingTickets);
-
-            $movieFinded = $this->showDAO->getShowByIdMovie($idMovie);
-
-            if($validateIdMovie && !empty($dateTime) && $validateRemainingTickets)
+            $movieFinded = $this->showDAO->getShowMovieByIdCinema($idMovie, $idCinema);
+            var_dump($movieFinded);
+            if($validateIdMovie && !empty($dateTime) && $validateRemainingTickets && !$movieFinded)
             {  
-                if(!$movieFinded)
-                {
-                    $flag = true;
-                }    
-                else
-                {
-                    $flag = false;  
-                } 
+                $flag = true; 
+            }
+            else
+            {
+                $flag = false;
             }
             
             return $flag;
         }
 
-        public function validateDateTime ()
+        public function validateDateTime ($dateTime)
         {
             $result = false;
-            $date = new DateTime("2020-10-31"); #serian las fechas
+
+            $movieDate = substr($dateTime, 0, 10);
+
+            $date = new DateTime($movieDate); #serian las fechas
             $newDate = new DateTime("2020-10-31"); #irian las fechas nueva
             $time = new DateTime("15:29:00"); #irian las horas, deberia compararlo asi y sumandole el get duration.
             $newTime = new DateTime("15:22:00"); #irian la hora nueva
+
+            var_dump($movieDate);
 
             if($date == $newDate)
             {
@@ -101,7 +102,7 @@
 
             if($validateShow)
             {
-                /*$show->setRoom($room);
+                $show->setRoom($room);
                 $show->setMovie($movie);
                 $show->setDateTime($dateTime);
                 $show->setRemainingTickets($remainingTickets);
@@ -113,7 +114,7 @@
                 $idShow = $showMapout->getId();
                 $room->setIdShow($idShow);
                 $this->roomDAO->edit($room);
-                */
+                
                 $this->roomController->showRoomDashboard($idCinema);
             }
             else

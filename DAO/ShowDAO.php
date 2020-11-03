@@ -140,6 +140,46 @@
             return $show;
         }
 
+        public function getShowMovieByIdCinema ($idMovie, $idCinema)
+        {
+            $sqlQuery = "SELECT s.idMovie
+            FROM shows s
+            INNER JOIN rooms r 
+            ON s.idRoom = r.id
+            WHERE r.idCinema = :idCinema
+            AND s.idMovie = :idMovie";
+
+            $parameters['idMovie'] = $idMovie;
+            $parameters['idCinema'] = $idCinema;
+
+            var_dump($idMovie);
+            var_dump($idCinema);
+
+            try
+            {
+                $this->connection = Connection::getInstance();
+                
+                $resultSet = $this->connection->execute($sqlQuery, $parameters);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+            
+            //var_dump($resultSet);
+
+            if(!empty($resultSet))
+            {
+                $movie = true;
+            }
+            else
+            {
+                $movie = false;
+            }
+
+            return $movie;
+        }
+
         public function getShowById ($id)
         {
             $sqlQuery = "SELECT * FROM shows WHERE id = :id";
