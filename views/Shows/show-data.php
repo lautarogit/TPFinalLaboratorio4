@@ -7,14 +7,14 @@
     use Models\Show as Show;
     use DAO\ShowDAO as ShowDAO;
     use Models\Movie as Movie;
-    use DAO\MovieDAOJSON as MovieDAOJSON;
+    use DAO\MovieDAO as MovieDAO;
 
     $show = new Show();
     $showDAO = new ShowDAO();
     
     $roomDAO = new RoomDAO();
     
-    $movieDAO = new MovieDAOJSON();
+    $movieDAO = new MovieDAO();
     $showMapout = $showDAO->getShowById($idShow);
 
     $id = $showMapout->getId();

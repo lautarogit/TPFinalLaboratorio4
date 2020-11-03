@@ -1,100 +1,186 @@
 <?php
-namespace DAO;
-    
-use Models\Genre as Genre;
-use \PDOException as PDOException;
-use DAO\Connection as Connection;
+    namespace DAO;
+        
+    use Models\Genre as Genre;
+    use \PDOException as PDOException;
+    use DAO\Connection as Connection;
 
-class GenreDAO
-{
-    private $connection;
-
-    public function add (Genre $genre)
+    class GenreDAO
     {
-        $sqlQuery = "INSERT INTO Genre (id,nameGenre) 
-        VALUES (:id,:nameGenre)";
-        $parameters["nameGenre"]=$genre->getName();
-        $parameters['id'] = $genre->getId();
-     
+        private $connection;
 
-        try
+        public function add (Genre $genre)
         {
-            $this->connection = Connection::getInstance();
+            $sqlQuery = "INSERT INTO Genres (id, nameGenre) 
+            VALUES (:id, :nameGenre)";
 
-            return $this->connection->executeNonQuery($sqlQuery, $parameters);
-        }
-        catch(PDOException $ex)
-        {
-            throw $ex;
-        }
-    }
-    
-        public function getAll ()
-        {
-        $sqlQuery = "SELECT * FROM genres";
+            $parameters["nameGenre"] = $genre->getName();
+            $parameters['id'] = $genre->getId();
         
-        try
-        {
-            $this->connection = Connection::getInstance();
-        
-            $result = $this->connection->execute($sqlQuery);
-        }
-        catch(PDOException $ex)
-        {
-            throw $ex;
-        }
-        
-        if(!empty($result))
-        {
-            $result = $this->mapout($result);
-
-            $cinemaList = array();
-
-            if(!is_array($result))
+            try
             {
-               array_push($genreList, $result);
+                $this->connection = Connection::getInstance();
+
+                return $this->connection->executeNonQuery($sqlQuery, $parameters);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
             }
         }
-        else 
+
+        public function getAll ()
         {
-            $result =  false;
+            $sqlQuery = "SELECT * FROM genres";
+            
+            try
+            {
+                $this->connection = Connection::getInstance();
+            
+                $result = $this->connection->execute($sqlQuery);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+            
+            if(!empty($result))
+            {
+                $result = $this->mapout($result);
+
+                $genreList = array();
+
+                if(!is_array($result))
+                {
+                    array_push($genreList, $result);
+                }
+            }
+            else 
+            {
+                $result =  false;
+            }
+
+            if(!empty($genreList))
+            {
+                $finalResult = $genreList;  
+            }
+            else
+            {
+                $finalResult = $result;
+            }
+
+            return $finalResult;
         }
 
-        if(!empty($genreList))
-        {
-            $finalResult = $genreList;  
+        public function getGenres ($movie)
+        {  
+            $sqlQuery = "SELECT g.id, g.nameGenre 
+            FROM genres g 
+            INNER JOIN MoviesXgenres r 
+            ON g.id = r.idGenre 
+            INNER JOIN movies m 
+            ON r.idMovie = m.id 
+            WHERE m.id = :id";
+
+            $parameters['id'] = $movie->getId();
+
+            try
+            {
+                $this->connection = Connection::getInstance();
+                
+                $result = $this->connection->execute($sqlQuery, $parameters);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+                
+            if(!empty($result))
+            {
+                $result = $this->mapout($result);
+
+                $genreList = array();
+
+                if(!is_array($result))
+                {
+                   array_push($genreList, $result);
+                }
+            }
+            else 
+            {
+                $result =  false;
+            }
+
+            if(!empty($genreList))
+            {
+                $finalResult = $genreList;  
+            }
+            else
+            {
+                $finalResult = $result;
+            }
+
+            return $finalResult;
         }
-        else
+            
+        public function relateGenreMovie ($id)
+        {  
+            $sqlQuery ="SELECT * FROM movies m 
+            INNER JOIN MoviesXgenres r 
+            ON m.id = r.idMovie 
+            INNER JOIN genres 
+            ON g.id = r.idGenre 
+            WHERE m.id = :id";
+
+            $parameters['id'] = $id;
+                
+            try
+            {
+                $this->connection = Connection::getInstance();
+                    
+                $result = $this->connection->execute($sqlQuery);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+                    
+            if(!empty($result))
+            {
+                $result = $this->mapout($result);
+            }
+            else 
+            {
+                $result =  false;
+            }
+        
+            return $result;
+        }
+            
+        public function retrieveDataFromApi ()
         {
-            $finalResult = $result;
+            $moviedb = file_get_contents(API_HOST.'/genre/movie/list?api_key='.TMDB_API_KEY.'&language='.LANG);
+            $genreList = ($moviedb) ? json_decode($moviedb, true)['genres']: array();
+
+            foreach ($genreList as $genreValue) 
+            {
+                $name = $genreValue['name'];
+                $IdGenre = $genreValue['id'];
+                $genre = new Genre($IdGenre, $name);
+                
+                $this->add($genre); 
+            }    
         }
 
-        return $finalResult;
-        }
         public function mapout ($value)
         {
-        $value = is_array($value) ? $value : [];
+            $value = is_array($value) ? $value : [];
 
-        $resp = array_map(function($p){
-            return new Genre($p['id'],$p['nameGenre']);
-        }, $value);
+            $resp = array_map(function($p){
+                return new Genre($p['id'], $p['nameGenre']);
+            }, $value);
 
-        return count($resp) > 1 ? $resp : $resp['0'];
+            return count($resp) > 1 ? $resp : $resp['0'];
         }
-        public function retrieveDataFromApi (){
-            $moviedb = file_get_contents(API_HOST . '/movie/now_playing?api_key=' . TMDB_API_KEY . '&language=' . LANG . '&page=1');
-            $genreList = ($moviedb) ? json_decode($moviedb, true)['runtime'] : array();
-        /*    $finalList=array();
-            foreach ($genreList as $gnr) {
-               
-               $name= $gnr['name'];
-                $IdGenre = $gnr['id'];
-         $genre=new Genre($IdGenre,$name);
-                array_push($finalList,$genre);
-                
-            }*/
-            return $genreList;
     }
-}
-
 ?>

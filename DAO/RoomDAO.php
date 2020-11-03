@@ -77,7 +77,7 @@
 
         public function getRoomByID ($id)
         {
-            $sqlQuery = "SELECT * FROM rooms WHERE id = :id";
+            $sqlQuery = "SELECT * FROM rooms WHERE (id = :id)";
 
             $parameters['id'] = $id;
 

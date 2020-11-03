@@ -121,6 +121,7 @@
                         </div>
             <?php
                     }
+                    
                     $i++;
                 }
             ?>
@@ -142,17 +143,21 @@
 
 <main class="d-flex align-items-center height-100">
     <?php 
-        if(count($movieList) >= 5)
+        if(!empty($movieList))
         {
+            if(count($movieList) >= 5)
+            {
     ?>
-    <div class="grid">
+                <div class="grid">
     <?php   
-        }
-        else if(count($movieList) <= 4)
-        {
+            }
+            else if(count($movieList) <= 4)
+            {
+            
     ?>
-    <div class="card-columns">
+                <div class="card-columns">
     <?php 
+            }
         } 
 
         if(empty($movieList))
@@ -195,53 +200,42 @@
                             ?></p>       
                     </div>
 
-                    <div class="modal-footer">
+                    <div class="card-footer">
                         <div style="display:block; margin:auto;">
-                            <?php 
-                                $genresId = $movieValue->getGenresId();
-                                $genreNameList = array();
-
-                                foreach($genresId as $genreId)
-                                {
-                                    foreach($genreList as $genre)
-                                    {
-                                        if($genreId == $genre->getId())
-                                        {
-                                            $genreName = $genre->getName();
-                                            array_push($genreNameList, $genreName);
-                                        } 
-                                    }     
-                                }   
-                            ?>
                         
-                            <p><?php 
+                        <?php 
+                            $genres = $genreDAO->getGenres($movieValue);
+                        
+                        ?>
+
+                        <p><?php 
                                 echo "<strong>Géneros: </strong>"; 
 
-                                $genreNameListDimension = count($genreNameList);
+                                $genresDimension = count($genres);
                                 $i = 0;
                                 
-                                foreach($genreNameList as $genreName)
+                                foreach($genres as $genre)
                                 {
                                     $i ++;
 
-                                    if($i == $genreNameListDimension)
+                                    if($i == $genresDimension)
                                     {  
-                                        echo $genreName;
+                                        echo $genre->getName();
                                     }
                                     else
                                     {
-                                        echo $genreName.", ";
+                                        echo $genre->getName().", ";
                                     } 
                                 }
                             ?></p>
 
-                            <p><?= "<strong>Fecha de lanzamiento: </strong>".$movieValue->getReleaseDate();?></p>
+                            <p><?= "<strong>Fecha de lanzamiento: </strong>".substr($movieValue->getReleaseDate(), 0, 10);?></p>
                         </div>
                     </div>
 
                     <form action="<?= FRONT_ROOT."Billboard/showBillboard"?>" method="POST">
                         <button class="btn btn-sm btn-success m-1" style="width: 354px;" type="submit" name="idMovie" value="<?= $movieValue->getId();?>">
-                            Comprar entrada
+                            Consultar por entrada
                         </button>   
                     </form>  
                 </div>                              
