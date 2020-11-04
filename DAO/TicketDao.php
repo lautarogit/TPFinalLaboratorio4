@@ -77,7 +77,16 @@
             return $finalResult;
         }
         public function getTickets($idUser){
-            $sqlQuery ="   SELECT  FROM tickets t 
+            $sqlQuery ="   SELECT 
+             c.name as  'nameCinema'
+            , c.location as 'locationCinema'
+            , r.name as 'roomName'
+            ,m.title as 'nameMovie'
+            ,m.runtime as 'runtime'
+            , s.dateTime  as 'dateShow' 
+            , u.userName as 'userName'
+            ,u.email  as 'email'
+              , r.price FROM tickets t 
             INNER JOIN shows s 
             ON t.idshow = s.id 
             INNER JOIN users  u
@@ -95,41 +104,14 @@
              {
                  $this->connection = Connection::getInstance();
              
-                 $result = $this->connection->execute($sqlQuery,$parameter);
+               return   $result = $this->connection->execute($sqlQuery,$parameter);
              }
              catch(PDOException $ex)
              {
                  throw $ex;
              }
-             
-             if(!empty($result))
-             {
-              //   $result = $this->mapout($result);
- 
-                 $ticketList = array();
- 
-                 if(!is_array($result))
-                 {
-                     array_push($ticketList, $result);
-                 }
-             }
-             else 
-             {
-                 $result =  false;
-             }
- 
-             if(!empty($ticketList))
-             {
-                 $finalResult = $ticketList;  
-             }
-             else
-             {
-                 $finalResult = $result;
-             }
- 
-             return $finalResult;
-         }
-        }*/
+      
+        }
         public function getAll ()
         {
             $sqlQuery = "SELECT * FROM tickets";
@@ -172,6 +154,7 @@
 
             return $finalResult;
         }
+      
 
         public function mapout($value)
         {
