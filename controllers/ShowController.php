@@ -314,7 +314,7 @@
 
             if($validateShow)
             {
-                /*$show->setRoom($room);
+                $show->setRoom($room);
                 $show->setMovie($movie);
                 $show->setDateTime($dateTime);
                 $show->setRemainingTickets($remainingTickets);
@@ -325,7 +325,7 @@
                 $showMapout = $this->showDAO->getShowByIdRoom($idRoom);
                 $idShow = $showMapout->getId();
                 $room->setIdShow($idShow);
-                $this->roomDAO->edit($room);*/
+                $this->roomDAO->edit($room);
                 
                 $this->roomController->showRoomDashboard($idCinema);
             }
