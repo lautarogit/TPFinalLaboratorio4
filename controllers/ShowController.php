@@ -250,10 +250,19 @@
             $actualHours = substr($actualHours ,1, 2);
             $actualMinutes = substr($actualMinutes ,1, 2);
     
-            if(($year >= $actualYear) && ($month >= $actualMonth) && ($day >= $actualDay)
-            && ($hours >= $actualHours) && ($minutes >= $actualMinutes))
+            if(($year >= $actualYear) && ($month >= $actualMonth) && ($day >= $actualDay) && ($hours >= $actualHours))
             {
-                $result = true;  
+                if($hours > $actualHours)
+                {
+                    $result = true;
+                }
+                else if($hours == $actualHours)
+                {
+                    if($minutes >= $actualMinutes)
+                    {
+                        $result = true;
+                    }
+                }  
             }
             else
             {
