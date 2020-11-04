@@ -202,32 +202,29 @@
 
                     <div class="card-footer">
                         <div style="display:block; margin:auto;">
-                        
-                        <?php 
-                            $genres = $genreDAO->getGenres($movieValue);
-                        
-                        ?>
+                            <p>
+                                <?php 
+                                    $genres = $this->genreDAO->getGenres($movieValue);
+                                    echo "<strong>Géneros: </strong>"; 
 
-                        <p><?php 
-                                echo "<strong>Géneros: </strong>"; 
-
-                                $genresDimension = count($genres);
-                                $i = 0;
-                                
-                                foreach($genres as $genre)
-                                {
-                                    $i ++;
-
-                                    if($i == $genresDimension)
-                                    {  
-                                        echo $genre->getName();
-                                    }
-                                    else
+                                    $genresDimension = count($genres);
+                                    $i = 0;
+                                                
+                                    foreach($genres as $genre)
                                     {
-                                        echo $genre->getName().", ";
-                                    } 
-                                }
-                            ?></p>
+                                        $i ++;
+
+                                        if($i == $genresDimension)
+                                        {  
+                                            echo $genre->getName();
+                                        }
+                                        else
+                                        {
+                                            echo $genre->getName().", ";
+                                        } 
+                                    }
+                                ?>
+                            </p>
 
                             <p><?= "<strong>Fecha de lanzamiento: </strong>".substr($movieValue->getReleaseDate(), 0, 10);?></p>
                         </div>

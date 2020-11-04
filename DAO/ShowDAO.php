@@ -41,7 +41,8 @@
 
         public function getAll ()
         {
-            $sqlQuery = "SELECT * FROM shows";
+            $sqlQuery = "SELECT * 
+            FROM shows";
             
             try
             {
@@ -84,7 +85,9 @@
 
         public function getShowByIdRoom ($idRoom)
         {
-            $sqlQuery = "SELECT * FROM shows WHERE idRoom = :idRoom";
+            $sqlQuery = "SELECT * 
+            FROM shows 
+            WHERE idRoom = :idRoom";
 
             $parameters['idRoom'] = $idRoom;
 
@@ -111,9 +114,46 @@
             return $show;
         }
 
+        public function getShowByIdCinemaAndIdMovie ($idCinema, $idMovie)
+        {
+            $sqlQuery = "SELECT *
+            FROM shows s
+            INNER JOIN rooms r 
+            ON s.idRoom = r.id
+            WHERE r.idCinema = :idCinema
+            AND s.idMovie = :idMovie";
+
+            $parameters['idCinema'] = $idCinema;
+            $parameters['idMovie'] = $idMovie;
+
+            try
+            {
+                $this->connection = Connection::getInstance();
+                
+                $resultSet = $this->connection->execute($sqlQuery, $parameters);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+            
+            if(!empty($resultSet))
+            {
+                $show = $this->mapout($resultSet);
+            }
+            else
+            {
+                $show = false;
+            }
+
+            return $show;
+        }
+
         public function getShowByIdMovie ($idMovie)
         {
-            $sqlQuery = "SELECT * FROM shows WHERE idMovie = :idMovie";
+            $sqlQuery = "SELECT * 
+            FROM shows 
+            WHERE idMovie = :idMovie";
 
             $parameters['idMovie'] = $idMovie;
 
@@ -152,9 +192,6 @@
             $parameters['idMovie'] = $idMovie;
             $parameters['idCinema'] = $idCinema;
 
-            var_dump($idMovie);
-            var_dump($idCinema);
-
             try
             {
                 $this->connection = Connection::getInstance();
@@ -165,8 +202,6 @@
             {
                 throw $ex;
             }
-            
-            //var_dump($resultSet);
 
             if(!empty($resultSet))
             {
@@ -182,7 +217,9 @@
 
         public function getShowById ($id)
         {
-            $sqlQuery = "SELECT * FROM shows WHERE id = :id";
+            $sqlQuery = "SELECT * 
+            FROM shows 
+            WHERE id = :id";
 
             $parameters['id'] = $id;
 
@@ -217,7 +254,9 @@
             $dateTime = $showUpdated->getDateTime();
             $remainingTickets = $showUpdated->getRemainingTickets();
 
-            $sqlQuery = "UPDATE shows SET idRoom = :idRoom, idMovie = :idMovie, dateTime = :dateTime, remainingTickets = :remainingTickets WHERE (id = :id)";
+            $sqlQuery = "UPDATE shows 
+            SET idRoom = :idRoom, idMovie = :idMovie, dateTime = :dateTime, remainingTickets = :remainingTickets 
+            WHERE (id = :id)";
 
             $parameters['id'] = $id;
             $parameters['idRoom'] = $idRoom;

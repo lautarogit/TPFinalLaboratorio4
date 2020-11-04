@@ -121,6 +121,57 @@
             return $movie;
         }
 
+        public function getMovieListByIdCinema ($idCinema)
+        {
+            $sqlQuery = "SELECT m.*
+            FROM shows s
+            INNER JOIN rooms r 
+            ON s.idRoom = r.id
+            INNER JOIN movies m
+            ON m.id = s.idMovie
+            WHERE r.idCinema = :idCinema";
+
+            $parameters['idCinema'] = $idCinema;
+
+            try
+            {
+                $this->connection = Connection::getInstance();
+                
+                $result = $this->connection->execute($sqlQuery, $parameters);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+
+            if(!empty($result))
+            {
+                $result = $this->mapout($result);
+
+                $movieList = array();
+
+                if(!is_array($result))
+                {
+                   array_push($movieList, $result);
+                }
+            }
+            else 
+            {
+                $result =  false;
+            }
+
+            if(!empty($movieList))
+            {
+                $finalResult = $movieList;  
+            }
+            else
+            {
+                $finalResult = $result;
+            }
+
+            return $finalResult;
+        }
+
         public function getMoviesXgenres ($id)
         {  
             $sqlQuery = "SELECT m.id, m.title, m.overview, m.adult, m.originalLanguage, m.popularity, m.posterPath, m.releaseDate, m.status, m.runtime
