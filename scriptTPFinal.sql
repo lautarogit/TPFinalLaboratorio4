@@ -91,7 +91,20 @@ SELECT * FROM moviesXgenres;
 CREATE TABLE IF NOT EXISTS tickets (
     id INT NOT NULL AUTO_INCREMENT,
     codeQR VARCHAR(200),
-    idUser INT NOT NULL,
-    CONSTRAINT PK_id PRIMARY KEY (id),
-    CONSTRAINT FK_idUser FOREIGN KEY (idUser) REFERENCES Users (id)
+   idShow int not null,
+   idUser INT NOT NULL,
+    CONSTRAINT PK_id PRIMARY KEY (id)
 );
+
+select * from tickets;
+SELECT * FROM tickets WHERE idUser= 231231;
+
+select * from tickets t 
+inner join shows s 
+on t.idshow = s.id 
+inner join users  u
+on s.idUser = u.dni
+inner join rooms r 
+on s.idRoom = r.id 
+inner join movies m 
+on s.idMovie = m.id where t.idUser = 231231; 

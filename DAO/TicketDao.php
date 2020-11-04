@@ -35,7 +35,101 @@
                 throw $ex;
             } 
         }
+        public function getTicketByUser($idUser){
+            $sqlQuery='SELECT * FROM tickets WHERE idUser= :idUser ';
+           $parameter['idUser']=$idUser;
+            try
+            {
+                $this->connection = Connection::getInstance();
+            
+                $result = $this->connection->execute($sqlQuery,$parameter);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+            
+            if(!empty($result))
+            {
+                $result = $this->mapout($result);
 
+                $ticketList = array();
+
+                if(!is_array($result))
+                {
+                    array_push($ticketList, $result);
+                }
+            }
+            else 
+            {
+                $result =  false;
+            }
+
+            if(!empty($ticketList))
+            {
+                $finalResult = $ticketList;  
+            }
+            else
+            {
+                $finalResult = $result;
+            }
+
+            return $finalResult;
+        }
+        public function getTickets($idUser){
+            $sqlQuery ="   SELECT  FROM tickets t 
+            INNER JOIN shows s 
+            ON t.idshow = s.id 
+            INNER JOIN users  u
+            ON t.idUser = u.dni
+            INNER JOIN rooms r 
+            ON s.idRoom = r.id 
+            INNER JOiN cinemas c
+            ON c.id= r.idCinema
+            INNER JOIN movies m 
+            ON s.idMovie = m.id
+            WHERE t.idUser = :idUser; ";
+      
+            $parameter['idUser']=$idUser;
+             try
+             {
+                 $this->connection = Connection::getInstance();
+             
+                 $result = $this->connection->execute($sqlQuery,$parameter);
+             }
+             catch(PDOException $ex)
+             {
+                 throw $ex;
+             }
+             
+             if(!empty($result))
+             {
+              //   $result = $this->mapout($result);
+ 
+                 $ticketList = array();
+ 
+                 if(!is_array($result))
+                 {
+                     array_push($ticketList, $result);
+                 }
+             }
+             else 
+             {
+                 $result =  false;
+             }
+ 
+             if(!empty($ticketList))
+             {
+                 $finalResult = $ticketList;  
+             }
+             else
+             {
+                 $finalResult = $result;
+             }
+ 
+             return $finalResult;
+         }
+        }*/
         public function getAll ()
         {
             $sqlQuery = "SELECT * FROM tickets";
@@ -84,7 +178,7 @@
             $value = is_array($value) ? $value : [];
 
             $resp = array_map(function($p){
-                return new Ticket($p['id'], $p['codeQR'], $p['idShow'], $p['idUser']);
+                return new Ticket($p['codeQR'], $p['idShow'], $p['idUser']);
             }, $value);
 
             return count($resp) > 1 ? $resp : $resp['0'];

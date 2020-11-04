@@ -9,6 +9,10 @@
         use DAO\MoviesXGenresDAO as MoviesXGenresDAO;
         $moviesXGenresDAO=new MoviesXGenresDAO();
         var_dump($moviesXGenresDAO->retrieveDataFromApi());*/
+use models\Ticket as Ticket;
+use DAO\TicketDAO as TicketDAO;
+$ticketDAO=new TicketDAO();
 
         
+var_dump($ticketDAO->getTicketByUser($_SESSION["loggedUser"]->getDni()));
 ?>
