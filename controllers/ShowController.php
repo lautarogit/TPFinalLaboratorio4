@@ -228,22 +228,30 @@
             {
                 $result = true;
             }
-
+            
             $year = substr($newDateTime, 0, 4);
             $month = substr($newDateTime, 5, 2);
             $day = substr($newDateTime, 8, 2);
-            
-   
+            $hours = substr($newDateTime, 11, 2);
+            $minutes = substr($newDateTime, 14, 2);
+
+            date_default_timezone_set('America/Argentina/Buenos_Aires');
             $actualDate = new DateTime();
+
             $actualYear = $actualDate->format('%Y');
             $actualMonth = $actualDate->format('%m');
             $actualDay = $actualDate->format('%d');
+            $actualHours = $actualDate->format('%H');
+            $actualMinutes = $actualDate->format('%i');
 
             $actualYear = substr($actualYear ,1, 4);
             $actualMonth = substr($actualMonth ,1, 2);
             $actualDay = substr($actualDay, 1, 2);
+            $actualHours = substr($actualHours ,1, 2);
+            $actualMinutes = substr($actualMinutes ,1, 2);
     
-            if(($year >= $actualYear) && ($month >= $actualMonth) && ($day >= $actualDay))
+            if(($year >= $actualYear) && ($month >= $actualMonth) && ($day >= $actualDay)
+            && ($hours >= $actualHours) && ($minutes >= $actualMinutes))
             {
                 $result = true;  
             }
@@ -297,7 +305,7 @@
 
             if($validateShow)
             {
-                $show->setRoom($room);
+                /*$show->setRoom($room);
                 $show->setMovie($movie);
                 $show->setDateTime($dateTime);
                 $show->setRemainingTickets($remainingTickets);
@@ -308,7 +316,7 @@
                 $showMapout = $this->showDAO->getShowByIdRoom($idRoom);
                 $idShow = $showMapout->getId();
                 $room->setIdShow($idShow);
-                $this->roomDAO->edit($room);
+                $this->roomDAO->edit($room);*/
                 
                 $this->roomController->showRoomDashboard($idCinema);
             }
