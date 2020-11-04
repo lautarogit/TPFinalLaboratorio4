@@ -122,17 +122,17 @@
 
                                                                       <div class="form-group">
                                                                            <label for="capacity"><h5><strong>Capacidad</strong> (2-3 dígitos)</h5></label>
-                                                                           <input class="form-control form-control-lg" type="number" name="capacity" value="<?= $roomValue->getCapacity();?>" placeholder="Ingresar localidad">
+                                                                           <input class="form-control form-control-lg" type="number" name="capacity" value="<?= $roomValue->getCapacity();?>" placeholder="Ingresar capacidad">
                                                                       </div>
 
                                                                       <div class="form-group">
                                                                            <label for="price"><h5><strong>Precio</strong> (2-10 dígitos)</h5></label>
-                                                                           <input class="form-control form-control-lg" type="number" name="price" value="<?= $roomValue->getPrice();?>" placeholder="Ingresar localidad">
+                                                                           <input class="form-control form-control-lg" type="number" name="price" value="<?= $roomValue->getPrice();?>" placeholder="Ingresar precio">
                                                                       </div>
 
                                                                       <div class="form-group">
                                                                            <label for="name"><h5><strong>Nombre</strong> (2-25 caracteres)</h5></label>
-                                                                           <input class="form-control form-control-lg" type="text" name="name" value="<?= $roomValue->getName();?>" placeholder="Ingresar capacidad">
+                                                                           <input class="form-control form-control-lg" type="text" name="name" value="<?= $roomValue->getName();?>" placeholder="Ingresar nombre">
                                                                       </div>
 
                                                                       <div class="form-group">
