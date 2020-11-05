@@ -5,10 +5,28 @@ use Models\User as User ;
 use DAO\UserDAO as UserDAO;
 class ImageUserDAO {
 private $connection;
+public function setImage($user,$image){
+    $sqlQuery = "INSERT INTO imageUser (idUser,image) VALUES(:idUser,:image)";
+    $parameter['idUser']=$user->getId();
+    $parameter['image']=$image;
+    
+    try 
+    {
+        $this->connection = Connection::getInstance();
+
+        return $this->connection->executeNonQuery($sqlQuery, $parameter);
+    }   
+    catch(PDOException $ex)
+    {
+        throw $ex;
+    } 
+}
+}
     public function getImage(User $user){
 $sqlQuery=" SELECT  * FROM ImageUser  where dni=:dni ";
 
 $parameter['dni']=$user->getDni();
+
 try
 {
     $this->connection = Connection::getInstance();
@@ -22,26 +40,17 @@ catch(PDOException $ex)
 
 if(!empty($resultSet))
 {
-    $image = $this->mapout($resultSet);
+    $image = $resultSet;
 }
 else
 {
-    $cinema = false;
+    $image= false;
 }
 
 return $image;
     }
-public function mapout ($value)
-{
-    $value = is_array($value) ? $value : [];
-$image=array();
-    $resp = array_map(function($p){
-        return $image=[[$p['dni'],$p['linkImage']];
-    }, $value);
+}
 
-    return count($resp) > 1 ? $resp : $resp['0'];
-}
-}
 
     
 
