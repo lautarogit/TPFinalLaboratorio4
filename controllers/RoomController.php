@@ -110,13 +110,38 @@
 
                 if(!$room->getStatus())
                 {
-                    $room->setStatus(true);
-                    $this->roomDAO->edit($room);
-                    $errorMessage = "Se ha rehabilitado una sala con el nombre ingresado";
+                    if($validateCapacity && $validatePrice && $validateName)
+                    {
+                        $room->setStatus(true);
+                        $room->setIdCinema($idCinema);
+                        $room->setCapacity($capacity);
+                        $room->setPrice($price);
+                        $room->setName($name);
+                        $this->roomDAO->edit($room);
+
+                        $errorMessage = "Se ha rehabilitado y modificado una sala con el nombre ingresado";
+                    }
+                    else
+                    {
+                        $errorMessage = "No se ha podido rehabilitar y modificar la sala ya existente por datos incorrectos.";
+                    }    
                 } 
                 else
                 {
-                    $errorMessage = "Ya existe una sala habilitada con ese nombre";
+                    if($validateCapacity && $validatePrice && $validateName)
+                    {
+                        $room->setIdCinema($idCinema);
+                        $room->setCapacity($capacity);
+                        $room->setPrice($price);
+                        $room->setName($name);
+                        $this->roomDAO->edit($room);
+                
+                        $errorMessage = "Se ha modificado una sala ya existente con ese nombre";
+                    }
+                    else
+                    {
+                        $errorMessage = "No se ha podido modificar la sala ya existente por datos incorrectos.";
+                    }   
                 } 
             }
             else if($validateCapacity && $validatePrice && $validateName)

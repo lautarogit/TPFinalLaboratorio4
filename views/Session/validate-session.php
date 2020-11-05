@@ -1,4 +1,5 @@
 <?php
-  if(!isset($_SESSION["loggedUser"]))
-    header("location:../index.php");  
+    use Models\SessionValidation as SessionValidation;
+
+    SessionValidation::validateSession();
 ?>

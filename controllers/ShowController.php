@@ -184,6 +184,8 @@
                 $minutes = $diff->format('%i');
 
                 $actualDate = new DateTime();
+                date_default_timezone_set('America/Argentina/Buenos_Aires');
+
                 $actualYear = $actualDate->format('%Y');
                 $actualMonth = $actualDate->format('%m');
                 $actualDay = $actualDate->format('%d');
@@ -235,11 +237,11 @@
                 $actualHours = $actualDate->format('%H');
                 $actualMinutes = $actualDate->format('%i');
 
-                $actualYear = substr($actualYear ,1, 4);
-                $actualMonth = substr($actualMonth ,1, 2);
+                $actualYear = substr($actualYear, 1, 4);
+                $actualMonth = substr($actualMonth, 1, 2);
                 $actualDay = substr($actualDay, 1, 2);
-                $actualHours = substr($actualHours ,1, 2);
-                $actualMinutes = substr($actualMinutes ,1, 2);
+                $actualHours = substr($actualHours, 1, 2);
+                $actualMinutes = substr($actualMinutes, 1, 2);
         
                 if(($year >= $actualYear) && ($month >= $actualMonth) && ($day >= $actualDay) && ($hours >= $actualHours))
                 {
@@ -268,7 +270,7 @@
             return $result;
         }
 
-        public function validateShow ($idCinema, $idMovie, $dateTime, $remainingTickets)
+        public function validateShow ($idCinema, $idMovie, $remainingTickets, $dateTime = '')
         {
             $validateIdMovie = $this->validateFormField($idMovie);
 

@@ -1,67 +1,6 @@
 <?php
     require_once(VIEWS_PATH."header.php");
-    require_once(VIEWS_PATH."nav.php");
-
-    use Models\Show as Show;
-    use DAO\CinemaDAO as CinemaDAO;
-    use DAO\RoomDAO as RoomDAO;
-    use DAO\MovieDAO as MovieDAO;
-    use DAO\ShowDAO as ShowDAO;
-    use Controllers\MovieController as MovieController;
-
-    $cinemaDAO = new CinemaDAO();
-    $roomDAO = new RoomDAO();
-    $movieDAO = new MovieDAO();
-    $showDAO = new ShowDAO();
-    $movieController = new MovieController();
-
-    $showMapout = $showDAO->getShowByIdMovie($idMovie);
-
-    $cinemaDAO = new CinemaDAO();
-    $cinemaList = $cinemaDAO->getAll();
-
-    $showList = array();
-
-    if(!empty($showMapout))
-    {
-        if(!is_array($showMapout))
-        {
-            $room = $roomDAO->getRoomById($showMapout->getIdRoom());
-            $movie = $movieDAO->getMovieById($showMapout->getIdMovie());
-        
-            $show = new Show();
-            $show->setId($showMapout->getId());
-            $show->setRoom($room);
-            $show->setMovie($movie);
-            $show->setDateTime($showMapout->getDateTime());
-            $show->setRemainingTickets($showMapout->getRemainingTickets());
-
-            array_push($showList, $show);
-        }
-        else
-        {
-            foreach($showMapout as $showValue)
-            {
-                $room = $roomDAO->getRoomById($showValue->getIdRoom());
-                $movie = $movieDAO->getMovieById($showValue->getIdMovie());
-
-                $show = new Show();
-                $show->setId($showValue->getId());
-                $show->setRoom($room);
-                $show->setMovie($movie);
-                $show->setDateTime($showValue->getDateTime());
-                $show->setRemainingTickets($showValue->getRemainingTickets());
-
-                array_push($showList, $show);
-            }     
-        } 
-    }
-    else
-    {
-        $errorMessage = "No hay shows de esta película";
-
-        $movieController->showMovieDashboard($errorMessage);
-    } 
+    require_once(VIEWS_PATH."nav.php");   
 ?>
 
 <div class="btn-toolbar m-2 position-relative" style="left: 400px; top: 47px;" role="toolbar">

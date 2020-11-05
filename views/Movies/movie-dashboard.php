@@ -2,11 +2,11 @@
     require_once(VIEWS_PATH."header.php"); 
     require_once(VIEWS_PATH."nav.php");
 
-    $rolId = $_SESSION['loggedUser']->getRolId();
     use Controllers\MovieController as MovieController;
 
     $movieController = new MovieController();
-    $topRatedMovieList = $movieController->filterTopRated($movieList);
+
+    $filterGenreList = $movieController->returnGenresAvailabe();
 ?>
 
 <div class="movie-buttons-div">
@@ -28,14 +28,14 @@
             Restaurar filtro <i class="fas fa-redo"></i>
         </button>
     </form>
-
+    
     <div class="dropdown" style="display: inline;">
         <button class="btn btn-dark dropdown-toggle m-1" style="color: crimson; border-radius: 2px 2px 10px 2px;" type="button" id="genreFilterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Filtrar por género
         </button>
         <div class="dropdown-menu background-dark" aria-labelledby="dropdownMenuButton">
             <?php 
-                foreach($genreList as $genre)
+                foreach($filterGenreList as $genre)
                 {
             ?>
                     <form action="<?= FRONT_ROOT."Movie/filterByGenre"?>" method="POST">
@@ -152,8 +152,7 @@
     <?php   
             }
             else if(count($movieList) <= 4)
-            {
-            
+            {  
     ?>
                 <div class="card-columns">
     <?php 
@@ -170,7 +169,8 @@
         {
             foreach($movieList as $movieValue)
             {  
-        ?>
+                
+            ?>
                 <div class="card w-15 m-2 background-dark text-white text-center" style="width: 364px;">
                     <div class="card-header movie-header-color">
                         <h3 class="card-title" style="text-align:center;"><?= $movieValue->getTitle();?></h3> 
@@ -209,7 +209,7 @@
 
                                     $genresDimension = count($genres);
                                     $i = 0;
-                                                
+                                                    
                                     foreach($genres as $genre)
                                     {
                                         $i ++;
@@ -236,7 +236,7 @@
                         </button>   
                     </form>  
                 </div>                              
-                
+                    
                 <!-- Movie info Modal -->
                 <div class="modal fade" tabindex="-1" role="dialog" id="<?= "movieInfo".$movieValue->getId();?>">
                     <div class="modal-dialog" role="document">
@@ -269,11 +269,10 @@
                     </div>
                 </div>
                 <!-- ----------------- -->
-        <?php  
+    <?php       
             } 
-         
         }
-        ?>
+    ?>
     </div>
 </main>
 
