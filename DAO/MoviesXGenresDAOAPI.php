@@ -1,13 +1,13 @@
 <?php
     namespace DAO;
     
-    use Models\Genre as Genre;
+    use Models\MoviesXGenres as MoviesXGenres;
     
     class GenreDAOJSON
     {
         private $genreList = array();
         
-        public function add(Genre $newGenre)
+        public function add(MoviesXGenres $newGenre)
         {
             $this->retrieveData();
             array_push($this->genreList, $newGenre);
@@ -31,7 +31,7 @@
         public function getGenreById ($idGenre)
         {
             $this->retrieveData();
-            $genre = new Genre();
+            $genre = new MoviesXGenres();
 
             foreach($this->genreList as $genreValue)
             {
@@ -44,24 +44,6 @@
             return $genre;
         }
 
-        public function retrieveDataFromAPI()
-        {
-            $genresdb = file_get_contents(API_HOST.'/genre/movie/list?api_key='.TMDB_API_KEY.'&language='.LANG);
-            $this->genreList = ($genresdb) ? json_decode($genresdb, TRUE)['genres'] : array();
-
-            foreach($this->genreList as $genre)
-            {
-                $id = $genre['id'];
-                $name = $genre['name'];
-
-                $newGenre = new Genre();
-
-                $newGenre->setId($id);
-                $newGenre->setName($name);
-
-                $this->add($newGenre);
-            }
-        }
 
         private function saveData()
         {
@@ -79,6 +61,25 @@
             $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
             file_put_contents($jsonPath, $jsonContent);
         }
+        public function retrieveDataFromApi ()
+        {
+            $moviedb = file_get_contents(API_HOST . '/movie/now_playing?api_key=' . TMDB_API_KEY . '&language=' . LANG . '&page=1');
+            $movieList = ($moviedb) ? json_decode($moviedb, true)['results'] : array();
+            $finalList = array();
+
+            foreach ($movieList as $movie) 
+            {
+                $idMovie = $movie['id'];
+                $IdGenre = $movie['genre_ids'];
+
+                foreach($IdGenre as $genre)
+                {
+                    $newMovie = new MoviesXGenres($idMovie,$genre);
+                   array_push($finalList,$genre);
+                }
+            }
+        }
+
 
         private function retrieveData()
         {
@@ -89,16 +90,17 @@
 
             foreach ($arrayToDecode as $arrayValue) 
             {
-                $genre = new Genre();
-                $id = $arrayValue['id'];
-                $name = $arrayValue['name'];
+                $genre = new MoviesXGenres();
+                $idGenre = $arrayValue['idGenre'];
+                $idMovie = $arrayValue['IdMovie'];
 
-                $genre->setId($id);
-                $genre->setName($name);
+                $genre->setIdGenre($idGenre);
+                $genre->setIdMovie($idMovie);
 
                 array_push($this->genreList, $genre);
             }
         }
+     
 
         function getJsonFilePath()
         {

@@ -157,7 +157,7 @@
             return $result;
         }
             
-        public function retrieveDataFromApi ()
+     /*   public function retrieveDataFromApi ()
         {
             $moviedb = file_get_contents(API_HOST.'/genre/movie/list?api_key='.TMDB_API_KEY.'&language='.LANG);
             $genreList = ($moviedb) ? json_decode($moviedb, true)['genres']: array();
@@ -170,7 +170,7 @@
                 
                 $this->add($genre); 
             }    
-        }
+        }*/
 
         public function mapout ($value)
         {
