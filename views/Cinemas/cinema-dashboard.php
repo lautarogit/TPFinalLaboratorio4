@@ -222,7 +222,7 @@
 
                                                                  <div class="form-group">
                                                                       <label for="name"><h5><strong>Precio</strong></h5></label>
-                                                                      <input class="form-control form-control-lg" type="number" name="price" placeholder="Ingresar capacidad">
+                                                                      <input class="form-control form-control-lg" type="number" name="price" placeholder="Ingresar precio">
                                                                  </div>
 
                                                                  <div class="form-group">

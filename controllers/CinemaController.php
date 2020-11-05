@@ -1,7 +1,6 @@
 <?php
     namespace Controllers;
 
-    use DAO\CinemaDAOJSON as CinemaDAOJSON;
     use DAO\CinemaDAO as CinemaDAO;
     use Models\Cinema as Cinema;
     use DAO\RoomDAO as RoomDAO;
@@ -92,13 +91,34 @@
 
                 if(!$cinema->getStatus())
                 {
-                    $cinema->setStatus(true);
-                    $this->cinemaDAO->edit($cinema);
-                    $errorMessage = "Se ha rehabilitado un cine con el nombre ingresado";
+                    if($validateName && $validateLocation)
+                    {
+                        $cinema->setStatus(true);
+                        $cinema->setName($name);
+                        $cinema->setLocation($location);
+                        $this->cinemaDAO->edit($cinema);
+
+                        $errorMessage = "Se ha rehabilitado y modificado un cine con el nombre ingresado";
+                    }
+                    else
+                    {
+                        $errorMessage = "No se ha podido rehabilitar y modificar el cine ya existente por datos incorrectos.";
+                    } 
                 } 
                 else
                 {
-                    $errorMessage = "Ya existe un cine habilitado con ese nombre";
+                    if($validateName && $validateLocation)
+                    {
+                        $cinema->setName($name);
+                        $cinema->setLocation($location);
+                        $this->cinemaDAO->edit($cinema);
+                        
+                        $errorMessage = "Se ha modificado un cine ya existente con ese nombre";
+                    }
+                    else
+                    {
+                        $errorMessage = "No se ha podido modificar el cine ya existente por datos incorrectos.";
+                    } 
                 }  
             }
             else if($validateName && $validateLocation)

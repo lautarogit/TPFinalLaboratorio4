@@ -86,12 +86,9 @@ SELECT * FROM moviesXgenres;
 CREATE TABLE IF NOT EXISTS tickets (
     id INT NOT NULL AUTO_INCREMENT,
     codeQR VARCHAR(200),
-	idShow INT NOT NULL,
-	idUser INT NOT NULL,
+    idUser INT NOT NULL,
     CONSTRAINT PK_id PRIMARY KEY (id)
 );
-
-SELECT * FROM tickets;
 
 ALTER TABLE rooms ADD CONSTRAINT FK_idCinema FOREIGN KEY (idCinema) REFERENCES cinemas (id);
 ALTER TABLE shows ADD CONSTRAINT PFK_idRoom FOREIGN KEY (idRoom) REFERENCES rooms (id);

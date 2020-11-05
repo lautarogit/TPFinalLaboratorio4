@@ -7,7 +7,7 @@
      <span class="navbar-text">
           <img src="<?php echo IMG_PATH."logo.png"; ?>" style="display: inline;">
           <?php
-            if($_SESSION['loggedUser'])
+            if(!empty($_SESSION['loggedUser']))
             {
               ?>
                 <h2 style="display: inline;">Bienvenido </h2>
@@ -18,7 +18,7 @@
      </span>
      <ul class="navbar-nav ml-auto">
           <?php 
-            if($_SESSION['loggedUser'])
+            if(!empty($_SESSION['loggedUser']))
             { 
           ?>
               <li class="nav-item">

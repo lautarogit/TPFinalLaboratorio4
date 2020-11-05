@@ -1,37 +1,6 @@
 <?php 
     require_once(VIEWS_PATH."header.php");
-    require_once(VIEWS_PATH."nav.php");
-
-    use Models\Room as Room;
-    use DAO\RoomDAO as RoomDAO;
-    use Models\Show as Show;
-    use DAO\ShowDAO as ShowDAO;
-    use Models\Movie as Movie;
-    use DAO\MovieDAO as MovieDAO;
-
-    $show = new Show();
-    $showDAO = new ShowDAO();
-    
-    $roomDAO = new RoomDAO();
-    
-    $movieDAO = new MovieDAO();
-    $showMapout = $showDAO->getShowById($idShow);
-
-    $id = $showMapout->getId();
-    $idRoom = $showMapout->getIdRoom();
-    $room = new Room();
-    $room = $roomDAO->getRoomByID($idRoom); 
-    $idMovie = $showMapout->getIdMovie();
-    $movie = new Movie();
-    $movie = $movieDAO->getMovieByID($idMovie);
-    $dateTime = $showMapout->getDateTime();
-    $remainingTickets = $showMapout->getRemainingTickets();
-
-    $show->setId($id);
-    $show->setRoom($room);
-    $show->setMovie($movie);
-    $show->setDateTime($dateTime);
-    $show->setRemainingTickets($remainingTickets);
+    require_once(VIEWS_PATH."nav.php"); 
 ?>
 
 <div class="m-3 text-white show-box" style="width: 550px;">
@@ -47,11 +16,25 @@
     </div>
 
     <h5 class="m-2">
-        <i class="fa fa-calendar" style="color: chartreuse;"></i><?php echo "  ".substr($show->getDateTime(), 0, 10);?>
+        <i class="fa fa-calendar" style="color: chartreuse;"></i><?php echo "  Fecha: ".substr($show->getDateTime(), 0, 10);?>
+    </h5>
+
+    <?php 
+        $showDateTime = new DateTime($show->getDateTime());
+        $previousMovieRuntime = $this->minutesToTimeFormat($movie->getRuntime());
+
+        $showDateTime = $this->addHourToTime($showDateTime, $previousMovieRuntime);
+
+        $stringShowTime = $showDateTime->format('Y-m-d H:i:s');
+        $endTime = substr($stringShowTime, 11, 5);
+    ?>
+
+    <h5 class="m-2">
+        <i class="fa fa-clock" style="color: cadetblue;"></i><?php echo "  Inicia a las ".substr($show->getDateTime(), 11, 5)." hs.";?>
     </h5>
 
     <h5 class="m-2">
-        <i class="fa fa-clock" style="color: cadetblue;"></i><?php echo "  ".substr($show->getDateTime(), 11);?>
+        <i class="fa fa-clock" style="color: brown;"></i><?php echo "  Finaliza a las ".$endTime." hs.";?>
     </h5>
     
     <h5 class="m-2">

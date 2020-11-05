@@ -2,19 +2,37 @@
     require_once(VIEWS_PATH."header.php");
     require_once(VIEWS_PATH."nav.php");
 
-    use Models\Movie as Movie;
-    use DAO\MovieDAO as MovieDAO;
-    use DAO\GenreDAO as GenreDAO;
-    use Models\Show as Show;
-    use Models\Room as Room;
-    use DAO\CinemaDAO as CinemaDAO;
-    use DAO\RoomDAO as RoomDAO;
-    use DAO\ShowDAO as ShowDAO;
+    $existingMovieList = $this->movieDAO->getMovieListByIdCinema($idCinema);
+    if(!empty($existingMovieList))
+    {
+        $existingMovieListSize = count($existingMovieList);
+    
+        $movieListSize = count($movieList);
+        $availableMovieList = array();
+        $i = 0;
+        $x = 0;
 
-    $movieDAO = new MovieDAO();
-    $genreDAO = new GenreDAO();
-    $movieList = $movieDAO->getAll();
-    $genreList = $genreDAO->getAll();
+        for($i = 0; $i < $movieListSize; $i++)
+        {
+            if($x < $existingMovieListSize)
+            {
+                if($movieList[$i]->getId() != $existingMovieList[$x]->getId())
+                {
+                    array_push($availableMovieList, $movieList[$i]);
+                }
+                else
+                {
+                    $x++;
+                }
+            }
+            else
+            {
+                array_push($availableMovieList, $movieList[$i]);
+            }
+        }
+
+        $movieList = $availableMovieList;
+    }
 ?>
 
 <form action="<?php echo FRONT_ROOT."Room/showRoomDashboard";?>">
@@ -26,11 +44,12 @@
 <?php 
      if(!empty($errorMessage))
      {
+        $errorMessageLength = (strlen($errorMessage)*13);   
 ?>
-          <div class="alert alert-danger alert-dismissible" style="width: 230px;">
-               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-               <strong><?php echo $errorMessage;?></strong>
-          </div>
+        <div class="alert alert-danger alert-dismissible" style="width: <?= $errorMessageLength ?>px;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong><?php echo $errorMessage;?></strong>
+        </div>
 <?php      
      }   
 ?>
@@ -44,13 +63,28 @@
 
         <h4 class="m-2">Seleccione una película: </h4>
 
+<?php 
+if(!empty($movieList))
+{
+    if(count($movieList) >= 5)
+    {
+?>
         <div class="grid">
-            <?php 
+<?php   
+    }
+    else if(count($movieList) <= 4)
+    {
+            
+?>
+        <div class="card-columns">
+<?php 
+    }
+} 
                     if(!empty($movieList))
                     {
                         foreach($movieList as $movieValue)
-                        {  
-            ?>
+                        {                         
+?>
                             <div class="card w-15 m-2 background-dark text-white text-center" style="width: 364px;">
                                 <div class="card-header movie-header-color">
                                     <h3 class="card-title" style="text-align:center;"><?= $movieValue->getTitle();?></h3> 
@@ -60,15 +94,35 @@
                                     <img style="width: 300px; height: 400px;" src='<?= TMDB_IMG_PATH.$movieValue->getPosterPath(); ?>'/>
                                 </div>
 
-                                
-
                                 <div class="card-footer">
                                     <div style="display:block; margin:auto;">
-                                        <p>Géneros: Example</p>
+                                        <p>
+                                            <?php 
+                                                $genres = $this->genreDAO->getGenres($movieValue);
+                                                echo "<strong>Géneros: </strong>"; 
 
-                                        <p><?= "<strong>Fecha de lanzamiento: </strong>".$movieValue->getReleaseDate();?></p>
+                                                $genresDimension = count($genres);
+                                                $i = 0;
+                                                
+                                                foreach($genres as $genre)
+                                                {
+                                                    $i ++;
+
+                                                    if($i == $genresDimension)
+                                                    {  
+                                                        echo $genre->getName();
+                                                    }
+                                                    else
+                                                    {
+                                                        echo $genre->getName().", ";
+                                                    } 
+                                                }
+                                            ?>
+                                        </p>
+
+                                        <p><?= "<strong>Fecha de lanzamiento: </strong>".substr($movieValue->getReleaseDate(), 0, 10);?></p>
                                     </div>
-                                </div> 
+                                </div>
 
                                 <div class="text-center">
                                     Seleccionar
@@ -78,14 +132,14 @@
                                     <input type="radio" name="idMovie" value="<?= $movieValue->getId();?>">
                                 </div>
                             </div>
-            <?php
+<?php     
                         } 
                     }
                     else
                     {
 
                     } 
-            ?>
+?>
         </div>
 
         <div class="form-group">
