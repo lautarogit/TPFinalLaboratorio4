@@ -164,9 +164,10 @@
 
                 $stringPreviousShowTime = $previousShowDateTime->format('Y-m-d H:i:s');
                 $showPreviousTime = substr($stringPreviousShowTime, 11, 8);
-
+    
                 $newTimeEntered = substr($newDateTime, 11, 8);
                 $newTimeEntered .= ':00';
+                
 
                 $previousDateTime = $showPreviousDate." ".$showPreviousTime;
                 $newDateTime = $newDateEntered." ".$newTimeEntered;
@@ -270,7 +271,7 @@
             return $result;
         }
 
-        public function validateShow ($idCinema, $idMovie, $remainingTickets, $dateTime = '')
+        public function validateShow ($idCinema, $idMovie, $dateTime, $remainingTickets)
         {
             $validateIdMovie = $this->validateFormField($idMovie);
 

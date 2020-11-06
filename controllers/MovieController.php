@@ -23,7 +23,10 @@
 
         public function showMovieDashboard ($errorMessage = '')
         {
-            $rolId = $_SESSION['loggedUser']->getRolId();
+            if(!empty($_SESSION['loggedUser']))
+            {
+                $rolId = $_SESSION['loggedUser']->getRolId();
+            }
 
             $movieList = $this->movieDAO->getAll();
             $availableMovieList = array();
@@ -47,7 +50,6 @@
             
             $topRatedMovieList = $this->filterTopRated($movieList);
             
-            require_once(VIEWS_PATH."Session/validate-session.php");
             require_once(VIEWS_PATH."Movies/movie-dashboard.php");
         }
 
@@ -65,7 +67,6 @@
 
             $topRatedMovieList = $this->filterTopRated($movieList);
             
-            require_once(VIEWS_PATH."Session/validate-session.php");
             require_once(VIEWS_PATH."Movies/movie-dashboard.php");
         }
 

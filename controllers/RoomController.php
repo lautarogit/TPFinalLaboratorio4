@@ -26,15 +26,16 @@
             $this->movieDAO = new MovieDAO();
         }
 
-        public function showRoomPermissionBlocked ($rolId)
-        {
-            require_once(VIEWS_PATH."Rooms/room-permission-blocked.php");
-        }
-
         public function showRoomDashboard ($idCinema, $errorMessage = '')
         {
-            require_once(VIEWS_PATH."Session/validate-session.php");
-            $rolId = $_SESSION['loggedUser']->getRolId();
+            if(!empty($_SESSION['loggedUser']))
+            {
+                $rolId = $_SESSION['loggedUser']->getRolId();
+            }
+            
+            $cinemaDAO = new CinemaDAO();
+            $showDAO = new ShowDAO();
+            $cinema = $cinemaDAO->getCinemaById($idCinema);
             $idCinema = intval($idCinema);
             $roomList = $this->roomDAO->getRoomListByIdCinema($idCinema);
             $showMapout = $this->showDAO->getAll();
@@ -67,31 +68,7 @@
             }
         
             $showList = $newShowList;
-            
-            if($rolId == 1)
-            {
-                require_once(VIEWS_PATH."Rooms/room-dashboard.php");
-            }
-            else
-            {
-                $this->showRoomPermissionBlocked($rolId);   
-            }   
-        }
-
-        public function showClientRoomDashboard ($idCinema)
-        {
-            require_once(VIEWS_PATH."Session/validate-session.php");
-            $rolId = $_SESSION['loggedUser']->getRolId();
-            $roomList = $this->roomDAO->getRoomListByIdCinema($idCinema);
-
-            if($rolId == 0)
-            {
-                require_once(VIEWS_PATH."Rooms/client-room-dashboard.php");
-            }
-            else
-            {
-                $this->showRoomPermissionBlocked($rolId); 
-            }   
+            require_once(VIEWS_PATH."Rooms/room-dashboard.php");  
         }
 
         public function addRoom ($idCinema, $capacity, $price, $name)

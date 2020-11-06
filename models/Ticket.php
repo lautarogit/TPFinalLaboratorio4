@@ -8,6 +8,7 @@
         private $codeQR;
         private $idShow;
         private $idUser;
+        
         public function __construct($codeQR=" ",$idShow=' ', $idUser=' ')
         {
             $this->codeQR=$codeQR;

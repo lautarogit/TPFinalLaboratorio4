@@ -10,18 +10,9 @@
 ?>
 
 <div class="movie-buttons-div">
-    <a class="btn btn-light m-1" style="display: inline; border-radius: 2px 2px 2px 10px;" role="button" href="
-    <?php 
-        if($rolId == 0)
-        {
-            echo FRONT_ROOT."Cinema/showClientCinemaDashboard";
-        }
-
-        if($rolId == 1)
-        {
-            echo FRONT_ROOT."Cinema/showCinemaDashboard";
-        }
-    ?>">Volver</a>
+    <a class="btn btn-light m-1" style="display: inline; border-radius: 2px 2px 2px 10px;" role="button" href="<?= FRONT_ROOT."Cinema/showCinemaDashboard";?>">
+        Volver
+    </a>
 
     <form action="<?= FRONT_ROOT."Movie/showMovieDashboard"?>" style="display: inline;" method="POST">
         <button class="btn btn-secondary m-1" type="submit">

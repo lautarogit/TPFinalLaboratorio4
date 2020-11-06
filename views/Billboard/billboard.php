@@ -56,7 +56,11 @@
                         </p>
 
                         <p class="card-text"><?php echo "<strong>Dirección: </strong>".$cinemaValue->getLocation();?></p> 
-                    </div>                   
+                    </div> 
+                    
+                    <div class="card-footer">
+                         
+                    </div>  
                 </div>
 <?php 
                 $i++;
