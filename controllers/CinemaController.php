@@ -42,20 +42,21 @@
 
         public function showClientCinemaDashboard ()
         {
-            $rolId = $_SESSION['loggedUser']->getRolId();
+            if(!empty($_SESSION['loggedUser']))
+            {
+                require_once(VIEWS_PATH."Session/validate-session.php");
+                $rolId = $_SESSION['loggedUser']->getRolId();
+
+                if($rolId == 1)
+                {
+                    $this->showCinemaPermissionBlocked($rolId);
+                } 
+            }
+            
             $cinemaList = $this->cinemaDAO->getAll();
             $roomList = $this->roomDAO->getAll();
 
-            require_once(VIEWS_PATH."Session/validate-session.php");
-
-            if($rolId == 0)
-            {
-                require_once(VIEWS_PATH."Cinemas/client-cinema-dashboard.php");
-            }
-            else
-            {
-                $this->showCinemaPermissionBlocked($rolId);
-            } 
+            require_once(VIEWS_PATH."Cinemas/client-cinema-dashboard.php"); 
         }
 
         public function showDisabledCinemaDashboard ()

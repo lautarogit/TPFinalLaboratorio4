@@ -1,18 +1,16 @@
- <?php
-        /*use DAO\MovieDAO as MovieDAO;
-        $movieDAO = new MovieDAO();
-        var_dump($movieDAO->retrieveDataFromAPI());*/
+<?php
+  require_once(VIEWS_PATH."header.php");
+  require_once(VIEWS_PATH."nav.php");
 
-        /*use DAO\GenreDAO as GenreDAO;
-        $genreDAO= new GenreDAO();
-        var_dump($genreDAO->retrieveDataFromApi());
-        use DAO\MoviesXGenresDAO as MoviesXGenresDAO;
-        $moviesXGenresDAO=new MoviesXGenresDAO();
-        var_dump($moviesXGenresDAO->retrieveDataFromApi());*/
-use models\Ticket as Ticket;
-use DAO\TicketDAO as TicketDAO;
-$ticketDAO=new TicketDAO();
-
-        
-var_dump($ticketDAO->getTicketByUser($_SESSION["loggedUser"]->getDni()));
 ?>
+<form action="<?php echo FRONT_ROOT."Movie/addGenresToDB"; ?>" method="post">
+        <button type="submit" class="btn btn-success">Consultar Generos</button>
+</form>
+<br>
+<form action="<?php echo FRONT_ROOT."Movie/addMoviesXGenresToDB"; ?>" method="post">
+        <button type="submit" class="btn btn-success">Consultar generos por peliculas</button>
+</form>
+<br>
+<form action="<?php echo FRONT_ROOT."Movie/addMovies"?>" method="post">
+        <button type="submit" class="btn btn-success">Consultar peliculas</button>
+</form>

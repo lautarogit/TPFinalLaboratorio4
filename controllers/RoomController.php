@@ -80,18 +80,20 @@
 
         public function showClientRoomDashboard ($idCinema)
         {
-            require_once(VIEWS_PATH."Session/validate-session.php");
-            $rolId = $_SESSION['loggedUser']->getRolId();
+            if(!empty($_SESSION['loggedUser']))
+            {
+                require_once(VIEWS_PATH."Session/validate-session.php");
+                $rolId = $_SESSION['loggedUser']->getRolId();
+
+                if($rolId == 1)
+                {
+                    $this->showRoomPermissionBlocked($rolId); 
+                }
+            }
+
             $roomList = $this->roomDAO->getRoomListByIdCinema($idCinema);
 
-            if($rolId == 0)
-            {
-                require_once(VIEWS_PATH."Rooms/client-room-dashboard.php");
-            }
-            else
-            {
-                $this->showRoomPermissionBlocked($rolId); 
-            }   
+            require_once(VIEWS_PATH."Rooms/client-room-dashboard.php");    
         }
 
         public function addRoom ($idCinema, $capacity, $price, $name)

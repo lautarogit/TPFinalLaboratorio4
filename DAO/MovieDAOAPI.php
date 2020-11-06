@@ -18,7 +18,7 @@
         {
             if($this->movieList !== [])
             {
-                $this->retrieveDataFromAPI();
+                $this->retrieveDataFromApi();
             }
             else
             {
@@ -55,7 +55,7 @@
             return $runtime;
         }
 
-        public function retrieveDataFromAPI ()
+        public function retrieveDataFromApi()
         {
             $moviedb = file_get_contents(API_HOST.'/movie/now_playing?api_key='.TMDB_API_KEY.'&language='.LANG.'&page=1');
             
@@ -92,41 +92,6 @@
             return $finalList;
         }
 
-        
-    /*    public function retrieveDetailsFromAPI ($id)
-        {
-            $moviedb = file_get_contents(API_HOST.'/movie/'.$id.'?api_key='.TMDB_API_KEY.'&language='.LANG);
-            $movie = json_decode($moviedb, TRUE);
-
-            $newMovie = new Movie();
-            $id = $movie['id'];
-            $title = $movie['title'];
-            $overview = $movie['overview'];
-            $adult = $movie['adult'];
-            $genresId = $movie['genre_ids'];
-            $originalLanguage = $movie['original_language'];
-            $popularity = $movie['popularity'];
-            $posterPath = $movie['poster_path'];  
-            $releaseDate = $movie['release_date'];
-            $runtime = $movie['runtime'];
-            $status = null;
-
-            $newMovie->setId($id);
-            $newMovie->setTitle($title);
-            $newMovie->setOverview($overview);
-            $newMovie->setAdult($adult);
-            $newMovie->setGenresId($genresId);
-            $newMovie->setOriginalLanguage($originalLanguage);
-            $newMovie->setPopularity($popularity);
-            $newMovie->setPosterPath($posterPath);
-            $newMovie->setReleaseDate($releaseDate);
-            $newMovie->setStatus($status);
-            $newMovie->setRuntime($runtime);
-
-            $this->add($newMovie);
-
-            return $movie;
-        }-*/
 
         private function saveData()
         {

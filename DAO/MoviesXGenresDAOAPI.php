@@ -3,7 +3,7 @@
     
     use Models\MoviesXGenres as MoviesXGenres;
     
-    class GenreDAOJSON
+    class MoviesXGenresDAOAPI
     {
         private $genreList = array();
         
@@ -78,6 +78,7 @@
                    array_push($finalList,$genre);
                 }
             }
+            return $finalList;
         }
 
 

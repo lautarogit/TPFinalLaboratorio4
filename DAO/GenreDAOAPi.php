@@ -3,15 +3,17 @@
     
     use Models\Genre as Genre;
     
-    class GenreDAOJSON
+    class GenreDAOAPI
     {
         private $genreList = array();
         
         public function add(Genre $newGenre)
         {
             $this->retrieveData();
+            if(!in_array($newGenre,$this->genreList)){
             array_push($this->genreList, $newGenre);
             $this->saveData();
+            }
         }
 
         public function getAll()
@@ -43,25 +45,7 @@
 
             return $genre;
         }
-/*
-        public function retrieveDataFromAPI()
-        {
-            $genresdb = file_get_contents(API_HOST.'/genre/movie/list?api_key='.TMDB_API_KEY.'&language='.LANG);
-            $this->genreList = ($genresdb) ? json_decode($genresdb, TRUE)['genres'] : array();
 
-            foreach($this->genreList as $genre)
-            {
-                $id = $genre['id'];
-                $name = $genre['name'];
-
-                $newGenre = new Genre();
-
-                $newGenre->setId($id);
-                $newGenre->setName($name);
-
-                $this->add($newGenre);
-            }
-        }*/
 
         private function saveData()
         {

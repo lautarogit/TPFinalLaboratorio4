@@ -11,6 +11,7 @@
 
         public function add (Genre $genre)
         {
+            
             $sqlQuery = "INSERT INTO Genres (id, nameGenre) 
             VALUES (:id, :nameGenre)";
 
@@ -28,6 +29,7 @@
                 throw $ex;
             }
         }
+
 
         public function getAll ()
         {
