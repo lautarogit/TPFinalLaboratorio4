@@ -223,7 +223,7 @@
             return $finalResult;
         }
 
-        private function setRuntime ($id)
+    /*    private function setRuntime ($id)
         {
             $moviedb = file_get_contents(API_HOST.'/movie/'.$id.'?api_key='.TMDB_API_KEY.'&language='.LANG);
             $movie = json_decode($moviedb, TRUE);
@@ -258,7 +258,7 @@
        
                 $this->add($newMovie);
             }
-        }
+        }*/
 
         public function mapout ($value)
         {

@@ -27,7 +27,6 @@
             $cinemaList = $this->cinemaDAO->getAll();
             $roomList = $this->roomDAO->getAll();
 
-            require_once(VIEWS_PATH."Session/validate-session.php");
             require_once(VIEWS_PATH."Cinemas/cinema-dashboard.php");
         }
 
@@ -43,7 +42,6 @@
 
         public function addCinema ($name, $location)
         {
-            require_once(VIEWS_PATH."Session/validate-session.php");
             $cinema = new Cinema();
 
             $cinemaFinded = $this->cinemaDAO->validateData($name);
@@ -107,7 +105,6 @@
 
         public function editCinema ($id, $name, $location, $status)
         {
-            require_once(VIEWS_PATH."Session/validate-session.php");
             $cinemaUpdated = new Cinema();
 
             $cinemaFinded = $this->cinemaDAO->validateData($name);
@@ -151,7 +148,6 @@
 
         public function disableCinema ($id)
         {
-            require_once(VIEWS_PATH."Session/validate-session.php");
             $cinemaDisabled = new Cinema();
             
             $cinemaDisabled = $this->cinemaDAO->getCinemaByID($id);

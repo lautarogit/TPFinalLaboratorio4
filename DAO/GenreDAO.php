@@ -11,6 +11,7 @@
 
         public function add (Genre $genre)
         {
+            
             $sqlQuery = "INSERT INTO Genres (id, nameGenre) 
             VALUES (:id, :nameGenre)";
 
@@ -28,6 +29,7 @@
                 throw $ex;
             }
         }
+
 
         public function getAll ()
         {
@@ -156,21 +158,7 @@
         
             return $result;
         }
-            
-        public function retrieveDataFromApi ()
-        {
-            $moviedb = file_get_contents(API_HOST.'/genre/movie/list?api_key='.TMDB_API_KEY.'&language='.LANG);
-            $genreList = ($moviedb) ? json_decode($moviedb, true)['genres']: array();
 
-            foreach ($genreList as $genreValue) 
-            {
-                $name = $genreValue['name'];
-                $IdGenre = $genreValue['id'];
-                $genre = new Genre($IdGenre, $name);
-                
-                $this->add($genre); 
-            }    
-        }
 
         public function mapout ($value)
         {

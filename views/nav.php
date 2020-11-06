@@ -112,10 +112,10 @@
             <p><strong>Apellido: </strong><?php echo $user->getLastName();?></p>
             <p><strong>DNI: </strong><?php echo $user->getDni();?></p>
             <p><strong>Email: </strong><?php echo $user->getEmail();?></p>
-                 <p><strong>Rol: </strong><?php echo $rol->getRolType();?></p>
-                 <?php
-          }
-          ?>
+            <p><strong>Rol: </strong><?php echo $rol->getRolType();?></p>
+<?php
+  }
+?>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
