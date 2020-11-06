@@ -63,15 +63,40 @@
         {
           
            require_once(VIEWS_PATH."add-movies.php");
-            $genreList=$this->genreDAOAPI->retrieveDataFromApi();
+            $genreList=$this->genreDAOAPI->getAll();
+         
             $genreDB=$this->genreDAO->getAll();
+
             foreach($genreList as $genre)
             {
+             
                 $this->genreDAOAPI->add($genre);
-                if(!in_array($genreDB,$genre))
+                if(!in_array($genre,$genreDB))
                 {
                     $this->genreDAO->add($genre);
+                    $flag=true;
+      
+
+
                 }
+                else{
+                  $flag = false;
+                }
+            }
+                if($flag){
+                ?>
+                <div class="alert alert-success" role="alert">
+    Se ha cargado en la base de datos con exito
+    </div>
+<?php
+            }
+            else{
+     ?> 
+                <div class="alert alert-success" role="alert">
+                  no hay nada que actualizar
+                  </div>
+       
+<?php
             }
          
            

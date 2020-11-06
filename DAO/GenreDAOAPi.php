@@ -87,7 +87,7 @@
         {
             $moviedb = file_get_contents(API_HOST.'/genre/movie/list?api_key='.TMDB_API_KEY.'&language='.LANG);
             $genreList = ($moviedb) ? json_decode($moviedb, true)['genres']: array();
-            $finalList=array();
+            $finalList = array();
             foreach ($genreList as $genreValue) 
             {
                 $name = $genreValue['name'];
@@ -96,9 +96,10 @@
               
                 array_push($finalList,$genre);
             }    
-            return $finalList;
+         
+              return $finalList;
         }
-
+    
         function getJsonFilePath()
         {
             $initialPath = "Data/genres.json";
