@@ -1,38 +1,6 @@
 <?php 
     require_once(VIEWS_PATH."header.php");
     require_once(VIEWS_PATH."nav.php");
-
-    $existingMovieList = $this->movieDAO->getMovieListByIdCinema($idCinema);
-    if(!empty($existingMovieList))
-    {
-        $existingMovieListSize = count($existingMovieList);
-    
-        $movieListSize = count($movieList);
-        $availableMovieList = array();
-        $i = 0;
-        $x = 0;
-
-        for($i = 0; $i < $movieListSize; $i++)
-        {
-            if($x < $existingMovieListSize)
-            {
-                if($movieList[$i]->getId() != $existingMovieList[$x]->getId())
-                {
-                    array_push($availableMovieList, $movieList[$i]);
-                }
-                else
-                {
-                    $x++;
-                }
-            }
-            else
-            {
-                array_push($availableMovieList, $movieList[$i]);
-            }
-        }
-
-        $movieList = $availableMovieList;
-    }
 ?>
 
 <form action="<?php echo FRONT_ROOT."Room/showRoomDashboard";?>">

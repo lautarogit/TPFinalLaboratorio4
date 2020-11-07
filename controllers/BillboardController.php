@@ -8,7 +8,6 @@
     use DAO\CinemaDAO as CinemaDAO;
     use DAO\RoomDAO as RoomDAO;
     use DAO\ShowDAO as ShowDAO;
-    use Controllers\MovieController as MovieController;
 
     class BillboardController
     {
@@ -17,7 +16,6 @@
         private $cinemaDAO;
         private $roomDAO;
         private $showDAO;
-        private $movieController;
 
         public function __construct ()
         {
@@ -26,7 +24,6 @@
             $this->cinemaDAO = new CinemaDAO();
             $this->roomDAO = new RoomDAO();
             $this->showDAO = new ShowDAO();
-            $this->movieController = new MovieController();
         }
 
         public function showBillboard ($idMovie)
@@ -72,11 +69,11 @@
                         $show->setRemainingTickets($showValue->getRemainingTickets());
 
                         array_push($showList, $show);
-                    }     
+                        
+                    }    
                 } 
             }
 
-            require_once(VIEWS_PATH."Session/validate-session.php");
             require_once(VIEWS_PATH."Billboard/billboard.php");
         }
     }

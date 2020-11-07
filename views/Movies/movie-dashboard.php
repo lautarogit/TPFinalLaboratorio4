@@ -10,18 +10,9 @@
 ?>
 
 <div class="movie-buttons-div">
-    <a class="btn btn-light m-1" style="display: inline; border-radius: 2px 2px 2px 10px;" role="button" href="
-    <?php 
-        if($rolId == 0)
-        {
-            echo FRONT_ROOT."Cinema/showClientCinemaDashboard";
-        }
-
-        if($rolId == 1)
-        {
-            echo FRONT_ROOT."Cinema/showCinemaDashboard";
-        }
-    ?>">Volver</a>
+    <a class="btn btn-light m-1" style="display: inline; border-radius: 2px 2px 2px 10px;" role="button" href="<?= FRONT_ROOT."Cinema/showCinemaDashboard";?>">
+        Volver
+    </a>
 
     <form action="<?= FRONT_ROOT."Movie/showMovieDashboard"?>" style="display: inline;" method="POST">
         <button class="btn btn-secondary m-1" type="submit">
@@ -30,7 +21,8 @@
     </form>
     
     <div class="dropdown" style="display: inline;">
-        <button class="btn btn-dark dropdown-toggle m-1" style="color: crimson; border-radius: 2px 2px 10px 2px;" type="button" id="genreFilterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn btn-dark dropdown-toggle m-1" style="color: crimson; border-radius: 2px 2px 10px 2px;" 
+        type="button" id="genreFilterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Filtrar por género
         </button>
         <div class="dropdown-menu background-dark" aria-labelledby="dropdownMenuButton">
@@ -39,7 +31,8 @@
                 {
             ?>
                     <form action="<?= FRONT_ROOT."Movie/filterByGenre"?>" method="POST">
-                        <button class="dropdown-item btn btn-dark" style="color: crimson; border-radius: 15px 15px 15px 15px;" type="submit" name="paramGenreId" value="<?= $genre->getId();?>">
+                        <button class="dropdown-item btn btn-dark" style="color: crimson; border-radius: 15px 15px 15px 15px;" 
+                        type="submit" name="paramGenreId" value="<?= $genre->getId();?>">
                             <?= $genre->getName();?>
                         </button>
                     </form> 
@@ -297,7 +290,8 @@
     </form>
 
     <div class="dropup" style="display: inline;">
-        <button class="btn btn-dark dropdown-toggle m-1" style="color: crimson; border-radius: 2px 2px 10px 2px;" type="button" id="genreFilterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn btn-dark dropdown-toggle m-1" style="color: crimson; border-radius: 2px 2px 10px 2px;" 
+        type="button" id="genreFilterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Filtrar por género
         </button>
         <div class="dropdown-menu background-dark" aria-labelledby="dropdownMenuButton">
@@ -306,7 +300,8 @@
                 {
             ?>
                     <form action="<?= FRONT_ROOT."Movie/filterByGenre"?>" method="POST">
-                        <button class="dropdown-item btn btn-dark" style="color: crimson; border-radius: 15px 15px 15px 15px;" type="submit" name="paramGenreId" value="<?= $genre->getId();?>">
+                        <button class="dropdown-item btn btn-dark" style="color: crimson; border-radius: 15px 15px 15px 15px;" 
+                        type="submit" name="paramGenreId" value="<?= $genre->getId();?>">
                             <?= $genre->getName();?>
                         </button>
                     </form> 

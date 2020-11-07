@@ -1,7 +1,6 @@
 <?php
     namespace Controllers;
 
-    use DAO\UserDAOJSON as UserDAOJSON;
     use DAO\UserDAO as UserDAO;
     use Models\User as User;
     use Controllers\CinemaController as CinemaController;
@@ -14,7 +13,6 @@
 
         public function __construct ()
         {
-            //$this->userDAO = new UserDAOJSON();
             $this->userDAO = new UserDAO();
             $this->cinemaController = new CinemaController();
         }

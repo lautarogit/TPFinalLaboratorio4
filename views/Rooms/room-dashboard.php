@@ -1,18 +1,6 @@
 <?php 
      require_once(VIEWS_PATH."header.php"); 
      require_once(VIEWS_PATH."nav.php");
-
-     use DAO\CinemaDAO as CinemaDAO;
-     use DAO\ShowDAO as ShowDAO;
-     use Models\Cinema as Cinema;
-     use Models\Room as Room;
-
-     $rolId = $_SESSION['loggedUser']->getRolId();
-     $cinemaDAO = new CinemaDAO();
-     $cinema = new Cinema();
-     $showDAO = new ShowDAO();
-
-     $cinema = $cinemaDAO->getCinemaById($idCinema);
 ?>
 
 <?php 
@@ -39,11 +27,18 @@
                          <thead>
                               <th>Nombre de sala</th>
                               <th>Precio</th>
-                              <th>Capacidad</th>
+                              <th>Capacidad</th>     
+                    <?php      
+                         if(!empty($rolId) && $rolId == 1)
+                         { 
+                    ?>
                               <th>Estado</th>
                               <th>Show</th>
                               <th>Editar</th>
                               <th>Eliminar</th>
+                    <?php      
+                         }
+                    ?>
                          </thead>
 
                          <tbody>
@@ -57,7 +52,11 @@
                                              <td><?php echo $roomValue->getName();?></td>
                                              <td><?php echo "<strong>$</strong>".$roomValue->getPrice();?></td>
                                              <td><?php echo $roomValue->getCapacity();?></td>
-                                             <td><i class="fas fa-check-circle" style="color: green;"></i></td>
+                                   <?php      
+                                        if(!empty($rolId) && $rolId == 1)
+                                        { 
+                                   ?>
+                                            <td><i class="fas fa-check-circle" style="color: green;"></i></td>
                                              <td> 
                                                   <?php 
                                                        if(!empty($roomValue->getIdShow()))
@@ -93,7 +92,10 @@
                                                             <i class="fas fa-trash"></i>
                                                        </button>
                                                   </form>
-                                             </td>
+                                             </td>      
+                                   <?php      
+                                        }
+                                   ?> 
                                         </tr>
 
                                         <!-- Edit room Modal -->
@@ -160,6 +162,10 @@
                          </tbody>
                     </table>
 
+          <?php      
+               if(!empty($rolId) && $rolId == 1)
+               { 
+          ?>
                     <h2 class="mb-4">Salas deshabilitadas de <p style="color: red; display: inline;"><?php echo $cinema->getName();?></p></h2>
                     <table class="table bg-dark text-white">
                          <thead>
@@ -195,7 +201,11 @@
                               } 
                          ?>     
                          </tbody>
-                    </table>
+                    </table>                
+          <?php      
+               }
+          ?>     
+           
                </div>
           </section>
      </main>

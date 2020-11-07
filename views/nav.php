@@ -66,10 +66,6 @@
             { 
           ?>
               <li class="nav-item">
-                <a class="btn btn-info m-1" role="button" href="<?= FRONT_ROOT."Cinema/showClientCinemaDashboard"?>"><i class="fas fa-sign-list"></i>  Ver cines disponibles</a>
-              </li>
-
-              <li class="nav-item">
                 <a class="btn btn-primary m-1" role="button" href="<?= FRONT_ROOT."Home/showLoginView"?>"><i class="fas fa-sign-in-alt"></i>  Iniciar sesión</a>
               </li>
           <?php 
@@ -77,8 +73,9 @@
           ?>
      </ul>
 </nav>
+
 <?php 
-  if(empty($_SESSION['loggedUser']))
+  if(!empty($_SESSION['loggedUser']))
   {
 ?>
     <div class="modal fade" tabindex="-1" role="dialog" id="infoModal">
@@ -97,6 +94,7 @@
 
               $user = $_SESSION['loggedUser'];
 
+              
               $rolId = $user->getRolId();
               $rol->setId($rolId);
               $rol->setRolType($rolId);
@@ -114,7 +112,7 @@
           </div>
         </div>
       </div>
-    </div>  
-<?php    
+    </div> 
+<?php
   }
 ?>
