@@ -10,25 +10,27 @@
     <div class="btn-group mr-2" role="group">
         <?php   
             $i = 0;
+            $cinemaListSize = count($cinemaList);
 
-            foreach($cinemaList as $cinemaValue)
+            foreach($showList as $show)
             {
-                if($i < count($showList))
+                if($i < $cinemaListSize)
                 { 
-                    $idCinema = $cinemaValue->getId();
-                    $showIdCinema = $showList[$i]->getRoom()->getIdCinema();
-                    
+                    $idCinema = $cinemaList[$i]->getId();
+                    $showIdCinema = $show->getRoom()->getIdCinema();
+
                     if($idCinema == $showIdCinema)
                     { 
+                        
                         
         ?>
                         <button class="btn btn-dark" style="color: chocolate; border-radius: 20px 20px 0px 0px;" type="button" 
                         data-toggle="collapse" data-target="<?= "#cinemaCollapseId".$showIdCinema;?>">
-                            <?= substr($showList[$i]->getDateTime(), 0, 10);?>
+                            <?= substr($show->getDateTime(), 0, 10);?>
                         </button>
-        <?php
+        <?php    
                         $i++;
-                    }   
+                    }    
                 }  
             }
         ?>
@@ -44,9 +46,8 @@
             $cinema = new Cinema();
             $cinemaDAO = new CinemaDAO();
             $cinema = $cinemaDAO->getCinemaById($idCinema);  
-            echo $idCinema ;
 ?>
-                <div class="card card-box-shadow collapse text-white background-dark d-relative" style="width: 400px; left: 405px; top: 52px;" id="<?= "cinemaCollapseId".$idCinema;?>">
+                <div class="card card-box-shadow collapse text-white background-dark d-relative" style="width: 400px; left: 405px; top: 73px;" id="<?= "cinemaCollapseId".$idCinema;?>">
                     <div class="card-header text-white background-linear-gradient">
                         <h3 class="card-title" style="display: inline;"><?php echo $cinema->getName();?></h3>
                     </div>
