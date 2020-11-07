@@ -76,17 +76,17 @@
 
             return $finalResult;
         }
-        public function getTickets($idUser){
-            $sqlQuery ="   SELECT 
-             c.name as  'nameCinema'
+        public function getTickets ($idUser){
+            $sqlQuery ="SELECT 
+            c.name as 'nameCinema'
             , c.location as 'locationCinema'
             , r.name as 'roomName'
-            ,m.title as 'nameMovie'
-            ,m.runtime as 'runtime'
-            , s.dateTime  as 'dateShow' 
+            , m.title as 'nameMovie'
+            , m.runtime as 'runtime'
+            , s.dateTime as 'dateShow' 
             , u.userName as 'userName'
-            ,u.email  as 'email'
-              , r.price FROM tickets t 
+            , u.email as 'email'
+            , r.price FROM tickets t 
             INNER JOIN shows s 
             ON t.idshow = s.id 
             INNER JOIN users  u
@@ -94,24 +94,26 @@
             INNER JOIN rooms r 
             ON s.idRoom = r.id 
             INNER JOiN cinemas c
-            ON c.id= r.idCinema
+            ON c.id = r.idCinema
             INNER JOIN movies m 
             ON s.idMovie = m.id
-            WHERE t.idUser = :idUser; ";
+            WHERE t.idUser = :idUser;";
       
-            $parameter['idUser']=$idUser;
-             try
-             {
-                 $this->connection = Connection::getInstance();
+            $parameter['idUser'] = $idUser;
+
+            try
+            {
+                $this->connection = Connection::getInstance();
              
-               return   $result = $this->connection->execute($sqlQuery,$parameter);
-             }
-             catch(PDOException $ex)
-             {
-                 throw $ex;
-             }
+                return   $result = $this->connection->execute($sqlQuery,$parameter);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
       
         }
+
         public function getAll ()
         {
             $sqlQuery = "SELECT * FROM tickets";
@@ -160,7 +162,7 @@
             $value = is_array($value) ? $value : [];
 
             $resp = array_map(function($p){
-                return new Ticket($p['codeQR'], $p['idShow'], $p['idUser']);
+                return new Ticket($p['id'], $p['codeQR'], $p['idShow'], $p['idUser']);
             }, $value);
 
             return count($resp) > 1 ? $resp : $resp['0'];

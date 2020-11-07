@@ -47,29 +47,39 @@
             $cinemaDAO = new CinemaDAO();
             $cinema = $cinemaDAO->getCinemaById($idCinema);  
 ?>
-                <div class="card card-box-shadow collapse text-white background-dark d-relative" style="width: 400px; left: 405px; top: 73px;" id="<?= "cinemaCollapseId".$idCinema;?>">
-                    <div class="card-header text-white background-linear-gradient">
-                        <h3 class="card-title" style="display: inline;"><?php echo $cinema->getName();?></h3>
-                    </div>
-
-                    <div class="card-body">
-                        <p class="card-text">
-                            <?php echo "<strong>Estado: </strong>";?><i class="fas fa-check-circle" style="color: green;"></i>
-                        </p>
-
-                        <p class="card-text"><?php echo "<strong>Dirección: </strong>".$cinema->getLocation();?></p> 
-                    </div>  
-
-                    <div class="card-footer">
-                        <div class="card-rows">
-                            <div class="card-columns">
-                                <button class="btn btn-warning" type="button">
-                                    xx:xx hs
-                                </button>
-                            </div>
-                        </div>
-                    </div> 
+            <div class="card card-box-shadow collapse text-white background-dark d-relative" style="width: 400px; left: 405px; top: 73px;" id="<?= "cinemaCollapseId".$idCinema;?>">
+                <div class="card-header text-white background-linear-gradient">
+                    <h3 class="card-title" style="display: inline;"><?php echo $cinema->getName();?></h3>
                 </div>
+
+                <div class="card-body">
+                    <p class="card-text">
+                        <?php echo "<strong>Estado: </strong>";?><i class="fas fa-check-circle" style="color: green;"></i>
+                    </p>
+
+                    <p class="card-text"><?php echo "<strong>Dirección: </strong>".$cinema->getLocation();?></p> 
+                </div>  
+
+                <div class="card-footer">
+                    <div class="card-rows">
+                        <div class="card-columns">
+                        <?php 
+                            foreach($showList  as $show)
+                            {
+                                if($show->getRoom()->getIdCinema() == $idCinema)
+                                {
+                        ?>
+                                    <button class="btn btn-warning m-1" type="button">
+                                        <?php echo substr($show->getDateTime(), 11, 5)." hs";?>
+                                    </button>
+                        <?php 
+                                }
+                            }
+                        ?>
+                        </div>
+                    </div>
+                </div> 
+            </div>
 <?php     
         }       
 ?>

@@ -1,6 +1,5 @@
 <?php
     namespace Models;
-    use Models\User as User;
 
     class Ticket 
     {
@@ -9,57 +8,52 @@
         private $idShow;
         private $idUser;
         
-        public function __construct($codeQR=" ",$idShow=' ', $idUser=' ')
+        public function __construct($id = '', $codeQR = '',$idShow = '', $idUser = '')
         {
+            $this->id=$id;
             $this->codeQR=$codeQR;
             $this->idShow=$idShow;
             $this->idUser=$idUser;
         }
 
-        public function getId()
+        public function getId ()
         {
             return $this->id;
         }
 
-        public function getCodeQR()
+        public function getCodeQR ()
         {
             return $this->codeQR;
         }
 
-        public function getIdShow()
+        public function getIdShow ()
         {
             return $this->idShow;
         }
 
-        public function getIdUser()
+        public function getIdUser ()
         {
             return $this->idUser;
         }
 
-        public function setId($id)
+        public function setId ($id)
         {
             $this->id = $id;
         }
 
-        public function setCodeQR($codeQR)
+        public function setCodeQR ($codeQR)
         {
             $this->codeQR = $codeQR;
-
-            return $this;
         }
 
-        public function setIdShow($idShow)
+        public function setIdShow ($idShow)
         {
             $this->idShow = $idShow;
-
-            return $this;
         }
 
-        public function setIdUser($idUser)
+        public function setIdUser ($idUser)
         {
             $this->idUser = $idUser;
-
-            return $this;
         }
     }
 ?>

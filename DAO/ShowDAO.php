@@ -59,11 +59,11 @@
             {
                 $result = $this->mapout($result);
 
-                $showList = array();
+                $showMapoutList = array();
 
                 if(!is_array($result))
                 {
-                   array_push($showList, $result);
+                   array_push($showMapoutList, $result);
                 }
             }
             else 
@@ -71,9 +71,9 @@
                 $result =  false;
             }
 
-            if(!empty($showList))
+            if(!empty($showMapoutList))
             {
-                $finalResult = $showList;  
+                $finalResult = $showMapoutList;  
             }
             else
             {

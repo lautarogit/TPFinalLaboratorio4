@@ -3,26 +3,29 @@
 
     use Models\Show as Show;
     use DAO\ShowDAO as ShowDAO;
+    use Models\Cinema as Cinema;
+    use DAO\CinemaDAO as CinemaDAO;
     use Models\Room as Room;
     use DAO\RoomDAO as RoomDAO;
-    use DAO\GenreDAO as GenreDAO;
     use Models\Movie as Movie;
     use DAO\MovieDAO as MovieDAO;
+    use DAO\GenreDAO as GenreDAO;
     use Controllers\iValidation as iValidation;
     use Controllers\RoomController as RoomController;
     use DateTime;
 
     class ShowController implements iValidation
     {
+        private $cinemaDAO;
         private $roomDAO;
         private $showDAO;
-        private $movieDAO; 
-        private $genreDAO;  
+        private $movieDAO;
         private $roomController;
 
         public function __construct ()
         {
             $this->showDAO = new ShowDAO();
+            $this->cinemaDAO = new CinemaDAO();
             $this->roomDAO = new RoomDAO();
             $this->movieDAO = new MovieDAO();
             $this->genreDAO = new GenreDAO();
@@ -170,11 +173,11 @@
 
                 $newDateEntered = substr($newDateTime, 0, 10);
 
+                $previousShowDateTime = new DateTime($previousShow->getDateTime());
+
                 $hours = substr($previousMovieRuntime, 0, 2);
                 $minutes = substr($previousMovieRuntime, 3, 2);
                 $seconds = substr($previousMovieRuntime, 6, 2);
-
-                $previousShowDateTime = new DateTime($previousShow->getDateTime());
                 
                 $previousShowDateTime->modify('+'.$hours.' hours'); 
                 $previousShowDateTime->modify('+'.$minutes.' minute');
@@ -186,7 +189,6 @@
                 $newTimeEntered = substr($newDateTime, 11, 8);
                 $newTimeEntered .= ':00';
                 
-
                 $previousDateTime = $showPreviousDate." ".$showPreviousTime;
                 $newDateTime = $newDateEntered." ".$newTimeEntered;
 
@@ -261,14 +263,12 @@
                 $actualDay = substr($actualDay, 1, 2);
                 $actualHours = substr($actualHours, 1, 2);
                 $actualMinutes = substr($actualMinutes, 1, 2);
-
-                echo "antes de entrar al if";
         
-                if(($year >= $actualYear) && ($month >= $actualMonth) && ($day >= $actualDay) && ($hours >= $actualHours))
+                if(($year >= $actualYear) && ($month >= $actualMonth) && ($day >= $actualDay))
                 {
                     if($day == $actualDay)
                     {
-                        if($hours > $actualHours)
+                        if($hours >= $actualHours)
                         {
                             $result = true;
                         }
@@ -297,23 +297,76 @@
             
             return $result;
         }
+    
+        public function searchMovie ($idMovie, $idCinema, $dateTime)
+        {
+            $flag = false;
+            $i = 0;
+            $showListMapper = $this->showDAO->getAll();
+            $showList = array();
+
+            if(!empty($showListMapper))
+            {
+                foreach($showListMapper as $showMapper)
+                {
+                    $show = new Show();
+
+                    $show->setId($showMapper->getId());
+                    $movie = $this->movieDAO->getMovieById($showMapper->getIdMovie());
+                    $show->setMovie($movie);
+                    $room = $this->roomDAO->getRoomById($showMapper->getIdRoom());
+                    $show->setRoom($room);
+                    $show->setDateTime($showMapper->getDateTime());
+                    
+                    array_push($showList, $show);
+                } 
+
+                $cinemaList = $this->cinemaDAO->getAll();
+                $showListSize = count($showList);
+                
+                foreach($cinemaList as $cinema)
+                {
+                    if($i < $showListSize)
+                    {
+                        if($cinema->getId() != $idCinema)
+                        {
+                            if(($showList[$i]->getMovie()->getId() == $idMovie) && ($showList[$i]->getRoom()->getId() == $cinema->getId()))
+                            {
+                                $showDay = substr($showList[$i]->getDateTime(), 8, 2);
+                                $dateTimeDay = substr($dateTime, 8, 2);
+
+                                if($showDay == $dateTimeDay)
+                                {
+                                    $flag = true;
+                                    break;
+                                }
+                                else
+                                {
+                                    $flag = false;
+                                }
+
+                                $i++;
+                            }   
+                        }
+                    }  
+                }
+            }
+            else
+            {
+                $flag = false;
+            }
+
+            return $flag;
+        }
 
         public function validateShow ($idCinema, $idMovie, $dateTime, $remainingTickets)
         {
             $validateIdMovie = $this->validateFormField($idMovie);
-
-            if(!empty($dateTime))
-            {
-                $validateDateTime = $this->validateDateTime($idCinema, $dateTime);
-            }
-            else
-            {
-                $validateDateTime = false;
-            }
-    
+            $validateDateTime = $this->validateDateTime($idCinema, $dateTime);
             $validateRemainingTickets = $this->validateFormField($remainingTickets);
-            
-            if($validateIdMovie && $validateDateTime && $validateRemainingTickets)
+            $movieFinded = $this->searchMovie($idMovie, $idCinema, $dateTime);
+
+            if($validateIdMovie && $validateDateTime && $validateRemainingTickets && !$movieFinded)
             {  
                 $flag = true; 
             }
@@ -321,11 +374,11 @@
             {
                 $flag = false;
             }
-            
+        
             return $flag;
         }
 
-        public function addShow ($idRoom = 0, $idMovie = 0, $dateTime = 0, $remainingTickets = '')
+        public function addShow ($idRoom = '', $idMovie = '', $dateTime = 0, $remainingTickets = '')
         {
             $room = new Room();
             $movie = new Movie();
@@ -335,7 +388,7 @@
             $movie = $this->movieDAO->getMovieById($idMovie);
             $idCinema = $room->getIdCinema();
 
-            if($dateTime != 0)
+            if(!empty($dateTime) && !empty($idMovie))
             {
                 $validateShow = $this->validateShow($idCinema, $idMovie, $dateTime, $remainingTickets);
             }  
