@@ -105,7 +105,7 @@
 
         function getJsonFilePath()
         {
-            $initialPath = "Data/genres.json";
+            $initialPath = "Data/MoviesXgenres.json";
 
             if(file_exists($initialPath))
             {
