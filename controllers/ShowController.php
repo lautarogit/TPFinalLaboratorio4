@@ -121,7 +121,7 @@
         {
             $result = false;
             $previousMovieList = $this->movieDAO->getMovieListByIdCinema($idCinema);
-
+            
             if(!empty($previousMovieList))
             {
                 $previousMovieListSize = count($previousMovieList);
@@ -136,15 +136,33 @@
                 }
 
                 $showMapout = $this->showDAO->getShowByIdCinemaAndIdMovie($idCinema, $previousMovie->getId());
-                $previousShow = new Show();
-                $room = $this->roomDAO->getRoomByID($showMapout->getIdRoom());
-                $movie = $this->movieDAO->getMovieById($showMapout->getIdMovie());
-                $previousShow->setId($showMapout->getId());
-                $previousShow->setRoom($room);
-                $previousShow->setMovie($movie);
-                $previousShow->setDateTime($showMapout->getDateTime());
-                $previousShow->setRemainingTickets($showMapout->getRemainingTickets());
 
+                if(is_array($showMapout))
+                {
+                    $lastIndex = (count($showMapout)-1);
+                    $room = $this->roomDAO->getRoomByID($showMapout[$lastIndex]->getIdRoom());
+                    $movie = $this->movieDAO->getMovieById($showMapout[$lastIndex]->getIdMovie());
+    
+                    $previousShow = new Show();
+                    $previousShow->setId($showMapout[$lastIndex]->getId());
+                    $previousShow->setRoom($room);
+                    $previousShow->setMovie($movie);
+                    $previousShow->setDateTime($showMapout[$lastIndex]->getDateTime());
+                    $previousShow->setRemainingTickets($showMapout[$lastIndex]->getRemainingTickets());
+                }
+                else
+                {
+                    $room = $this->roomDAO->getRoomByID($showMapout->getIdRoom());
+                    $movie = $this->movieDAO->getMovieById($showMapout->getIdMovie());
+
+                    $previousShow = new Show();
+                    $previousShow->setId($showMapout->getId());
+                    $previousShow->setRoom($room);
+                    $previousShow->setMovie($movie);
+                    $previousShow->setDateTime($showMapout->getDateTime());
+                    $previousShow->setRemainingTickets($showMapout->getRemainingTickets());
+                }
+                
                 $showPreviousDate = substr($previousShow->getDateTime(), 0, 10);
                 $previousMovieRuntime = $previousMovie->getRuntime();
 
@@ -243,23 +261,32 @@
                 $actualDay = substr($actualDay, 1, 2);
                 $actualHours = substr($actualHours, 1, 2);
                 $actualMinutes = substr($actualMinutes, 1, 2);
+
+                echo "antes de entrar al if";
         
                 if(($year >= $actualYear) && ($month >= $actualMonth) && ($day >= $actualDay) && ($hours >= $actualHours))
                 {
-                    if($hours > $actualHours)
+                    if($day == $actualDay)
                     {
-                        $result = true;
-                    }
-                    else if($hours == $actualHours)
-                    {
-                        if($minutes >= $actualMinutes)
+                        if($hours > $actualHours)
                         {
                             $result = true;
                         }
-                        else
+                        else if($hours == $actualHours)
                         {
-                            $result = false;
+                            if($minutes >= $actualMinutes)
+                            {
+                                $result = true;
+                            }
+                            else
+                            {
+                                $result = false;
+                            }
                         }
+                    }
+                    else if($day > $actualDay)
+                    {
+                        $result = true;
                     }  
                 }
                 else
@@ -285,9 +312,8 @@
             }
     
             $validateRemainingTickets = $this->validateFormField($remainingTickets);
-            $movieFinded = $this->showDAO->getShowMovieByIdCinema($idMovie, $idCinema);
             
-            if($validateIdMovie && $validateDateTime && $validateRemainingTickets && !$movieFinded)
+            if($validateIdMovie && $validateDateTime && $validateRemainingTickets)
             {  
                 $flag = true; 
             }
@@ -299,7 +325,7 @@
             return $flag;
         }
 
-        public function addShow ($idRoom, $idMovie = '', $dateTime, $remainingTickets = '')
+        public function addShow ($idRoom = 0, $idMovie = 0, $dateTime = 0, $remainingTickets = '')
         {
             $room = new Room();
             $movie = new Movie();
@@ -308,31 +334,38 @@
             $room = $this->roomDAO->getRoomByID($idRoom);
             $movie = $this->movieDAO->getMovieById($idMovie);
             $idCinema = $room->getIdCinema();
-            
-            $validateShow = $this->validateShow($idCinema, $idMovie, $dateTime, $remainingTickets);
 
+            if($dateTime != 0)
+            {
+                $validateShow = $this->validateShow($idCinema, $idMovie, $dateTime, $remainingTickets);
+            }  
+            else
+            {
+                $validateShow = false;
+            }
+            
             if($validateShow)
             {
                 $show->setRoom($room);
                 $show->setMovie($movie);
                 $show->setDateTime($dateTime);
                 $show->setRemainingTickets($remainingTickets);
-
+    
                 $this->showDAO->add($show);
                 $idCinema = $show->getRoom()->getIdCinema();
-    
+        
                 $showMapout = $this->showDAO->getShowByIdRoom($idRoom);
                 $idShow = $showMapout->getId();
                 $room->setIdShow($idShow);
                 $this->roomDAO->edit($room);
-                
+                    
                 $this->roomController->showRoomDashboard($idCinema);
             }
             else
             {
                 $errorMessage = "Datos incorrectos"; 
                 $this->showAddView($idRoom, $errorMessage);
-            }   
+            } 
         }
 
         public function validateFormField ($paramName, $minLength = '', $maxLength = '') 

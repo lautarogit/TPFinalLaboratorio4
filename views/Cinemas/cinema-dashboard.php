@@ -206,17 +206,20 @@
                                                                       <form class="bg-dark-alpha p-5 text-black" action="<?php echo FRONT_ROOT."Cinema/editCinema"?>" method="POST">
                                                                            <div class="form-group">
                                                                                 <label for="id"><h5><strong>ID</strong> (No editable)</h5></label>
-                                                                                <input class="form-control form-control-lg" type="number" name="id" value="<?php echo $cinemaValue->getId();?>" readonly/>
+                                                                                <input class="form-control form-control-lg" type="number" name="id" 
+                                                                                value="<?php echo $cinemaValue->getId();?>" readonly/>
                                                                            </div>
 
                                                                            <div class="form-group">
                                                                                 <label for="name"><h5><strong>Nombre</strong> (3-40 caracteres)</h5></label>
-                                                                                <input class="form-control form-control-lg" type="text" name="name" value="<?php echo $cinemaValue->getName();?>" placeholder="Ingresar nombre">
+                                                                                <input class="form-control form-control-lg" type="text" name="name" 
+                                                                                value="<?php echo $cinemaValue->getName();?>" placeholder="Ingresar nombre">
                                                                            </div>
 
                                                                            <div class="form-group">
                                                                                 <label for="location"><h5><strong>Dirección</strong> (3-40 caracteres)</h5></label>
-                                                                                <input class="form-control form-control-lg" type="text" name="location" value="<?php echo $cinemaValue->getLocation();?>" placeholder="Ingresar localidad">
+                                                                                <input class="form-control form-control-lg" type="text" name="location" 
+                                                                                value="<?php echo $cinemaValue->getLocation();?>" placeholder="Ingresar localidad">
                                                                            </div>
 
                                                                            <div class="form-group">
@@ -256,7 +259,8 @@
                                                                       <form class="bg-dark-alpha p-5 text-black" action="<?php echo FRONT_ROOT."Room/addRoom"?>" method="POST">
                                                                            <div class="form-group">
                                                                                 <label for="id"><h5><strong>ID del cine</strong> (No editable)</h5></label>
-                                                                                <input class="form-control form-control-lg" type="number" name="idCinema" value="<?php echo $cinemaValue->getId();?>" readonly/>
+                                                                                <input class="form-control form-control-lg" type="number" name="idCinema" 
+                                                                                value="<?php echo $cinemaValue->getId();?>" readonly/>
                                                                            </div>
 
                                                                            <div class="form-group">

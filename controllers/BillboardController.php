@@ -69,7 +69,8 @@
                         $show->setRemainingTickets($showValue->getRemainingTickets());
 
                         array_push($showList, $show);
-                    }     
+                        
+                    }    
                 } 
             }
 
