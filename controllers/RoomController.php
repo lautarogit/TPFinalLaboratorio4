@@ -147,27 +147,11 @@
             require_once(VIEWS_PATH."Session/validate-session.php");
             $roomUpdated = new Room();
 
-            $roomFinded = $this->roomDAO->validateData($name, $idCinema);
             $validateCapacity = $this->validateFormField($capacity, 2, 3);
             $validatePrice = $this->validateFormField($price, 2, 10);
             $validateName = $this->validateFormField($name, 2, 25);
             
-            if($roomFinded)
-            {
-                $roomUpdated = $this->roomDAO->getRoomByName($name, $idCinema);
-
-                if(!$roomUpdated->getStatus())
-                {
-                    $roomUpdated->setStatus(true);
-                    $this->roomDAO->edit($roomUpdated);
-                    $errorMessage = "Se ha rehabilitado una sala con el nombre ingresado";
-                } 
-                else
-                {
-                    $errorMessage = "Ya existe una sala habilitada con ese nombre";
-                } 
-            }
-            else if($validateCapacity && $validatePrice && $validateName && $status!=null)
+            if($validateCapacity && $validatePrice && $validateName && !empty($status))
             {
                 $roomUpdated->setId($id);
                 $roomUpdated->setIdCinema($idCinema);
@@ -175,8 +159,11 @@
                 $roomUpdated->setPrice($price);
                 $roomUpdated->setName($name);
                 $roomUpdated->setStatus($status);
-
                 $this->roomDAO->edit($roomUpdated);
+            }
+            else
+            {
+                $errorMessage = "No se ha podido modificar la sala por datos inválidos";
             }
             
             if(!empty($errorMessage))
