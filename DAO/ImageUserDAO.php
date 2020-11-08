@@ -21,7 +21,7 @@ public function setImage($user,$image){
         throw $ex;
     } 
 }
-}
+
     public function getImage(User $user){
 $sqlQuery=" SELECT  * FROM ImageUser  where dni=:dni ";
 
