@@ -10,15 +10,17 @@
         public function add(MoviesXGenres $newGenre)
         {
             $this->retrieveData();
+            if(!in_array($newGenre,$this->genreList)){
             array_push($this->genreList, $newGenre);
             $this->saveData();
+            }
         }
 
         public function getAll()
         {
-            if($this->genreList !== [])
+            if(!empty($this->genreList))
             {
-                $this->retrieveDataFromAPI();
+                $this->retrieveDataFromApi();
             }
             else
             {
@@ -52,8 +54,8 @@
             
             foreach ($this->genreList as $genre) 
             {
-                $arrayValue['id'] = $genre->getId();
-                $arrayValue['name'] = $genre->getName();
+                $arrayValue['idGenre'] = $genre->getIdGenre();
+                $arrayValue['idMovie'] = $genre->getIdMovie();
 
                 array_push($arrayToEncode, $arrayValue);
             }
@@ -74,8 +76,9 @@
 
                 foreach($IdGenre as $genre)
                 {
-                    $newMovie = new MoviesXGenres($idMovie,$genre);
-                   array_push($finalList,$genre);
+                    $newGenre = new MoviesXGenres($idMovie,$genre);
+                   array_push($finalList,$newGenre);
+                  // var_dump($finalList);
                 }
             }
             return $finalList;
@@ -93,7 +96,7 @@
             {
                 $genre = new MoviesXGenres();
                 $idGenre = $arrayValue['idGenre'];
-                $idMovie = $arrayValue['IdMovie'];
+                $idMovie = $arrayValue['idMovie'];
 
                 $genre->setIdGenre($idGenre);
                 $genre->setIdMovie($idMovie);

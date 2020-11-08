@@ -24,7 +24,7 @@
             $runtime = $movie->getRuntime();
 
             $sqlQuery = "INSERT INTO MOVIES (id, title, overview, adult, originalLanguage, popularity, posterPath, releaseDate, status, runtime) 
-            VALUES(:id, :title, :overview, :adult, :originalLanguage, :popularity, :posterPath, :releaseDate, :status, :runtime)";
+            VALUES(:id, :title, :overview, :adult, :originalLanguage, :popularity, :posterPath, :releaseDate, :status, :runtime) ";
 
             $parameters['id'] = $id;
             $parameters['title'] = $title;
