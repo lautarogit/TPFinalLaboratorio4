@@ -28,9 +28,11 @@
             $this->movieDAO = new MovieDAO();
         }
         
-        public function showAllTicketsByUser()
+        public function showAllTicketsByUser ()
         {
-            require_once (VIEWS_PATH."Tickets/TicketsByUser.php");
+            $user = $_SESSION["loggedUser"];
+
+            require_once(VIEWS_PATH."Tickets/TicketsByUser.php");
         }
 
         public function buyTicket ($quantity, $idShow)
@@ -69,7 +71,7 @@
                     $show->setDateTime($showMapper->getDateTime());
 
                     $this->showDAO->edit($show);
-                    $errorMessage = false;
+                    $errorMessage = true;
                 }
                 else
                 {

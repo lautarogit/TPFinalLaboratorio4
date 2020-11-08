@@ -48,12 +48,16 @@
                         </a>  
                     <?php 
                       }
+                      else
+                      {
                     ?>
-                      <a class="dropdown-item btn btn-dark text-center" style="color: crimson;" role="button" href="<?= FRONT_ROOT."Ticket/showAllTicketsByUser"?>">
+                        <a class="dropdown-item btn btn-dark text-center" style="color: crimson;" role="button" href="<?= FRONT_ROOT."Ticket/showAllTicketsByUser"?>">
                           <i class="fas fa-sliders-h"></i> Ver mis Tickets
                         </a>  
-                        
-
+                    <?php 
+                      }
+                    ?>
+    
                     <a class="dropdown-item btn btn-dark text-center" style="color: crimson;" role="button" href="<?= FRONT_ROOT."Home/logout"?>">
                       <i class="fas fa-sign-out-alt"></i>  Cerrar sesión
                     </a> 

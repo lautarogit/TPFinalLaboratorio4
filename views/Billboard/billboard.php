@@ -9,12 +9,26 @@
 <?php 
      if(!empty($errorMessage))
      {
+         if(is_bool($errorMessage))
+         {
 ?>
-          <div class="alert alert-danger alert-dismissible" style="width: 575px;">
+            <div class="alert alert-success alert-dismissible m-2" style="width: 630px;">
+                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                 <strong>
+                    Entrada/s comprada exitosamente. Ingrese <a href="<?= FRONT_ROOT."Ticket/showAllTicketsByUser";?>">AQUÍ</a> para ver sus entradas
+                </strong> 
+            </div>
+<?php   
+         }
+         elseif(is_string($errorMessage))
+         {
+?>
+            <div class="alert alert-danger alert-dismissible m-2" style="width: 630px;">
                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                <strong><?php echo $errorMessage;?></strong>
-          </div>
-<?php      
+            </div>
+<?php    
+         }  
      } 
 ?>  
   
@@ -136,7 +150,7 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <form action="<?= FRONT_ROOT."Ticket/buyTicket";?>">
+                                                    <form action="<?= FRONT_ROOT."Ticket/buyTicket";?>" method="POST">
                                                         <label for="quantity">Cantidad de tickets</label>
                                                         <input type="number" name="quantity">
 
