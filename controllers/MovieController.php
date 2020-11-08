@@ -133,7 +133,7 @@
             }
             else{
                 $flag=true;
-                $this->moviesXgenresDAO->add($mxg);
+                $this->moviesXGenresDAO->add($mxg);
             }
             }
             $this->updateQuery ($flag);
@@ -153,7 +153,13 @@
                 $this->movieDAOAPI->add($movies);
         
                 $result=$this->movieDAO->add($movies);
-                $flag=boolval($result);
+                if($result)
+                {
+                    $flag=true;
+                }
+                else{
+                    $flag=false;
+                }
         
             }
         
@@ -161,7 +167,7 @@
 
             $this->updateQuery ($flag);
         }
-        
+
 
         public function showFilterMovieDashboard ($filterMovieList)
         {
