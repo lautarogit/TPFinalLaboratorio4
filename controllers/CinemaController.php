@@ -45,8 +45,8 @@
             $cinema = new Cinema();
 
             $cinemaFinded = $this->cinemaDAO->validateData($name);
-            $validateName = $this->validateFormField($name, 4, 20);
-            $validateLocation = $this->validateFormField($location, 4, 45);
+            $validateName = $this->validateFormField($name,3, 40);
+            $validateLocation = $this->validateFormField($location, 3, 40);
 
             if($cinemaFinded)
             {
@@ -89,7 +89,6 @@
                 $cinema->setName($name);
                 $cinema->setLocation($location);
                 $cinema->setStatus(true);
-
                 $this->cinemaDAO->add($cinema);
             }
             
@@ -107,33 +106,20 @@
         {
             $cinemaUpdated = new Cinema();
 
-            $cinemaFinded = $this->cinemaDAO->validateData($name);
-            $validateName = $this->validateFormField($name, 4, 20);
-            $validateLocation = $this->validateFormField($location, 4, 45);
+            $validateName = $this->validateFormField($name, 3, 40);
+            $validateLocation = $this->validateFormField($location, 3, 40);
 
-            if($cinemaFinded)
-            {
-                $cinemaUpdated = $this->cinemaDAO->getCinemaByName($name);
-
-                if(!$cinemaUpdated->getStatus())
-                {
-                    $cinemaUpdated->setStatus(true);
-                    $this->cinemaDAO->edit($cinemaUpdated);
-                    $errorMessage = "Se ha rehabilitado un cine con el nombre ingresado";
-                } 
-                else
-                {
-                    $errorMessage = "Ya existe un cine habilitado con ese nombre";
-                }  
-            }
-            else if($validateName && $validateLocation && $status!=null)
+            if($validateName && $validateLocation && !empty($status))
             {
                 $cinemaUpdated->setId($id);
                 $cinemaUpdated->setName($name);
                 $cinemaUpdated->setLocation($location);
                 $cinemaUpdated->setStatus($status);
-
                 $this->cinemaDAO->edit($cinemaUpdated);
+            }
+            else
+            {
+                $errorMessage = "No se ha podido modificar el cine por datos inválidos";
             }
 
             if(!empty($errorMessage))

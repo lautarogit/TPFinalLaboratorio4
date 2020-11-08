@@ -5,34 +5,59 @@
     use Models\Cinema as Cinema;
     use DAO\CinemaDAO as CinemaDAO;
 ?>
-    
+
+<?php 
+     if(!empty($errorMessage))
+     {
+         if(is_bool($errorMessage))
+         {
+?>
+            <div class="alert alert-success alert-dismissible m-2" style="width: 630px;">
+                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                 <strong>
+                    Entrada/s comprada exitosamente. Ingrese <a href="<?= FRONT_ROOT."Ticket/showAllTicketsByUser";?>">AQUÍ</a> para ver sus entradas
+                </strong> 
+            </div>
+<?php   
+         }
+         elseif(is_string($errorMessage))
+         {
+?>
+            <div class="alert alert-danger alert-dismissible m-2" style="width: 630px;">
+               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+               <strong><?php echo $errorMessage;?></strong>
+            </div>
+<?php    
+         }  
+     } 
+?>  
+  
 <div class="btn-toolbar m-2 position-relative" style="left: 400px; top: 80px;" role="toolbar">
     <div class="btn-group mr-2" role="group">
         <?php   
             $i = 0;
             $cinemaListSize = count($cinemaList);
+            $showListSize = count($showList);
 
-            foreach($showList as $show)
+            foreach($cinemaList as $cinema)
             {
-                if($i < $cinemaListSize)
+                if($i < $showListSize)
                 { 
-                    $idCinema = $cinemaList[$i]->getId();
-                    $showIdCinema = $show->getRoom()->getIdCinema();
-
+                    $showIdCinema = $showList[$i]->getRoom()->getIdCinema();
+                    $idCinema = $cinema->getId();
+                        
                     if($idCinema == $showIdCinema)
-                    { 
-                        
-                        
-        ?>
+                    {             
+            ?> 
                         <button class="btn btn-dark" style="color: chocolate; border-radius: 20px 20px 0px 0px;" type="button" 
                         data-toggle="collapse" data-target="<?= "#cinemaCollapseId".$showIdCinema;?>">
-                            <?= substr($show->getDateTime(), 0, 10);?>
+                            <?= substr($showList[$i]->getDateTime(), 0, 10);?>
                         </button>
-        <?php    
-                        $i++;
-                    }    
+            <?php      
+                        $i++; 
+                    }       
                 }  
-            }
+            } 
         ?>
     </div>
 </div>
@@ -69,9 +94,81 @@
                                 if($show->getRoom()->getIdCinema() == $idCinema)
                                 {
                         ?>
-                                    <button class="btn btn-warning m-1" type="button">
-                                        <?php echo substr($show->getDateTime(), 11, 5)." hs";?>
+                                    <button class="btn btn-warning m-1" type="button" 
+                                    data-toggle="modal" data-target="<?= "#ticketModal".$show->getId();?>">
+                                        <p>
+                                            <i class="fa fa-ticket-alt" style="color: red;"></i>
+                                            <?= " ".$show->getRemainingTickets();?>
+                                        </p>
+                                        <p>
+                                            <?= substr($show->getDateTime(), 11, 5)." hs";?>
+                                        </p>
                                     </button>
+
+                                    <!-- Ticket Modal -->
+                                    <div class="modal fade" tabindex="-1" role="dialog" id="<?= "ticketModal".$show->getId();?>">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content background-dark text-white">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Ticket</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    <?php
+                                                        $adult = $movie->getAdult();
+                                                        $price = $show->getRoom()->getPrice();
+                                                        $roomName = $show->getRoom()->getName();
+                                                        $date = substr($show->getDateTime(), 0, 10);
+                                                        $time = substr($show->getDateTime(), 11, 5);
+                                                        $title = $movie->getTitle();
+                                                        $idShow = $show->getId();
+                                                    ?>
+
+                                                    <h5><?= "Sala: ".$roomName;?></h5>
+                                                    <p>
+                                                        <?php
+                                                            if($adult == 0)
+                                                            {
+                                                                ?>
+                                                                    <h2 class="d-inline">FAMILIAR<?= "  $".$price;?></h2>
+                                                                <?php
+                                                            }
+                                                            else
+                                                            {
+                                                                ?>
+                                                                    <h2 class="d-inline">ADULTO<?= "  $".$price;?></h2>
+                                                                <?php
+                                                            }
+                                                        ?>
+                                                    </p>
+                                                    <h2><?= $title; ?></h2>
+                                                    <h5><?= "Fecha: ".$date;?></h5>
+                                                    <h5><?= "Hora: ".$time;?></h5>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <form action="<?= FRONT_ROOT."Ticket/buyTicket";?>" method="POST">
+                                                        <label for="quantity">Cantidad de tickets</label>
+                                                        <input type="number" name="quantity">
+
+                                                        <button class="btn btn-success" type="submit" name="idShow" 
+                                                        value="<?= $idShow;?>">
+                                                            Comprar entrada
+                                                        </button>
+                                                        
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                            Cerrar
+                                                        </button>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- ----------------- -->
                         <?php 
                                 }
                             }

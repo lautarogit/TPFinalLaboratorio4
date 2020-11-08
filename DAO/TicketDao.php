@@ -35,9 +35,14 @@
                 throw $ex;
             } 
         }
-        public function getTicketByUser($idUser){
-            $sqlQuery='SELECT * FROM tickets WHERE idUser= :idUser ';
-           $parameter['idUser']=$idUser;
+
+        public function getTicketByUser($idUser)
+        {
+            $sqlQuery='SELECT * FROM tickets 
+            WHERE idUser= :idUser ';
+
+            $parameter['idUser'] = $idUser;
+
             try
             {
                 $this->connection = Connection::getInstance();
@@ -76,8 +81,10 @@
 
             return $finalResult;
         }
-        public function getTickets ($idUser){
-            $sqlQuery ="SELECT 
+
+        public function getTickets ($idUser)
+        {
+            $sqlQuery = "SELECT 
             c.name as 'nameCinema'
             , c.location as 'locationCinema'
             , r.name as 'roomName'
@@ -157,7 +164,7 @@
             return $finalResult;
         }
       
-        public function mapout($value)
+        public function mapout ($value)
         {
             $value = is_array($value) ? $value : [];
 

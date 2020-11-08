@@ -26,7 +26,7 @@
             $this->showDAO = new ShowDAO();
         }
 
-        public function showBillboard ($idMovie)
+        public function showBillboard ($idMovie, $errorMessage = '')
         {
             $movie = new Movie();
             $movie = $this->movieDAO->getMovieById($idMovie);

@@ -51,15 +51,7 @@
                 if($user->getPassword() == $password)
                 {
                     $this->setSession($user);
-
-                    if($user->getRolId() == 0)
-                    {
-                        $this->cinemaController->showClientCinemaDashboard();
-                    }
-                    else
-                    {
-                        $this->cinemaController->showCinemaDashboard();
-                    }  
+                    $this->cinemaController->showCinemaDashboard();
                 }
                 else
                 {
