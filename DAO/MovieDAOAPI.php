@@ -10,8 +10,11 @@
         public function add(Movie $newMovie)
         {
             $this->retrieveData();
+            if(!in_array($newMovie,$this->movieList))
+            {
             array_push($this->movieList, $newMovie);
             $this->saveData();
+            } 
         }
 
         public function getAll()
@@ -19,6 +22,7 @@
             if($this->movieList !== [])
             {
                 $this->retrieveDataFromApi();
+
             }
             else
             {
@@ -49,8 +53,7 @@
             $movie = json_decode($moviedb, TRUE);
 
             $runtime = $movie['runtime'];
-
-            intval($runtime);
+         intval($runtime);
 
             return $runtime;
         }
@@ -88,6 +91,7 @@
                 $newMovie->setRuntime($this->setRuntime($id));
 
                 array_push($finalList,$newMovie);
+            
             }
             return $finalList;
         }
