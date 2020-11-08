@@ -246,7 +246,7 @@
             return $show;
         }
 
-        public function edit (show $showUpdated)
+        public function edit (Show $showUpdated)
         {
             $id = $showUpdated->getId();
             $idRoom = $showUpdated->getRoom()->getId();
