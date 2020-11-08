@@ -30,6 +30,13 @@
             $this->showDAO = new ShowDAO();
         }
     
+        public function actionDisabled ()
+        {
+            $errorMessage = true;
+
+            $this->showMovieDashboard($errorMessage);
+        }
+
         public function showMovieDashboard ($errorMessage = '')
         {
             if(!empty($_SESSION['loggedUser']))
@@ -61,64 +68,77 @@
             
             require_once(VIEWS_PATH."Movies/movie-dashboard.php");
         }
-        public function addGenresToDB()
-        {
-          
-           require_once(VIEWS_PATH."add-movies.php");
-            $genreList=$this->genreDAOAPI->getAll();
-         
-            $genreDB=$this->genreDAO->getAll();
 
-            foreach($genreList as $genre)
-            {
-             
-                $this->genreDAOAPI->add($genre);
-                if(!in_array($genre,$genreDB))
-                {
-                    $this->genreDAO->add($genre);
-                    $flag=true;
-      
-
-
-                }
-                else{
-                  $flag = false;
-                }
-            }
-                if($flag){
-                ?>
-                <div class="alert alert-success" role="alert">
-    Se ha cargado en la base de datos con exito
-    </div>
-<?php
-            }
-            else{
-     ?> 
-                <div class="alert alert-success" role="alert">
-                  no hay nada que actualizar
-                  </div>
-       
-<?php
-            }
-         
-           
-        }
         public function addMoviesXGenresToDB()
         {
-          
-           require_once(VIEWS_PATH."add-movies.php");
-            $this->moviesXgenresDAOAPI->retrieveDataFromApi();
+            require_once(VIEWS_PATH."add-movies.php");
+            $moviesXgenresList=$this->moviesXGenresDAOAPI->retrieveDataFromApi();
+            $moviesXgenresDB= $this->moviesXGenresDAO->getAll();
+
+            foreach($moviesXgenresList as $mxg)
+            {
+                var_dump(in_array($mxg,$moviesXGenresDB));
+
+                $this->moviesXGenresDAOAPI->add($mxg);
+
+                if(!empty($moviesXgenresDB))
+                {
+                    if(!in_array($mxg,$moviesXGenresDB))
+                    {
+                        $flag=true;
+                        $this->moviesXgenresDAO->add($mxg);
+
+                    }
+                    else
+                    {
+                        $flag = false;
+                    }
+                }
+                else
+                {
+                    $flag=true;
+                    $this->moviesXgenresDAO->add($mxg);
+                }
+            }
+            
+            $this->updateQuery($flag);
         }
 
         public function addMoviesToDB()
         {
-            require_once(VIEWS_PATH."add-movies.php");      
-          
-        }
-        public function addMovies(){
             require_once(VIEWS_PATH."add-movies.php");
-            $this->moviesDAOAPI->retrieveDataFromApi();
+        }
 
+        public function addMovies()
+        {
+            require_once(VIEWS_PATH."add-movies.php");
+            $moviesList= $this->movieDAOAPI->getAll();
+            $moviesDB=$this->movieDAO->getAll();
+
+            foreach($moviesList as $movies)
+            {
+                $this->movieDAOAPI->add($movies);
+
+                if(!empty($moviesDB))
+                {
+                    if(!in_array($movies,$moviesDB))
+                    {
+                        $this->movieDAO->add($movies);
+                        $flag=true;
+                    }
+                    else
+                    {
+                        $flag = false;
+                    }
+                }
+                else
+                {
+                    $this->movieDAO->add($movies);
+                    $flag=true;
+                }
+            }
+
+            $this->updateQuery($flag);
         }
 
         public function showFilterMovieDashboard ($filterMovieList)

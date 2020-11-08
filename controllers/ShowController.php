@@ -361,20 +361,25 @@
 
         public function validateShow ($idCinema, $idMovie, $dateTime, $remainingTickets)
         {
-            $validateIdMovie = $this->validateFormField($idMovie);
-            $validateDateTime = $this->validateDateTime($idCinema, $dateTime);
-            $validateRemainingTickets = $this->validateFormField($remainingTickets);
-            $movieFinded = $this->searchMovie($idMovie, $idCinema, $dateTime);
+            $flag = false;
 
-            if($validateIdMovie && $validateDateTime && $validateRemainingTickets && !$movieFinded)
-            {  
-                $flag = true; 
-            }
-            else
+            if(!empty($idCinema) && !empty($idMovie) && !empty($dateTime) && !empty($remainingTickets))
             {
-                $flag = false;
+                $validateIdMovie = $this->validateFormField($idMovie);
+                $validateDateTime = $this->validateDateTime($idCinema, $dateTime);
+                $validateRemainingTickets = $this->validateFormField($remainingTickets);
+                $movieFinded = $this->searchMovie($idMovie, $idCinema, $dateTime);
+
+                if($validateIdMovie && $validateDateTime && $validateRemainingTickets && !$movieFinded)
+                {  
+                    $flag = true; 
+                }
+                else
+                {
+                    $flag = false;
+                }
             }
-        
+
             return $flag;
         }
 

@@ -28,11 +28,19 @@
             $this->movieDAO = new MovieDAO();
         }
         
+        public function showTicketsSelled ()
+        {
+            $ticketList = $this->ticketDAO->getAll();
+
+            require_once(VIEWS_PATH."Tickets/tickets-selled.php");
+        }
+
         public function showAllTicketsByUser ()
         {
             $user = $_SESSION["loggedUser"];
+            $ticketList = $this->ticketDAO->getTickets($user->getDni());
 
-            require_once(VIEWS_PATH."Tickets/TicketsByUser.php");
+            require_once(VIEWS_PATH."Tickets/tickets-by-user.php");
         }
 
         public function buyTicket ($quantity, $idShow)

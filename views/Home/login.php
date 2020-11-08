@@ -1,3 +1,7 @@
+<?php
+     require_once(VIEWS_PATH."nav.php");
+?>
+
 <main class="d-flex align-items-center justify-content-center height-100 transparent-box">
      <div class="content">
           <form action="<?php echo FRONT_ROOT."Home/login";?>" method="POST" class="login-form bg-dark-alpha p-2 text-white">
@@ -9,11 +13,20 @@
                     <i class="fas fa-key"></i><input class="login-input" type="password" name="password" placeholder="Ingresar constraseña">
                </div>
 
-               <button class="btn btn-dark btn-block btn-lg" style="border-radius:25px 25px 3px 3px;" type="submit">Iniciar sesion</button>
+               <button class="btn btn-dark btn-block btn-lg" style="border-radius:7px 7px 7px 7px;" type="submit">Iniciar sesion</button>
           </form>
 
           <div class="text-center">
-               <button class="btn btn-primary btn-lg text-center background-green" style="border-radius:3px 3px 25px 25px; width: 292px;" data-toggle="modal" data-target="#signUpModal">Únete ahora</button>
+               <button class="btn btn-primary btn-lg text-center background-green" style="border-radius:7px 7px 7px 7px; width: 292px;" 
+               data-toggle="modal" data-target="#signUpModal">
+                    Únete ahora
+               </button>
+          </div>
+          
+          <div class="text-center m-2">
+               <a class="btn btn-info btn-lg" style="border-radius:7px 7px 7px 7px; width: 292px;" rol="button" href="<?= FRONT_ROOT."Cinema/showCinemaDashboard";?>">
+                    Continuar como invitado 
+               </a>
           </div> 
      </div>
 </main>
@@ -86,7 +99,10 @@
                                    <input class="form-control form-control-lg" type="password" name="password" placeholder="Contraseña" required>
                               </div>
 
-                              <button class="btn btn-primary btn-block btn-lg text-center background-green" style="border-radius:25px 3px 25px 3px;" type="submit">Registrarte</button>
+                              <button class="btn btn-primary btn-block btn-lg text-center background-green" style="border-radius:25px 3px 25px 3px;" 
+                              type="submit">
+                                   Registrarte
+                              </button>
                          </form>
                     </div>
                </div>

@@ -3,7 +3,7 @@
     require_once(VIEWS_PATH."nav.php");
 ?>
 
-<table class="table bg-dark text-white">
+<table class="table bg-dark text-white m-2">
     <thead>
         <th>Nombre de cine</th>
         <th>Localidad de cine</th>
@@ -15,8 +15,6 @@
     </thead>
 
 <?php
-    $ticketList = $this->ticketDAO->getTickets($user->getDni());
-
     foreach($ticketList as $ticket)
     {       
 ?>

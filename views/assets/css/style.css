@@ -51,26 +51,26 @@
 }
 
 .transparent-box{
-    position: absolute;
-    top:8%;
-    left:37%;
-    background: rgba(0, 0, 0, .7);
-    width: 450px;
-    height: 430px;
-    border-radius: 30px 5px 30px 5px;
+    position: absolute !important;
+    top:12% !important;
+    left:37% !important;
+    background: rgba(0, 0, 0, .7) !important;
+    width: 450px !important;
+    height: 430px !important;
+    border-radius: 30px 5px 30px 5px !important;
 }
 
 .text-shadow{
-    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black !important;
 }
 
 .grid{
-    display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
+    display: grid !important;
+    grid-template-columns: 20% 20% 20% 20% 20% !important;
 }
 
 .hover-box:hover{
-    border-color: seagreen;
+    border-color: seagreen !important;
 }
 
 footer{

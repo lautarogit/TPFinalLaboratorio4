@@ -1,6 +1,12 @@
-<form action="<?php echo FRONT_ROOT."movie/addMoviesToDB"?>">    
-    <button class="btn btn-success m-2" type="submit">  <!-- fijate como queres hacerlo -->
+<form action="<?php echo FRONT_ROOT."Movie/addMoviesToDB"?>">    
+    <button class="btn btn-success m-2" type="submit"> 
         Agregar peliculas a la BDD
+    </button>
+</form>
+
+<form action="<?php echo FRONT_ROOT."Ticket/showTicketsSelled"?>">    
+    <button class="btn btn-info m-2" type="submit"> 
+        Ver ventas de tickets
     </button>
 </form>
 

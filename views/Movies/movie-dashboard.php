@@ -44,16 +44,31 @@
 </div>
 
 <?php 
-     if(!empty($errorMessage))
-     {
+    if(!empty($errorMessage))
+    {
+        if(is_bool($errorMessage))
+        {
 ?>
-          <div class="alert alert-danger alert-dismissible" style="width: 340px;">
+            <div class="alert alert-warning alert-dismissible m-2" style="width: 500px;">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>
+                    Debe tener una cuenta para utilizar esta funcionalidad.
+                    <a href="<?= FRONT_ROOT."Home/showLoginView";?>"> Inicie sesión</a> para continuar             
+                </strong> 
+            </div>
+<?php   
+        }
+        elseif(is_string($errorMessage))
+        {
+?>
+            <div class="alert alert-danger alert-dismissible m-2" style="width: 630px;">
                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                <strong><?php echo $errorMessage;?></strong>
-          </div>
-<?php      
-     }   
-?>
+            </div>
+<?php    
+        }  
+    } 
+?>  
 
 <div class="container text-center" style="width: 100%; height: 100px;">
     <h1 class="text-crimson text-shadow">Top 5 películas mas populares</h1>
@@ -80,6 +95,7 @@
                         <li data-target="#carouselIndicator" data-slide-to="<?= $i; ?>"></li>
             <?php
                     }
+                    
                     $i++;
                 }
             ?>
@@ -222,12 +238,28 @@
                             <p><?= "<strong>Fecha de lanzamiento: </strong>".substr($movieValue->getReleaseDate(), 0, 10);?></p>
                         </div>
                     </div>
-
-                    <form action="<?= FRONT_ROOT."Billboard/showBillboard"?>" method="POST">
-                        <button class="btn btn-sm btn-success m-1" style="width: 354px;" type="submit" name="idMovie" value="<?= $movieValue->getId();?>">
-                            Consultar por entrada
-                        </button>   
-                    </form>  
+                    <?php 
+                        if(!empty($rolId))
+                        {
+                    ?>
+                            <form action="<?= FRONT_ROOT."Billboard/showBillboard"?>" method="POST">
+                                <button class="btn btn-sm btn-success m-1" style="width: 354px;" type="submit" name="idMovie" value="<?= $movieValue->getId();?>">
+                                    Consultar por entrada
+                                </button>   
+                            </form>  
+                    <?php 
+                        }
+                        else
+                        {
+                    ?>
+                            <form action="<?= FRONT_ROOT."Movie/actionDisabled"?>" method="POST">
+                                <button class="btn btn-sm btn-success m-1" style="width: 354px;" type="submit" name="idMovie" value="<?= $movieValue->getId();?>">
+                                    Consultar por entrada
+                                </button>   
+                            </form>  
+                    <?php 
+                        }
+                    ?>
                 </div>                              
                     
                 <!-- Movie info Modal -->
