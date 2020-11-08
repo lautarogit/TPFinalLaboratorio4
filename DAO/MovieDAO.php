@@ -12,6 +12,8 @@
         
         public function add (Movie $movie)
         {
+            
+            
             $id = $movie->getId();
             $title = $movie->getTitle();
             $overview = $movie->getOverview();
@@ -41,12 +43,13 @@
             {
                 $this->connection = Connection::getInstance();
 
-                return $this->connection->executeNonQuery($sqlQuery, $parameters);
+              $result= $this->getMovieById($id) ?false:$this->connection->executeNonQuery($sqlQuery, $parameters);
             } 
             catch (PDOException $ex) 
             {
                 throw $ex;
             }
+            return $result;
         }
 
         public function getAll ()

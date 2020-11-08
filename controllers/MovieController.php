@@ -112,19 +112,19 @@
         {
             require_once(VIEWS_PATH."add-movies.php");
             $moviesXgenresList=$this->moviesXGenresDAOAPI->retrieveDataFromApi();
-            $moviesXgenresDB= $this->moviesXGenresDAO->getAll();
+            $mxgDB= $this->moviesXGenresDAO->getAll();
 
             foreach($moviesXgenresList as $mxg)
             {
            
-                var_dump(in_array($mxg,$moviesXGenresDB));
+             
              
                 $this->moviesXGenresDAOAPI->add($mxg);
-                if(!empty($moviesXgenresDB)){
-                 if(!in_array($mxg,$moviesXGenresDB))
+                if(!empty($mxgDB)){
+                 if(!in_array($mxg,$mxgDB))
                 {
                  $flag=true;
-                    $this->moviesXgenresDAO->add($mxg);
+                    $this->moviesXGenresDAO->add($mxg);
                  
                 }
                 else{
@@ -147,33 +147,21 @@
         public function addMovies(){
             require_once(VIEWS_PATH."add-movies.php");
             $moviesList= $this->movieDAOAPI->getAll();
-
-            $moviesDB=$this->movieDAO->getAll();
-
             foreach($moviesList as $movies)
             {
              
                 $this->movieDAOAPI->add($movies);
-                if(!empty($moviesDB)){
-
-                if(!in_array($movies,$moviesDB))
-                {
-                    $this->movieDAO->add($movies);
-                    $flag=true;
+        
+                $result=$this->movieDAO->add($movies);
+                $flag=boolval($result);
+        
+            }
+        
             
-                }
-                else{
-                    $flag = false;
-                }
-             }
-            else{
-                $this->movieDAO->add($movies);
-                $flag=true;
-            }
-            }
 
             $this->updateQuery ($flag);
         }
+        
 
         public function showFilterMovieDashboard ($filterMovieList)
         {
