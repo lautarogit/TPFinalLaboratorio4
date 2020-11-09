@@ -93,86 +93,89 @@
                             {
                                 if($show->getRoom()->getIdCinema() == $idCinema)
                                 {
+                                    if($show->getRemainingTickets() > 0)
+                                    {
                         ?>
-                                    <button class="btn btn-warning m-1" type="button" 
-                                    data-toggle="modal" data-target="<?= "#ticketModal".$show->getId();?>">
-                                        <p>
-                                            <i class="fa fa-ticket-alt" style="color: red;"></i>
-                                            <?= " ".$show->getRemainingTickets();?>
-                                        </p>
-                                        <p>
-                                            <?= substr($show->getDateTime(), 11, 5)." hs";?>
-                                        </p>
-                                    </button>
+                                        <button class="btn btn-warning m-1" type="button" 
+                                        data-toggle="modal" data-target="<?= "#ticketModal".$show->getId();?>">
+                                            <p>
+                                                <i class="fa fa-ticket-alt" style="color: red;"></i>
+                                                <?= " ".$show->getRemainingTickets();?>
+                                            </p>
+                                            <p>
+                                                <?= substr($show->getDateTime(), 11, 5)." hs";?>
+                                            </p>
+                                        </button>
 
-                                    <!-- Ticket Modal -->
-                                    <div class="modal fade" tabindex="-1" role="dialog" id="<?= "ticketModal".$show->getId();?>">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content background-dark text-white">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Ticket</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
+                                        <!-- Ticket Modal -->
+                                        <div class="modal fade" tabindex="-1" role="dialog" id="<?= "ticketModal".$show->getId();?>">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content background-dark text-white">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Ticket</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
 
-                                                <div class="modal-body">
-                                                    <?php
-                                                        $adult = $movie->getAdult();
-                                                        $price = $show->getRoom()->getPrice();
-                                                        $roomName = $show->getRoom()->getName();
-                                                        $date = substr($show->getDateTime(), 0, 10);
-                                                        $time = substr($show->getDateTime(), 11, 5);
-                                                        $title = $movie->getTitle();
-                                                        $idShow = $show->getId();
-                                                    ?>
-
-                                                    <h5><?= "Sala: ".$roomName;?></h5>
-                                                    <p>
+                                                    <div class="modal-body">
                                                         <?php
-                                                            if($adult == 0)
-                                                            {
-                                                                ?>
-                                                                    <h2 class="d-inline">FAMILIAR<?= "  $".$price;?></h2>
-                                                                <?php
-                                                            }
-                                                            else
-                                                            {
-                                                                ?>
-                                                                    <h2 class="d-inline">ADULTO<?= "  $".$price;?></h2>
-                                                                <?php
-                                                            }
+                                                            $adult = $movie->getAdult();
+                                                            $price = $show->getRoom()->getPrice();
+                                                            $roomName = $show->getRoom()->getName();
+                                                            $date = substr($show->getDateTime(), 0, 10);
+                                                            $time = substr($show->getDateTime(), 11, 5);
+                                                            $title = $movie->getTitle();
+                                                            $idShow = $show->getId();
                                                         ?>
-                                                    </p>
-                                                    <h2><?= $title; ?></h2>
-                                                    <h5><?= "Fecha: ".$date;?></h5>
-                                                    <h5><?= "Hora: ".$time;?></h5>
+
+                                                        <h5><?= "Sala: ".$roomName;?></h5>
+                                                        <p>
+                                                            <?php
+                                                                if($adult == 0)
+                                                                {
+                                                                    ?>
+                                                                        <h2 class="d-inline">FAMILIAR<?= "  $".$price;?></h2>
+                                                                    <?php
+                                                                }
+                                                                else
+                                                                {
+                                                                    ?>
+                                                                        <h2 class="d-inline">ADULTO<?= "  $".$price;?></h2>
+                                                                    <?php
+                                                                }
+                                                            ?>
+                                                        </p>
+                                                        <h2><?= $title; ?></h2>
+                                                        <h5><?= "Fecha: ".$date;?></h5>
+                                                        <h5><?= "Hora: ".$time;?></h5>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <form action="<?= FRONT_ROOT."Ticket/buyTicket";?>" method="POST">
+                                                            <label for="quantity">Cantidad de tickets</label>
+                                                            <input type="number" name="quantity">
+
+                                                            <input type="radio" name="card" value="<?= "Visa";?>">Visa
+                                                            <input type="radio" name="card" value="<?= "Mastercard";?>">Mastercard
+
+                                                            <button class="btn btn-success" type="submit" name="idShow" 
+                                                            value="<?= $idShow;?>">
+                                                                Comprar entrada
+                                                            </button>
+                                                            
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                                Cerrar
+                                                            </button>
+                                                        </form>
+                                                    </div>
+
                                                 </div>
-
-                                                <div class="modal-footer">
-                                                    <form action="<?= FRONT_ROOT."Ticket/buyTicket";?>" method="POST">
-                                                        <label for="quantity">Cantidad de tickets</label>
-                                                        <input type="number" name="quantity">
-
-                                                        <input type="radio" name="card" value="<?= "Visa";?>">Visa
-                                                        <input type="radio" name="card" value="<?= "Mastercard";?>">Mastercard
-
-                                                        <button class="btn btn-success" type="submit" name="idShow" 
-                                                        value="<?= $idShow;?>">
-                                                            Comprar entrada
-                                                        </button>
-                                                        
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                            Cerrar
-                                                        </button>
-                                                    </form>
-                                                </div>
-
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- ----------------- -->
+                                        <!-- ----------------- -->
                         <?php 
+                                    }
                                 }
                             }
                         ?>

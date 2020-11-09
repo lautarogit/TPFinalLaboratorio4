@@ -2,6 +2,7 @@
     namespace Controllers;
 
     use Controllers\BillboardController as BillboardController;
+    use Controllers\MovieController as MovieController;
     use DAO\TicketDAO as TicketDAO;
     use Models\Ticket as Ticket;
     use DAO\ShowDAO as ShowDAO;
@@ -17,6 +18,7 @@
         private $showDAO;
         private $ticketDAO;
         private $billboardController;
+        private $movieController;
         private $roomDAO;
         private $movieDAO;
 
@@ -25,6 +27,7 @@
             $this->showDAO = new ShowDAO();
             $this->ticketDAO = new TicketDAO();
             $this->billboardController = new BillboardController();
+            $this->movieController = new MovieController();
             $this->roomDAO = new RoomDAO();
             $this->movieDAO = new MovieDAO();
         }
@@ -45,68 +48,79 @@
             require_once(VIEWS_PATH."Tickets/tickets-by-user.php");
         }
 
-        public function buyTicket ($quantity, $card, $idShow)
+        public function buyTicket ($quantity = '', $card = '', $idShow = '')
         {
             $user = $_SESSION['loggedUser'];
-            $showMapper = $this->showDAO->getShowById($idShow);
-            $idMovie = $showMapper->getIdMovie();
-
-            date_default_timezone_set('America/Argentina/Buenos_Aires');
-            $dateDay = date('l');
-                                                
-            $show = new Show();
-            $show->setId($showMapper->getId());
-            $show->setRemainingTickets($showMapper->getRemainingTickets());
-            $room = $this->roomDAO->getRoomByID($showMapper->getIdRoom());
             
-            $ticketsLeft = $show->getRemainingTickets();
-            
-            if($user->getRolId() != 1)
+            if(!empty($quantity) && !empty($card) && !empty($idShow))
             {
-                if(($show->getRemainingTickets() - $quantity) >= 0)
-                {
-                    for($i = 0; $i < $quantity; $i++)
-                    {
-                        $ticket = new Ticket();
-
-                        $codeQR = rand(1000, 10000);
-                        $ticket->setCodeQR($codeQR);
-                        $ticket->setIdShow($idShow);
-                        $ticket->setIdUser($user->getDni()); 
+                $showMapper = $this->showDAO->getShowById($idShow);
+                $idMovie = $showMapper->getIdMovie();
+        
+                date_default_timezone_set('America/Argentina/Buenos_Aires');
+                $dateDay = date('l');
+                                                            
+                $show = new Show();
+                $show->setId($showMapper->getId());
+                $show->setRemainingTickets($showMapper->getRemainingTickets());
+                $room = $this->roomDAO->getRoomByID($showMapper->getIdRoom());
                         
-                        $this->ticketDAO->add($ticket);
-                    }
+                $ticketsLeft = $show->getRemainingTickets();
 
-                    if($dateDay == "Tuesday" || $dateDay == "Wednesday") 
+                if($user->getRolId() != 1)
+                {
+                    if(($show->getRemainingTickets() - $quantity) >= 0)
                     {
-                        $discount = 0.75;
-                        $roomPrice = $room->getPrice();
-                        $newPrice =  $roomPrice * $discount;
-
-                        $room->setRoom($room)->setPrice($newPrice);
-                        $this->roomDAO->edit($room);
+                        for($i = 0; $i < $quantity; $i++)
+                        {
+                            $ticket = new Ticket();
+    
+                            $codeQR = rand(1000, 10000);
+                            $ticket->setCodeQR($codeQR);
+                            $ticket->setIdShow($idShow);
+                            $ticket->setIdUser($user->getDni()); 
+                            
+                            $this->ticketDAO->add($ticket);
+                        }
+    
+                        if($dateDay == "Tuesday" || $dateDay == "Wednesday") 
+                        {
+                            $discount = 0.75;
+                            $roomPrice = $room->getPrice();
+                            $newPrice =  $roomPrice * $discount;
+    
+                            $room->setRoom($room)->setPrice($newPrice);
+                            $this->roomDAO->edit($room);
+                            $show->setRoom($room);
+                        }
+    
+                        $newRemainingTickets = $show->getRemainingTickets() - $quantity;
+                        $show->setRemainingTickets($newRemainingTickets);
+                        $room = $this->roomDAO->getRoomById($showMapper->getIdRoom());
                         $show->setRoom($room);
+                        $movie = $this->movieDAO->getMovieById($showMapper->getIdMovie());
+                        $show->setMovie($movie);
+                        $show->setDateTime($showMapper->getDateTime());
+    
+                        $this->showDAO->edit($show);
+                        $errorMessage = true;
                     }
-
-                    $newRemainingTickets = $show->getRemainingTickets() - $quantity;
-                    $show->setRemainingTickets($newRemainingTickets);
-                    $room = $this->roomDAO->getRoomById($showMapper->getIdRoom());
-                    $show->setRoom($room);
-                    $movie = $this->movieDAO->getMovieById($showMapper->getIdMovie());
-                    $show->setMovie($movie);
-                    $show->setDateTime($showMapper->getDateTime());
-
-                    $this->showDAO->edit($show);
-                    $errorMessage = true;
+                    else
+                    {
+                        $errorMessage = "Cantidad de entradas invalidas. Hay ".$ticketsLeft." entradas disponibles";
+                        $this->billboardController->showBillboard($idMovie, $errorMessage);
+                    }     
                 }
                 else
                 {
-                    $errorMessage = "Cantidad de entradas invalidas. Hay ".$ticketsLeft." entradas disponibles";
-                }     
+                    $errorMessage = "No puede comprar entradas como administrador";
+                    $this->billboardController->showBillboard($idMovie, $errorMessage);
+                }
             }
             else
             {
-                $errorMessage = "No puede comprar entradas como administrador";
+                $errorMessage = "Los datos ingresados no son válidos, vuelva a consultar entradas";
+                $this->movieController->showMovieDashboard($errorMessage);
             }
             
             $this->billboardController->showBillboard($idMovie, $errorMessage);
