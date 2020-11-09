@@ -14,7 +14,7 @@
 
     foreach($ticketList as $ticket)
     {       
-        $totalPrice += $ticket['roomPrice'];
+        $totalPrice += $ticket['price'];
         $i++;
     } 
 
@@ -41,9 +41,8 @@
 
 <table class="table bg-dark text-white m-2">
     <thead>
-        <th>Cantidad de tickets</th>
-        <th>Cantidad en pesos</th>
-        <th>Tickets restantes</th>
+        <th>Ticket</th>
+        <th>Valor</th>
     </thead>
 
 <?php
@@ -52,18 +51,12 @@
 
     foreach($ticketList as $ticket)
     {      
-        if($x < count($showList))
-        {
 ?>
-            <tr>
-                <td><?php echo $i;?></td>
-                <td><?php echo $ticket['roomPrice'];?></td>
-                <td><?php echo $showList[$x]['remainingTickets'];?></td>
-            </tr>
-<?php  
-            $x++;
-        }
-
+        <tr>
+            <td><?php echo $i;?></td>
+            <td><?php echo "$".$ticket['price'];?></td>
+        </tr>
+<?php   
         $i++;
     } 
 ?>

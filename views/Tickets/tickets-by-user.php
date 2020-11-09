@@ -5,11 +5,12 @@
 
 <table class="table bg-dark text-white m-2">
     <thead>
-        <th>Nombre de cine</th>
-        <th>Localidad de cine</th>
-        <th>Nombre de la sala</th>
-        <th>Nombre pelicula</th>
-        <th>Fecha de la funcion</th>
+        <th>Cine</th>
+        <th>Localidad</th>
+        <th>Sala</th>
+        <th>Pelicula</th>
+        <th>Fecha de función</th>
+        <th>Valor del ticket</th>
         <th>Nombre de usuario</th>
         <th>Email</th>
     </thead>
@@ -24,6 +25,7 @@
             <td><?php echo $ticket['roomName'];?></td>
             <td><?php echo $ticket['nameMovie'];?></td>
             <td><?php echo $ticket['dateShow'];?></td>
+            <td><?php echo "$".$ticket['price'];?></td>
             <td><?php echo $_SESSION['loggedUser']->getUserName();?></td>
             <td><?php echo $_SESSION['loggedUser']->getEmail();?></td>
         </tr>

@@ -3,7 +3,6 @@
     require_once(VIEWS_PATH."nav.php");
 
     use Controllers\MovieController as MovieController;
-    use Models\SessionValidation as SessionValidation;
 
     $movieController = new MovieController();
 
@@ -244,28 +243,23 @@
                             <p><?= "<strong>Fecha de lanzamiento: </strong>".substr($movieValue->getReleaseDate(), 0, 10);?></p>
                         </div>
                     </div>
-                    <?php                
-                        if($rolId != -1)
-                        {
-                    ?>
-                            <form action="<?= FRONT_ROOT."Billboard/showBillboard"?>" method="POST">
+                    
+                        <form action="
+                            <?php 
+                                if($rolId != -1)
+                                {
+                                    echo FRONT_ROOT."Billboard/showBillboard";
+                                }
+                                else
+                                {
+                                    echo FRONT_ROOT."Movie/actionDisabled";
+                                }
+                            ?>" 
+                            method="POST">
                                 <button class="btn btn-sm btn-success m-1" style="width: 354px;" type="submit" name="idMovie" value="<?= $movieValue->getId();?>">
                                     Consultar por entrada
                                 </button>   
-                            </form>  
-                    <?php 
-                        }
-                        else
-                        {
-                    ?>
-                            <form action="<?= FRONT_ROOT."Movie/actionDisabled"?>" method="POST">
-                                <button class="btn btn-sm btn-success m-1" style="width: 354px;" type="submit" name="idMovie" value="<?= $movieValue->getId();?>">
-                                    Consultar por entrada
-                                </button>   
-                            </form>  
-                    <?php 
-                        }
-                    ?>
+                        </form>  
                 </div>                              
                     
                 <!-- Movie info Modal -->

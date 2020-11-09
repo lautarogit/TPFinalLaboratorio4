@@ -7,13 +7,15 @@
         private $codeQR;
         private $idShow;
         private $idUser;
+        private $price;
         
-        public function __construct($id = '', $codeQR = '',$idShow = '', $idUser = '')
+        public function __construct($id = '', $codeQR = '',$idShow = '', $idUser = '', $price = '')
         {
-            $this->id=$id;
-            $this->codeQR=$codeQR;
-            $this->idShow=$idShow;
-            $this->idUser=$idUser;
+            $this->id = $id;
+            $this->codeQR = $codeQR;
+            $this->idShow = $idShow;
+            $this->idUser = $idUser;
+            $this->price = $price;
         }
 
         public function getId ()
@@ -36,6 +38,11 @@
             return $this->idUser;
         }
 
+        public function getPrice ()
+        {
+            return $this->price;
+        }
+
         public function setId ($id)
         {
             $this->id = $id;
@@ -54,6 +61,11 @@
         public function setIdUser ($idUser)
         {
             $this->idUser = $idUser;
+        }
+        
+        public function setPrice ($price)
+        {
+            $this->price = $price;
         }
     }
 ?>

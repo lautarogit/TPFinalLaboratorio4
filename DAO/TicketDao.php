@@ -15,14 +15,16 @@
             $codeQR = $ticket->getCodeQR();
             $idShow = $ticket->getIdShow();
             $idUser = $ticket->getIdUser();
+            $price = $ticket->getPrice();
 
-            $sqlQuery ='INSERT INTO TICKETS  (id, codeQR, IdUser, idShow)  
-            VALUES (:id,:codeQR ,:idUser, :idShow)';
+            $sqlQuery ='INSERT INTO TICKETS  (id, codeQR, IdUser, idShow, price)  
+            VALUES (:id,:codeQR ,:idUser, :idShow, :price)';
 
             $parameter['id'] = $id; 
             $parameter['codeQR'] = $codeQR;
             $parameter['idUser'] = $idUser;
             $parameter['idShow'] = $idShow;
+            $parameter['price'] = $price;
 
             try 
             {
@@ -93,7 +95,7 @@
             , s.dateTime as 'dateShow' 
             , u.userName as 'userName'
             , u.email as 'email'
-            , r.price FROM tickets t 
+            , t.price FROM tickets t 
             INNER JOIN shows s 
             ON t.idshow = s.id 
             INNER JOIN users  u
@@ -124,18 +126,19 @@
         public function getTicketsPrices ()
         {
             $sqlQuery = "SELECT t.id as 'ticketId',
-            r.price as 'roomPrice' 
+            t.price as 'price' 
             FROM tickets t
             INNER JOIN shows s
             ON s.id = t.idShow
             INNER JOIN rooms r
             ON r.id = s.idRoom";
+            
 
             try
             {
                 $this->connection = Connection::getInstance();
             
-                return  $result = $this->connection->execute($sqlQuery);
+                return  $this->connection->execute($sqlQuery);
             }
             catch(PDOException $ex)
             {
@@ -191,7 +194,7 @@
             $value = is_array($value) ? $value : [];
 
             $resp = array_map(function($p){
-                return new Ticket($p['id'], $p['codeQR'], $p['idShow'], $p['idUser']);
+                return new Ticket($p['id'], $p['codeQR'], $p['idShow'], $p['idUser'], $p['price']);
             }, $value);
 
             return count($resp) > 1 ? $resp : $resp['0'];

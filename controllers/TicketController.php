@@ -53,12 +53,9 @@
             $user = $_SESSION['loggedUser'];
             
             if(!empty($quantity) && !empty($card) && !empty($idShow))
-            {
+            {   
                 $showMapper = $this->showDAO->getShowById($idShow);
                 $idMovie = $showMapper->getIdMovie();
-        
-                date_default_timezone_set('America/Argentina/Buenos_Aires');
-                $dateDay = date('l');
                                                             
                 $show = new Show();
                 $show->setId($showMapper->getId());
@@ -71,6 +68,9 @@
                 {
                     if(($show->getRemainingTickets() - $quantity) >= 0)
                     {
+                        date_default_timezone_set('America/Argentina/Buenos_Aires');
+                        $dateDay = date('l');
+
                         for($i = 0; $i < $quantity; $i++)
                         {
                             $ticket = new Ticket();
@@ -79,19 +79,20 @@
                             $ticket->setCodeQR($codeQR);
                             $ticket->setIdShow($idShow);
                             $ticket->setIdUser($user->getDni()); 
+                            $ticket->setPrice($room->getPrice());
+
+                            if($dateDay == "Tuesday" || $dateDay == "Wednesday") 
+                            {
+                                $discount = 0.75;
+                                
+                                $price = $room->getPrice();
+
+                                $newPrice = $price * $discount;
+                                $ticket->setPrice($newPrice);
+                                var_dump($newPrice);
+                            }
                             
                             $this->ticketDAO->add($ticket);
-                        }
-    
-                        if($dateDay == "Tuesday" || $dateDay == "Wednesday") 
-                        {
-                            $discount = 0.75;
-                            $roomPrice = $room->getPrice();
-                            $newPrice =  $roomPrice * $discount;
-    
-                            $room->setRoom($room)->setPrice($newPrice);
-                            $this->roomDAO->edit($room);
-                            $show->setRoom($room);
                         }
     
                         $newRemainingTickets = $show->getRemainingTickets() - $quantity;

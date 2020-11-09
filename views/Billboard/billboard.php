@@ -112,7 +112,7 @@
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content background-dark text-white">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title">Ticket</h5>
+                                                        <h5 class="modal-title">Ticket (Descuentos martes y miercoles)</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
@@ -132,16 +132,46 @@
                                                         <h5><?= "Sala: ".$roomName;?></h5>
                                                         <p>
                                                             <?php
+                                                                date_default_timezone_set('America/Argentina/Buenos_Aires');
+                                                                $dateDay = date('l');
+
+                                                                if($dateDay == "Tuesday" || $dateDay == "Wednesday") 
+                                                                {
+                                                                    $discount = 0.75;
+                                                                    $price = $show->getRoom()->getPrice() * $discount;
+                                                                    $discountDay = true;
+                                                                }
+                                                                else
+                                                                {
+                                                                    $discountDay = false;
+                                                                }
+
                                                                 if($adult == 0)
                                                                 {
                                                                     ?>
                                                                         <h2 class="d-inline">FAMILIAR<?= "  $".$price;?></h2>
+                                                                        <?php 
+                                                                            if($discountDay)
+                                                                            {
+                                                                                ?>
+                                                                                    <p class="d-inline" style="color: green;">(25% de descuento incluido)</p>
+                                                                                <?php 
+                                                                            }
+                                                                        ?>
                                                                     <?php
                                                                 }
                                                                 else
                                                                 {
                                                                     ?>
                                                                         <h2 class="d-inline">ADULTO<?= "  $".$price;?></h2>
+                                                                        <?php 
+                                                                            if($discountDay)
+                                                                            {
+                                                                                ?>
+                                                                                    <p class="d-inline" style="color: green;">(25% de descuento incluido)</p>
+                                                                                <?php 
+                                                                            }
+                                                                        ?>
                                                                     <?php
                                                                 }
                                                             ?>
