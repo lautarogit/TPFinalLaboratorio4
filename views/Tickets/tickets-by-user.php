@@ -24,8 +24,8 @@
             <td><?php echo $ticket['roomName'];?></td>
             <td><?php echo $ticket['nameMovie'];?></td>
             <td><?php echo $ticket['dateShow'];?></td>
-            <td><?php echo $ticket['userName'];?></td>
-            <td><?php echo $ticket['email'];?></td>
+            <td><?php echo $_SESSION['loggedUser']->getUserName();?></td>
+            <td><?php echo $_SESSION['loggedUser']->getEmail();?></td>
         </tr>
 <?php  
     } 

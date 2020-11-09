@@ -121,6 +121,28 @@
       
         }
 
+        public function getTicketsPrices ()
+        {
+            $sqlQuery = "SELECT t.id as 'ticketId',
+            r.price as 'roomPrice' 
+            FROM tickets t
+            INNER JOIN shows s
+            ON s.id = t.idShow
+            INNER JOIN rooms r
+            ON r.id = s.idRoom";
+
+            try
+            {
+                $this->connection = Connection::getInstance();
+            
+                return  $result = $this->connection->execute($sqlQuery);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+        }
+
         public function getAll ()
         {
             $sqlQuery = "SELECT * FROM tickets";

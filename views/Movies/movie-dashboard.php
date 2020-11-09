@@ -239,7 +239,7 @@
                         </div>
                     </div>
                     <?php 
-                        if(!empty($rolId))
+                        if(!is_null($rolId))
                         {
                     ?>
                             <form action="<?= FRONT_ROOT."Billboard/showBillboard"?>" method="POST">

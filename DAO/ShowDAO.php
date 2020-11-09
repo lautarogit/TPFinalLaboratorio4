@@ -247,6 +247,23 @@
             return $show;
         }
 
+        public function getRemainingTickets ()
+        {
+            $sqlQuery = "SELECT remainingTickets as 'remainingTickets'
+            FROM shows ";
+
+            try
+            {
+                $this->connection = Connection::getInstance();
+            
+                return  $result = $this->connection->execute($sqlQuery);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+        }
+
         public function edit (Show $showUpdated)
         {
             $id = $showUpdated->getId();

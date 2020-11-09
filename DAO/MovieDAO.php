@@ -12,8 +12,6 @@
         
         public function add (Movie $movie)
         {
-            
-            
             $id = $movie->getId();
             $title = $movie->getTitle();
             $overview = $movie->getOverview();

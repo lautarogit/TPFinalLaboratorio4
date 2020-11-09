@@ -24,8 +24,8 @@
             $this->genreDAO = new GenreDAO();
             $this->moviesXGenresDAO = new MoviesXGenresDAO();
             $this->genreDAOAPI = new GenreDAOAPI();
-            $this->moviesXGenresDAOAPI=new MoviesXGenresDAOAPI();
-            $this->movieDAOAPI= new MovieDAOAPI();
+            $this->moviesXGenresDAOAPI = new MoviesXGenresDAOAPI();
+            $this->movieDAOAPI = new MovieDAOAPI();
        
             $this->showDAO = new ShowDAO();
         }
@@ -69,59 +69,40 @@
             require_once(VIEWS_PATH."Movies/movie-dashboard.php");
         }
 
-        public function updateQuery($flag)
-        {
-                if($flag)
-                {
-                ?>
-                                <div class="alert alert-success" role="alert">
-                                Se ha cargado en la base de datos con exito
-                                </div> 
-                <?php
-                            }
-                            else{
-                ?> 
-                                <div class="alert alert-success" role="alert">
-                                    no hay nada que actualizar
-                                </div>
-                <?php
-                        }
-                }
-      
-
-        
         public function addMoviesXGenresToDB()
         {
             require_once(VIEWS_PATH."add-movies.php");
-            $moviesXgenresList=$this->moviesXGenresDAOAPI->retrieveDataFromApi();
-            $mxgDB= $this->moviesXGenresDAO->getAll();
+            $moviesXgenresList = $this->moviesXGenresDAOAPI->retrieveDataFromApi();
+            $mxgDB = $this->moviesXGenresDAO->getAll();
 
             foreach($moviesXgenresList as $mxg)
             {
-           
-             
-             
                 $this->moviesXGenresDAOAPI->add($mxg);
-                if(!empty($mxgDB)){
-                 if(!in_array($mxg,$mxgDB))
+
+                if(!empty($mxgDB))
                 {
-                 $flag=true;
+                    if(!in_array($mxg,$mxgDB))
+                    {
+                        $flag=true;
+                        $this->moviesXGenresDAO->add($mxg);
+
+                    }
+                    else
+                    {
+                        $flag = false;
+                    }
+                }
+                else
+                {
+                    $flag=true;
                     $this->moviesXGenresDAO->add($mxg);
-                 
-                }
-                else{
-                    $flag = false;
                 }
             }
-            else{
-                $flag=true;
-                $this->moviesXGenresDAO->add($mxg);
-            }
-            }
+
             $this->updateQuery ($flag);
         }
 
-        public function addMoviesToDB()
+        public function addMoviesToDB ()
         {
             require_once(VIEWS_PATH."add-movies.php");
         }
@@ -130,27 +111,70 @@
         {
             require_once(VIEWS_PATH."add-movies.php");
             $moviesList= $this->movieDAOAPI->getAll();
+
             foreach($moviesList as $movies)
             {
-             
                 $this->movieDAOAPI->add($movies);
-        
+
                 $result=$this->movieDAO->add($movies);
+
                 if($result)
                 {
                     $flag=true;
                 }
-                else{
+                else
+                {
                     $flag=false;
                 }
-        
+
             }
-        
-            
 
             $this->updateQuery ($flag);
         }
 
+        public function addGenresToDB()
+        {
+
+           require_once(VIEWS_PATH."add-movies.php");
+            $genreList=$this->genreDAOAPI->getAll();
+
+            $genreDB=$this->genreDAO->getAll();
+
+            foreach($genreList as $genre)
+            {
+
+                $this->genreDAOAPI->add($genre);
+                if(!in_array($genre,$genreDB))
+                {
+                    $this->genreDAO->add($genre);
+                    $flag=true;
+                    $this->updateQuery ($flag);
+                }
+                else{
+                      $flag = false;
+                }
+
+            }
+            $this->updateQuery ($flag);
+        }
+
+        public function updateQuery($flag)
+        {
+            if($flag){
+            ?>
+                            <div class="alert alert-success" role="alert">
+                            Se ha cargado en la base de datos con exito
+                            </div> 
+            <?php
+                        }
+                        else{
+            ?> 
+                            <div class="alert alert-success" role="alert">
+                                no hay nada que actualizar
+                            </div>
+            <?php
+                    }
+            }
 
         public function showFilterMovieDashboard ($filterMovieList)
         {

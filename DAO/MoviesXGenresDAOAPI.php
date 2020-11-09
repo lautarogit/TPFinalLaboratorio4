@@ -46,7 +46,6 @@
             return $genre;
         }
 
-
         private function saveData()
         {
             $arrayToEncode = array();
@@ -63,6 +62,7 @@
             $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
             file_put_contents($jsonPath, $jsonContent);
         }
+
         public function retrieveDataFromApi ()
         {
             $moviedb = file_get_contents(API_HOST . '/movie/now_playing?api_key=' . TMDB_API_KEY . '&language=' . LANG . '&page=1');
@@ -77,13 +77,11 @@
                 foreach($IdGenre as $genre)
                 {
                     $newGenre = new MoviesXGenres($idMovie,$genre);
-                   array_push($finalList,$newGenre);
-                  // var_dump($finalList);
+                    array_push($finalList,$newGenre);
                 }
             }
             return $finalList;
         }
-
 
         private function retrieveData()
         {

@@ -10,6 +10,7 @@
     use DAO\RoomDAO as RoomDAO;
     use Models\Movie as Movie;
     use DAO\MovieDAO as MovieDAO;
+    
 
     class TicketController
     {
@@ -30,7 +31,8 @@
         
         public function showTicketsSelled ()
         {
-            $ticketList = $this->ticketDAO->getAll();
+            $ticketList = $this->ticketDAO->getTicketsPrices();
+            $showList = $this->showDAO->getRemainingTickets();
 
             require_once(VIEWS_PATH."Tickets/tickets-selled.php");
         }
@@ -43,17 +45,22 @@
             require_once(VIEWS_PATH."Tickets/tickets-by-user.php");
         }
 
-        public function buyTicket ($quantity, $idShow)
+        public function buyTicket ($quantity, $card, $idShow)
         {
             $user = $_SESSION['loggedUser'];
             $showMapper = $this->showDAO->getShowById($idShow);
             $idMovie = $showMapper->getIdMovie();
 
+            date_default_timezone_set('America/Argentina/Buenos_Aires');
+            $dateDay = date('l');
+                                                
             $show = new Show();
             $show->setId($showMapper->getId());
             $show->setRemainingTickets($showMapper->getRemainingTickets());
+            $room = $this->roomDAO->getRoomByID($showMapper->getIdRoom());
+            
             $ticketsLeft = $show->getRemainingTickets();
-
+            
             if($user->getRolId() != 1)
             {
                 if(($show->getRemainingTickets() - $quantity) >= 0)
@@ -68,6 +75,17 @@
                         $ticket->setIdUser($user->getDni()); 
                         
                         $this->ticketDAO->add($ticket);
+                    }
+
+                    if($dateDay == "Tuesday" || $dateDay == "Wednesday") 
+                    {
+                        $discount = 0.75;
+                        $roomPrice = $room->getPrice();
+                        $newPrice =  $roomPrice * $discount;
+
+                        $room->setRoom($room)->setPrice($newPrice);
+                        $this->roomDAO->edit($room);
+                        $show->setRoom($room);
                     }
 
                     $newRemainingTickets = $show->getRemainingTickets() - $quantity;

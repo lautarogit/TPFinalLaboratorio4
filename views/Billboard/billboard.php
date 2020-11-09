@@ -154,6 +154,9 @@
                                                         <label for="quantity">Cantidad de tickets</label>
                                                         <input type="number" name="quantity">
 
+                                                        <input type="radio" name="card" value="<?= "Visa";?>">Visa
+                                                        <input type="radio" name="card" value="<?= "Mastercard";?>">Mastercard
+
                                                         <button class="btn btn-success" type="submit" name="idShow" 
                                                         value="<?= $idShow;?>">
                                                             Comprar entrada
