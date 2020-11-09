@@ -1,7 +1,3 @@
-<?php
-     require_once(VIEWS_PATH."nav.php");
-?>
-
 <main class="d-flex align-items-center justify-content-center height-100 transparent-box">
      <div class="content">
           <form action="<?php echo FRONT_ROOT."Home/login";?>" method="POST" class="login-form bg-dark-alpha p-2 text-white">

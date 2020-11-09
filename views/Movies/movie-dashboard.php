@@ -3,10 +3,16 @@
     require_once(VIEWS_PATH."nav.php");
 
     use Controllers\MovieController as MovieController;
+    use Models\SessionValidation as SessionValidation;
 
     $movieController = new MovieController();
 
     $filterGenreList = $movieController->returnGenresAvailabe();
+    
+    if(!isset($_SESSION['loggedUser']))
+    {
+        $rolId = -1;
+    }
 ?>
 
 <div class="movie-buttons-div">
@@ -238,8 +244,8 @@
                             <p><?= "<strong>Fecha de lanzamiento: </strong>".substr($movieValue->getReleaseDate(), 0, 10);?></p>
                         </div>
                     </div>
-                    <?php 
-                        if(!is_null($rolId))
+                    <?php                
+                        if($rolId != -1)
                         {
                     ?>
                             <form action="<?= FRONT_ROOT."Billboard/showBillboard"?>" method="POST">

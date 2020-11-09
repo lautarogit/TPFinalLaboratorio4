@@ -1,6 +1,7 @@
 <?php
     namespace Controllers;
 
+    use Models\SessionValidation as SessionValidation;
     use DAO\UserDAO as UserDAO;
     use Models\User as User;
     use Controllers\CinemaController as CinemaController;
@@ -38,7 +39,7 @@
         }
 
         public function setSession ($user)
-        {
+        {  
             $_SESSION["loggedUser"] = $user;
         }
        
