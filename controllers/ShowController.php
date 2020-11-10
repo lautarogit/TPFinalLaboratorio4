@@ -373,11 +373,10 @@
             if(!empty($idCinema) && !empty($idMovie) && !empty($dateTime) && !empty($remainingTickets))
             {
                 $validateIdMovie = $this->validateFormField($idMovie);
-                $validateDateTime = $this->validateDateTime($idCinema, $dateTime);
                 $validateRemainingTickets = $this->validateFormField($remainingTickets);
                 $movieFinded = $this->searchMovie($idMovie, $idCinema, $dateTime);
 
-                if($validateIdMovie && $validateDateTime && $validateRemainingTickets && !$movieFinded)
+                if($validateIdMovie && !empty($dateTime) && $validateRemainingTickets && !$movieFinded)
                 {  
                     $flag = true; 
                 }
@@ -390,17 +389,27 @@
             return $flag;
         }
 
+        public function validateShowDate (Show $show)
+        {
+            #funcion  de traer un array de shows del mismo room
+
+            #verificar que ese show no coincida con otro el mismo dia
+
+            #si coinciden el tiempo antes de ese show con el mas cercano
+        }
+
         public function addShow ($idRoom = '', $idMovie = '', $dateTime = 0, $remainingTickets = '')
         {
             $room = new Room();
             $movie = new Movie();
             $show = new Show();
+            #$auxShow = new Show();
 
             $room = $this->roomDAO->getRoomByID($idRoom);
             $movie = $this->movieDAO->getMovieById($idMovie);
             $idCinema = $room->getIdCinema();
 
-            if(!empty($dateTime) && !empty($idMovie))
+            if(!empty($idMovie))
             {
                 $validateShow = $this->validateShow($idCinema, $idMovie, $dateTime, $remainingTickets);
             }  
@@ -418,10 +427,7 @@
     
                 $this->showDAO->add($show);
                 $idCinema = $show->getRoom()->getIdCinema();
-        
-                $showMapout = $this->showDAO->getShowByIdRoom($idRoom);
-                $idShow = $showMapout->getId();
-                $room->setIdShow($idShow);
+
                 $this->roomDAO->edit($room);
                     
                 $this->roomController->showRoomDashboard($idCinema);

@@ -44,11 +44,12 @@
                     <?php 
                               }    
                     ?>
-                                   <th>Show</th>
+                                   <th>Ver show</th>
                     <?php 
                               if($rolId == 1)
                               { 
                     ?>
+                                   <th>Agregar show</th>
                                    <th>Editar</th>
                                    <th>Eliminar</th>
                     <?php 
@@ -68,45 +69,61 @@
                                              <td><?php echo $roomValue->getName();?></td>
                                              <td><?php echo "<strong>$</strong>".$roomValue->getPrice();?></td>
                                              <td><?php echo $roomValue->getCapacity();?></td>
+                                             
                                         <?php      
                                              if(isset($rolId) && $rolId == 1)
                                              { 
                                         ?>
                                                   <td><i class="fas fa-check-circle" style="color: green;"></i></td>
                                         <?php      
-                                             }
-                                             
-                                             if(isset($rolId))
-                                             { 
-                                                  if(!empty($roomValue->getIdShow()))
-                                                  {
+                                             }      
                                         ?>
-                                                       <td> 
-                                                            <form method="POST" action="<?= FRONT_ROOT."Show/showDataView";?>"> 
-                                                                 <button class="btn btn-info btn-sm" type="submit" name="idShow" value="<?= $roomValue->getIdShow();?>">
-                                                                      <i class="fas fa-eye"></i>  Ver show
-                                                                 </button>
-                                                            </form> 
-                                        <?php 
-                                                  }
+                                                  <td> 
+                                                       <div class="dropdown" style="display: inline;">
+                                                            <button class="btn btn-dark dropdown-toggle m-1" style="color: crimson; border-radius: 2px 2px 10px 2px;" 
+                                                            type="button" id="selectShowDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                 Seleccionar show
+                                                            </button>
+                                                            <div class="dropdown-menu background-dark" aria-labelledby="dropdownMenuButton">
+                                                                 <?php 
+                                                                      $var = array();
+                                                                      
+                                                                      foreach($showList as $showArray)
+                                                                      {
+                                                                           foreach($showArray as $show)
+                                                                           {     
+                                                                                $var = $show;
 
-                                                  if(!empty($roomValue->getIdShow()) && $rolId == 1)
-                                                  {
-                                        ?>
-                                                            <form method="POST" action="<?= FRONT_ROOT."Show/showAddView";?>"> 
-                                                                 <button class="btn btn-success btn-sm" type="submit" name="idRoom" value="<?= $roomValue->getId();?>">
-                                                                      <i class="fas fa-calendar-plus"></i>  Agregar show
-                                                                 </button>
-                                                            </form> 
-                                                       </td>
-                                        <?php 
-                                                  }
-                                             }
-                                   }
-
+                                                                                if($show['roomId'] == $roomValue->getId()) 
+                                                                                {                       
+                                                                 ?>
+                                                                           <form action="<?= FRONT_ROOT."Show/showDataView"?>" method="POST">
+                                                                           <button class="dropdown-item btn btn-dark" style="color: crimson; border-radius: 15px 15px 15px 15px;" 
+                                                                           type="submit" name="dateTime" value="<?= $var['showId'];?>">
+                                                                                <?= $var['movieTitle'].": ".$var['showDateTime'];?>
+                                                                           </button>
+                                                                           </form> 
+                                                                 <?php
+                                                                                }
+                                                                                
+                                                                           }
+                                                                      }                  
+                                                                 ?>
+                                                            </div>
+                                                       </div>
+                                                  </td>
+                                                                        
+                                   <?php
                                         if(isset($rolId) && $rolId == 1)
                                         { 
-                                   ?>             
+                                   ?>        <td>
+                                                  <form method="POST" action="<?= FRONT_ROOT."Show/showAddView";?>"> 
+                                                       <button class="btn btn-success btn-sm" type="submit" name="idRoom" value="<?= $roomValue->getId();?>">
+                                                            <i class="fas fa-calendar-plus"></i>  Agregar show
+                                                       </button>
+                                                  </form> 
+                                             </td>
+
                                              <td> 
                                                   <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="<?= "#editRoom".$roomValue->getId(); ?>">
                                                        <i class="fas fa-cogs"></i>
@@ -183,7 +200,9 @@
                                         </div>
                                         <!-- ----------------- -->
                          <?php 
+                                   }
                               }     
+                                  
                          ?>     
                          </tbody>
                     </table>
@@ -242,7 +261,7 @@
           ?>
                <h2 class="text-white">No hay salas disponibles en <?php echo $cinema->getName();?></h2>
 <?php
-     }
+     }  
 ?>
 
 <a class="btn btn-primary" role="button" href="<?php echo FRONT_ROOT."Cinema/showCinemaDashboard";?>">

@@ -38,36 +38,18 @@
             $cinema = $cinemaDAO->getCinemaById($idCinema);
             $idCinema = intval($idCinema);
             $roomList = $this->roomDAO->getRoomListByIdCinema($idCinema);
-            $showMapout = $this->showDAO->getAll();
             $newShowList = array();
             
-            if(!empty($showMapout))
+            foreach($roomList as $room)
             {
-                foreach($showMapout as $showValue)
-                {
-                    $id = $showValue->getId();
-                    $room = new Room();
-                    $idRoom = $showValue->getIdRoom();
-                    $room = $this->roomDAO->getRoomByID($idRoom);
-                    $movie = new Movie();
-                    $idMovie = $showValue->getIdMovie();
-                    $movie = $this->movieDAO->getMovieByID($idMovie);
-                    $dateTime = $showValue->getDateTime();
-                    $remainingTickets = $showValue->getRemainingTickets();
-    
-                    $show = new Show();
-    
-                    $show->setId($id);
-                    $show->setRoom($room);
-                    $show->setMovie($movie);
-                    $show->setDateTime($dateTime);
-                    $show->setRemainingTickets($remainingTickets);
-    
-                    array_push($newShowList, $show);
-                }
+                $showList = $this->showDAO->getShowListByIdRoom($room->getId());
+
+                array_push($newShowList, $showList);
             }
-        
+
             $showList = $newShowList;
+            $roomsXshows = $this->showDAO->getRoomsXshows();
+        
             require_once(VIEWS_PATH."Rooms/room-dashboard.php");  
         }
 

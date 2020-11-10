@@ -114,6 +114,57 @@
 
             return $show;
         }
+        
+        public function getRoomsXshows ()
+        {
+            $sqlQuery = "SELECT r.id as 'roomId'
+            FROM rooms r
+            INNER JOIN shows s 
+            ON s.idRoom = r.id
+            GROUP BY r.id";
+
+            try
+            {
+                $this->connection = Connection::getInstance();
+                
+                $resultSet = $this->connection->execute($sqlQuery);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+            
+            return $resultSet;
+        }
+
+        public function getShowListByIdRoom ($idRoom)
+        {
+            $sqlQuery = "SELECT m.title as 'movieTitle',
+            s.dateTime as 'showDateTime',
+            r.id as 'roomId',
+            s.id as 'showId'
+            FROM shows s
+            INNER JOIN movies m
+            ON s.idMovie = m.id
+            INNER JOIN rooms r
+            ON s.idRoom = r.id
+            WHERE idRoom = :idRoom";
+
+            $parameters['idRoom'] = $idRoom;
+
+            try
+            {
+                $this->connection = Connection::getInstance();
+                
+                $resultSet = $this->connection->execute($sqlQuery, $parameters);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+            
+            return $resultSet;
+        }
 
         public function getShowByIdCinemaAndIdMovie ($idCinema, $idMovie)
         {

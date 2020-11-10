@@ -32,7 +32,6 @@ CREATE TABLE IF NOT EXISTS rooms (
     capacity INT NOT NULL,
     `name` VARCHAR (25),
     `status` BOOLEAN,
-    idShow INT NOT NULL,
     CONSTRAINT PK_id PRIMARY KEY (id)
 );
 
@@ -88,6 +87,7 @@ CREATE TABLE IF NOT EXISTS tickets (
     codeQR VARCHAR(200),
 	idShow INT NOT NULL,
 	idUser INT NOT NULL,
+    price FLOAT NOT NULL,
     CONSTRAINT PK_id PRIMARY KEY (id)
 );
 

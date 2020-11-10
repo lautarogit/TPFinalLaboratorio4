@@ -9,9 +9,8 @@
         private $price;
         private $name;
         private $status;
-        private $idShow;
 
-        public function __construct($id = '', $idCinema = '', $capacity = '', $price = '', $name = '', $status = TRUE, $idShow = '')
+        public function __construct($id = '', $idCinema = '', $capacity = '', $price = '', $name = '', $status = TRUE)
         {
             $this->id = $id;
             $this->idCinema = $idCinema;
@@ -19,7 +18,6 @@
             $this->price = $price;
             $this->name = $name;
             $this->status = $status;
-            $this->idShow = $idShow;
         }
 
         public function getId ()
@@ -52,11 +50,6 @@
             return $this->status;
         }
 
-        public function getIdShow ()
-        {
-            return $this->idShow;
-        }
-
         public function setId ($id)
         {
             $this->id = $id;
@@ -86,10 +79,5 @@
         {
             $this->status = $status;
         }
-
-        public function setIdShow ($idShow)
-        {
-            $this->idShow = $idShow;
-        }
-}
+    }
 ?>
