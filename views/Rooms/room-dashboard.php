@@ -1,6 +1,11 @@
 <?php 
      require_once(VIEWS_PATH."header.php"); 
      require_once(VIEWS_PATH."nav.php");
+
+     if(!isset($_SESSION['loggedUser']))
+     {
+          $rolId = -1;
+     }
 ?>
 
 <?php 
@@ -27,16 +32,27 @@
                          <thead>
                               <th>Nombre de sala</th>
                               <th>Precio</th>
-                              <th>Capacidad</th>     
-                    <?php      
-                         if(!empty($rolId) && $rolId == 1)
-                         { 
+                              <th>Capacidad</th>    
+                    <?php   
+                    
+                         if(isset($rolId))
+                         {  
+                              if($rolId == 1)
+                              { 
                     ?>
-                              <th>Estado</th>
-                              <th>Show</th>
-                              <th>Editar</th>
-                              <th>Eliminar</th>
-                    <?php      
+                                   <th>Estado</th>
+                    <?php 
+                              }    
+                    ?>
+                                   <th>Show</th>
+                    <?php 
+                              if($rolId == 1)
+                              { 
+                    ?>
+                                   <th>Editar</th>
+                                   <th>Eliminar</th>
+                    <?php 
+                              }  
                          }
                     ?>
                          </thead>
@@ -52,40 +68,51 @@
                                              <td><?php echo $roomValue->getName();?></td>
                                              <td><?php echo "<strong>$</strong>".$roomValue->getPrice();?></td>
                                              <td><?php echo $roomValue->getCapacity();?></td>
-                                   <?php      
-                                        if(!empty($rolId) && $rolId == 1)
-                                        { 
-                                   ?>
-                                            <td><i class="fas fa-check-circle" style="color: green;"></i></td>
-                                             <td> 
-                                                  <?php 
-                                                       if(!empty($roomValue->getIdShow()))
-                                                       {
-                                                  ?>
+                                        <?php      
+                                             if(isset($rolId) && $rolId == 1)
+                                             { 
+                                        ?>
+                                                  <td><i class="fas fa-check-circle" style="color: green;"></i></td>
+                                        <?php      
+                                             }
+                                             
+                                             if(isset($rolId))
+                                             { 
+                                                  if(!empty($roomValue->getIdShow()))
+                                                  {
+                                        ?>
+                                                       <td> 
                                                             <form method="POST" action="<?= FRONT_ROOT."Show/showDataView";?>"> 
                                                                  <button class="btn btn-info btn-sm" type="submit" name="idShow" value="<?= $roomValue->getIdShow();?>">
                                                                       <i class="fas fa-eye"></i>  Ver show
                                                                  </button>
                                                             </form> 
-                                                  <?php
-                                                       }
-                                                       else
-                                                       {          
-                                                  ?>
+                                        <?php 
+                                                  }
+
+                                                  if(!empty($roomValue->getIdShow()) && $rolId == 1)
+                                                  {
+                                        ?>
                                                             <form method="POST" action="<?= FRONT_ROOT."Show/showAddView";?>"> 
                                                                  <button class="btn btn-success btn-sm" type="submit" name="idRoom" value="<?= $roomValue->getId();?>">
                                                                       <i class="fas fa-calendar-plus"></i>  Agregar show
                                                                  </button>
                                                             </form> 
-                                                  <?php      
-                                                       } 
-                                                  ?>
-                                             </td>
+                                                       </td>
+                                        <?php 
+                                                  }
+                                             }
+                                   }
+
+                                        if(isset($rolId) && $rolId == 1)
+                                        { 
+                                   ?>             
                                              <td> 
                                                   <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="<?= "#editRoom".$roomValue->getId(); ?>">
                                                        <i class="fas fa-cogs"></i>
                                                   </button>
                                              </td>
+
                                              <td>
                                                   <form method="POST" action="<?php echo FRONT_ROOT."Room/disableRoom";?>"> 
                                                        <button class="btn btn-danger btn-sm" value="<?= $roomValue->getId(); ?>" name="id">
@@ -94,8 +121,8 @@
                                                   </form>
                                              </td>      
                                    <?php      
-                                        }
-                                   ?> 
+                                        } 
+                                   ?>
                                         </tr>
 
                                         <!-- Edit room Modal -->
@@ -156,8 +183,7 @@
                                         </div>
                                         <!-- ----------------- -->
                          <?php 
-                                   }
-                              } 
+                              }     
                          ?>     
                          </tbody>
                     </table>

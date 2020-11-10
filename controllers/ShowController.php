@@ -32,6 +32,13 @@
             $this->roomController = new RoomController();
         }
 
+        public function actionDisabled ($idShow)
+        {
+            $errorMessage = true;
+
+            $this->showDataView($idShow, $errorMessage);
+        }
+
         public function showAddView ($idRoom, $errorMessage = '')
         {
             $room = new Room();
@@ -44,7 +51,7 @@
             require_once(VIEWS_PATH."Shows/add-show.php");
         }
 
-        public function showDataView ($idShow)
+        public function showDataView ($idShow, $errorMessage = '')
         {
             $show = new Show();
             $showMapout = $this->showDAO->getShowById($idShow);

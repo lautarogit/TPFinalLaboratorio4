@@ -266,7 +266,7 @@
 </div>
 
 <a class="btn btn-info m-2" style="display: inline; border-radius: 2px 10px 10px 2px;" role="button" href="<?= FRONT_ROOT."Movie/showMovieDashboard";?>">
-    Volver
+    Volver a catálogo de películas
 </a>
 
 <?php

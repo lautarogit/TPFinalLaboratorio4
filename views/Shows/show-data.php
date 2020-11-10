@@ -1,6 +1,26 @@
 <?php 
     require_once(VIEWS_PATH."header.php");
     require_once(VIEWS_PATH."nav.php"); 
+
+    if(!isset($_SESSION['loggedUser']))
+    {
+        $rolId = -1;
+    }
+?>
+
+<?php 
+    if(!empty($errorMessage))
+    {
+?>
+        <div class="alert alert-warning alert-dismissible m-2" style="width: 500px;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>
+                Debe tener una cuenta para utilizar esta funcionalidad.
+                <a href="<?= FRONT_ROOT."Home/showLoginView";?>"> Inicie sesión</a> para continuar             
+            </strong> 
+        </div>
+<?php   
+    }
 ?>
 
 <div class="m-3 text-white show-box" style="width: 550px;">
@@ -40,10 +60,42 @@
     <h5 class="m-2">
         <i class="fa fa-ticket-alt" style="color: burlywood;"></i><?php echo "  ".$show->getRemainingTickets();?><strong> Tickets restantes </strong>
     </h5>
+
+    <form class="text-center" action="
+        <?php 
+            if($rolId != -1)
+            {
+                echo FRONT_ROOT."Billboard/showBillboard";
+            }
+            else
+            {
+                echo FRONT_ROOT."Show/actionDisabled";
+            }
+        ?>">
+
+        <?php
+            if($rolId != -1)
+            {
+        ?>
+                <button class="btn btn-success m-2" type="submit" name="idMovie" value="<?= $show->getMovie()->getId();?>">
+                    Consultar por entrada
+                </button>
+        <?php
+            }
+            else
+            {
+        ?>
+                <button class="btn btn-success m-2" type="submit" name="idShow" value="<?= $show->getId();?>">
+                    Consultar por entrada
+                </button>
+        <?php
+            }
+        ?>
+    </form>
 </div>
 
 <form action="<?php echo FRONT_ROOT."Room/showRoomDashboard";?>">
-    <button class="btn btn-primary" type="submit" name="idCinema" value="<?= $show->getRoom()->getIdCinema();?>">
+    <button class="btn btn-primary m-2" type="submit" name="idCinema" value="<?= $show->getRoom()->getIdCinema();?>">
         Volver
     </button>
 </form>

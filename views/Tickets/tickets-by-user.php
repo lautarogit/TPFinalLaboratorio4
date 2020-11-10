@@ -34,7 +34,7 @@
 ?>
 </table>
 
-<a class="btn btn-info m-1" style="display: inline; border-radius: 2px 10px 10px 2px;" role="button" href="<?= FRONT_ROOT."Cinema/showCinemaDashboard";?>" rol="button">
+<a class="btn btn-info m-2" style="display: inline; border-radius: 2px 10px 10px 2px;" role="button" href="<?= FRONT_ROOT."Cinema/showCinemaDashboard";?>" rol="button">
     Volver a cartelera de cines
 </a>
 
