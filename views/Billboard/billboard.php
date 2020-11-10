@@ -127,25 +127,25 @@
                                                             $time = substr($show->getDateTime(), 11, 5);
                                                             $title = $movie->getTitle();
                                                             $idShow = $show->getId();
+
+                                                            date_default_timezone_set('America/Argentina/Buenos_Aires');
+                                                            $dateDay = date('l');
+
+                                                            if($dateDay == "Tuesday" || $dateDay == "Wednesday") 
+                                                            {
+                                                                $discount = 0.75;
+                                                                $price = $show->getRoom()->getPrice() * $discount;
+                                                                $discountDay = true;
+                                                            }
+                                                            else
+                                                            {
+                                                                $discountDay = false;
+                                                            }
                                                         ?>
 
                                                         <h5><?= "Sala: ".$roomName;?></h5>
                                                         <p>
                                                             <?php
-                                                                date_default_timezone_set('America/Argentina/Buenos_Aires');
-                                                                $dateDay = date('l');
-
-                                                                if($dateDay == "Tuesday" || $dateDay == "Wednesday") 
-                                                                {
-                                                                    $discount = 0.75;
-                                                                    $price = $show->getRoom()->getPrice() * $discount;
-                                                                    $discountDay = true;
-                                                                }
-                                                                else
-                                                                {
-                                                                    $discountDay = false;
-                                                                }
-
                                                                 if($adult == 0)
                                                                 {
                                                                     ?>
@@ -183,23 +183,24 @@
 
                                                     <div class="modal-footer">
                                                         <form action="<?= FRONT_ROOT."Ticket/buyTicket";?>" method="POST">
-                                                            <label for="quantity">Cantidad de tickets</label>
-                                                            <input type="number" name="quantity">
+                                                            <input class="m-1" type="radio" name="card" value="<?= "Visa";?>">
+                                                            <img  style="width: 45px; height: 15px;" src='<?= IMG_PATH."visaLogo.png"; ?>'/>  
+                                                            <input class="m-1" type="radio" name="card" value="<?= "Mastercard";?>">
+                                                            <img  style="width: 30px; height: 23px;" src='<?= IMG_PATH."mastercardLogo.png"; ?>'/>  
 
-                                                            <input type="radio" name="card" value="<?= "Visa";?>">Visa
-                                                            <input type="radio" name="card" value="<?= "Mastercard";?>">Mastercard
+                                                            <label class="d-inline" for="quantity">Cantidad de tickets</label>
+                                                            <input class="d-inline m-1" type="number" name="quantity">
 
-                                                            <button class="btn btn-success" type="submit" name="idShow" 
+                                                            <button class="btn btn-success m-2" type="submit" name="idShow" 
                                                             value="<?= $idShow;?>">
                                                                 Comprar entrada
                                                             </button>
                                                             
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                            <button type="button" class="btn btn-secondary m-2" style="float: right;" data-dismiss="modal">
                                                                 Cerrar
                                                             </button>
                                                         </form>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>

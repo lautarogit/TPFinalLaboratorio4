@@ -48,7 +48,7 @@
             require_once(VIEWS_PATH."Tickets/tickets-by-user.php");
         }
 
-        public function buyTicket ($quantity = '', $card = '', $idShow = '')
+        public function buyTicket ($card = '', $quantity = '', $idShow = '')
         {
             $user = $_SESSION['loggedUser'];
             
