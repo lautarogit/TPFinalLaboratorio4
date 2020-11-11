@@ -17,15 +17,17 @@
             $idMovie = $show->getMovie()->getId();
             $dateTime = $show->getDateTime();
             $remainingTickets = $show->getRemainingTickets();
+            $status = true;
 
-            $sqlQuery = "INSERT INTO shows (id, idRoom, idMovie, dateTime, remainingTickets) 
-            VALUES (:id, :idRoom, :idMovie, :dateTime, :remainingTickets)";
+            $sqlQuery = "INSERT INTO shows (id, idRoom, idMovie, dateTime, remainingTickets, status) 
+            VALUES (:id, :idRoom, :idMovie, :dateTime, :remainingTickets, :status)";
 
             $parameters['id'] = $id;
             $parameters['idRoom'] = $idRoom;
             $parameters['idMovie'] = $idMovie;
             $parameters['dateTime'] = $dateTime;
             $parameters['remainingTickets'] = $remainingTickets;
+            $parameters['status'] = $status;
 
             try
             {
@@ -140,9 +142,11 @@
         public function getShowListByIdRoom ($idRoom)
         {
             $sqlQuery = "SELECT m.title as 'movieTitle',
+            m.id as 'movieId',
             s.dateTime as 'showDateTime',
             r.id as 'roomId',
-            s.id as 'showId'
+            s.id as 'showId',
+            s.status as 'showStatus'
             FROM shows s
             INNER JOIN movies m
             ON s.idMovie = m.id
@@ -322,9 +326,10 @@
             $idMovie = $showUpdated->getMovie()->getId();
             $dateTime = $showUpdated->getDateTime();
             $remainingTickets = $showUpdated->getRemainingTickets();
+            $status = $showUpdated->getStatus();
 
             $sqlQuery = "UPDATE shows 
-            SET idRoom = :idRoom, idMovie = :idMovie, dateTime = :dateTime, remainingTickets = :remainingTickets 
+            SET idRoom = :idRoom, idMovie = :idMovie, dateTime = :dateTime, remainingTickets = :remainingTickets, status = :status 
             WHERE (id = :id)";
 
             $parameters['id'] = $id;
@@ -332,6 +337,31 @@
             $parameters['idMovie'] = $idMovie;
             $parameters['dateTime'] = $dateTime;
             $parameters['remainingTickets'] = $remainingTickets;
+            $parameters['status'] = $status;
+
+            try
+            {
+                $this->connection = Connection::getInstance();
+
+                return $this->connection->executeNonQuery($sqlQuery, $parameters);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function changeStatus (Show $show)
+        {
+            $id = $show->getId();
+            $status = $show->getStatus();
+
+            $sqlQuery = "UPDATE shows 
+            SET status = :status 
+            WHERE (id = :id)";
+
+            $parameters['id'] = $id;
+            $parameters['status'] = $status;
 
             try
             {
@@ -351,7 +381,7 @@
 
             $resp = array_map(function($p)
             {
-                return new ShowMapout ($p['id'], $p['idRoom'], $p['idMovie'], $p['dateTime'], $p['remainingTickets']);
+                return new ShowMapout ($p['id'], $p['idRoom'], $p['idMovie'], $p['dateTime'], $p['remainingTickets'], $p['status']);
             }, $value);
 
             return count($resp) > 1 ? $resp : $resp['0'];

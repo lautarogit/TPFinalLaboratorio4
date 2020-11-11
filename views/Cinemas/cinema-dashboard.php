@@ -41,6 +41,8 @@
      } 
 ?>
 
+<!--- <img class="text-center" style="width: 800px; height: 300px;" src='<?= IMG_PATH."mastercardLogo.png"; ?>'/> -->
+
 <main class="d-flex m-2">
      <div class="card-rows">
           <div class="card-columns">

@@ -39,11 +39,10 @@
         <i class="fa fa-calendar" style="color: chartreuse;"></i><?php echo "  Fecha: ".substr($show->getDateTime(), 0, 10);?>
     </h5>
 
-    <?php 
-        $showDateTime = new DateTime($show->getDateTime());
+    <?php
         $previousMovieRuntime = $this->minutesToTimeFormat($movie->getRuntime());
 
-        $showDateTime = $this->addHourToTime($showDateTime, $previousMovieRuntime);
+        $showDateTime = $this->addHourToTime($show->getDateTime(), $previousMovieRuntime);
 
         $stringShowTime = $showDateTime->format('Y-m-d H:i:s');
         $endTime = substr($stringShowTime, 11, 5);

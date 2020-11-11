@@ -23,7 +23,7 @@
             require_once(VIEWS_PATH."Home/home.php");
         }
 
-        public function showAdministratorPanel ()
+        public function showAdministratorPanel ($errorMessage = '')
         {
             require_once(VIEWS_PATH."Session/validate-session.php");
 

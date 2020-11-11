@@ -8,6 +8,7 @@
     use DAO\CinemaDAO as CinemaDAO;
     use DAO\RoomDAO as RoomDAO;
     use DAO\ShowDAO as ShowDAO;
+    use Controllers\MovieController as MovieController;
 
     class BillboardController
     {
@@ -16,6 +17,7 @@
         private $cinemaDAO;
         private $roomDAO;
         private $showDAO;
+        private $movieController;
 
         public function __construct ()
         {
@@ -24,6 +26,7 @@
             $this->cinemaDAO = new CinemaDAO();
             $this->roomDAO = new RoomDAO();
             $this->showDAO = new ShowDAO();
+            $this->movieController = new MovieController();
         }
 
         public function showBillboard ($idMovie, $errorMessage = '')
@@ -51,6 +54,7 @@
                     $show->setMovie($movie);
                     $show->setDateTime($showMapout->getDateTime());
                     $show->setRemainingTickets($showMapout->getRemainingTickets());
+                    $show->setStatus($showMapout->getStatus());
 
                     array_push($showList, $show);
                 }
@@ -67,11 +71,31 @@
                         $show->setMovie($movie);
                         $show->setDateTime($showValue->getDateTime());
                         $show->setRemainingTickets($showValue->getRemainingTickets());
+                        $show->setStatus($showValue->getStatus());
 
                         array_push($showList, $show);
                         
                     }    
                 } 
+
+                $newShowList = array();
+
+                foreach($showList as $show)
+                {
+                    if($show->getStatus())
+                    {
+                        array_push($newShowList, $show);
+                    }
+                }
+
+                $showList = $newShowList;
+
+                if(empty($showList))
+                {
+                    $errorMessage = "Todos los shows de la película seleccionada han expirado";
+
+                    $this->movieController->showMovieDashboard($errorMessage);
+                }
             }
 
             require_once(VIEWS_PATH."Billboard/billboard.php");

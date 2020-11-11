@@ -10,6 +10,7 @@
     use DAO\MovieDAO as MovieDAO;
     use Models\Movie as Movie;
     use Controllers\iValidation as iValidation;
+    use Controllers\ShowController as ShowController;
 
     class RoomController implements iValidation
     {
@@ -17,6 +18,7 @@
         private $cinemaDAO;
         private $showDAO;
         private $movieDAO;
+        private $showController;
 
         public function __construct ()
         {
@@ -24,6 +26,7 @@
             $this->cinemaDAO = new CinemaDAO();
             $this->showDAO = new ShowDAO();
             $this->movieDAO = new MovieDAO();
+            $this->showController = new ShowController();
         }
 
         public function showRoomDashboard ($idCinema, $errorMessage = '')
@@ -40,16 +43,45 @@
             $roomList = $this->roomDAO->getRoomListByIdCinema($idCinema);
             $newShowList = array();
             
-            foreach($roomList as $room)
+            if(!empty($roomList))
             {
-                $showList = $this->showDAO->getShowListByIdRoom($room->getId());
-
-                array_push($newShowList, $showList);
+                foreach($roomList as $room)
+                {
+                    $showList = $this->showDAO->getShowListByIdRoom($room->getId());
+    
+                    array_push($newShowList, $showList);
+                }
             }
-
+            
             $showList = $newShowList;
             $roomsXshows = $this->showDAO->getRoomsXshows();
-        
+
+            $showMapoutList = $this->showDAO->getAll();
+
+            if(!empty($showMapoutList))
+            {
+                $showListToValidate = array();
+
+                foreach($showMapoutList as $showMapout)
+                {
+                    $show = new Show();
+
+                    $show->setId($showMapout->getId());
+                    $movie = $this->movieDAO->getMovieById($showMapout->getIdMovie());
+                    $show->setMovie($movie);
+
+                    array_push($showListToValidate, $show);
+                }
+            }
+
+            if(!empty($showListToValidate))
+            {
+                foreach($showListToValidate as $showValidate)
+                {
+                    $this->showController->updateShowStatus($showValidate->getId(), $showValidate->getMovie()->getId(), $cinema->getId());
+                }
+            }
+            
             require_once(VIEWS_PATH."Rooms/room-dashboard.php");  
         }
 

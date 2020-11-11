@@ -8,6 +8,8 @@
     use DAO\MoviesXGenresDAOAPI as MoviesXGenresDAOAPI;
     use DAO\GenreDAOAPI as GenreDAOAPI;
     use DAO\MovieDAOAPI as MovieDAOAPI;
+    use Controllers\HomeController as HomeController;
+
     class MovieController
     {
         private $movieDAO;
@@ -17,6 +19,7 @@
         private $genreDAOAPI;
         private $moviesXGenresDAOAPI;
         private $movieDAOAPI;
+        private $homeController;
 
         public function __construct ()
         {
@@ -26,8 +29,8 @@
             $this->genreDAOAPI = new GenreDAOAPI();
             $this->moviesXGenresDAOAPI = new MoviesXGenresDAOAPI();
             $this->movieDAOAPI = new MovieDAOAPI();
-       
             $this->showDAO = new ShowDAO();
+            $this->homeController = new HomeController();
         }
     
         public function actionDisabled ()
@@ -132,51 +135,48 @@
             $this->updateQuery ($flag);
         }
 
-        public function addGenresToDB()
+        public function addGenresToDB ()
         {
+            require_once(VIEWS_PATH."add-movies.php");
+            $genreList = $this->genreDAOAPI->getAll();
 
-           require_once(VIEWS_PATH."add-movies.php");
-            $genreList=$this->genreDAOAPI->getAll();
-
-            $genreDB=$this->genreDAO->getAll();
+            $genreDB = $this->genreDAO->getAll();
 
             foreach($genreList as $genre)
             {
 
                 $this->genreDAOAPI->add($genre);
+
                 if(!in_array($genre,$genreDB))
                 {
                     $this->genreDAO->add($genre);
                     $flag=true;
                     $this->updateQuery ($flag);
                 }
-                else{
+                else
+                {
                       $flag = false;
                 }
-
             }
+
             $this->updateQuery ($flag);
         }
 
         public function updateQuery($flag)
         {
-            if($flag){
-            ?>
-                            <div class="alert alert-success" role="alert">
-                            Se ha cargado en la base de datos con exito
-                            </div> 
-            <?php
-                        }
-                        else{
-            ?> 
-                            <div class="alert alert-success" role="alert">
-                                no hay nada que actualizar
-                            </div>
-            <?php
-                    }
+            if($flag)
+            {
+                $errorMessage = "Se ha cargado con éxito en la base de datos";
+            }
+            else
+            {
+                $errorMessage = true;
             }
 
-        public function showFilterMovieDashboard ($filterMovieList)
+            $this->homeController->showAdministratorPanel($errorMessage);
+        }
+
+        public function showFilterMovieDashboard ($filterMovieList, $date = '')
         {
             $moviesXgenres = $this->moviesXGenresDAOAPI->getAll();
             $genreDAO = $this->genreDAO;
@@ -195,6 +195,48 @@
             $this->showFilterMovieDashboard($movieList);  
             
             return $movieList;
+        }
+
+        public function filterByDate ($date)
+        {
+            if(!empty($date))
+            {
+                if(!empty($_SESSION['loggedUser']))
+                {
+                    $rolId = $_SESSION['loggedUser']->getRolId();
+                }
+
+                $movieList = $this->movieDAO->getAll();
+                $availableMovieList = array();
+                $showMapoutList = $this->showDAO->getAll();
+
+                if(!empty($showMapoutList))
+                {
+                    $i = 0;
+
+                    foreach($movieList as $movie)
+                    {
+                        for($i = 0; $i < count($showMapoutList); $i++)
+                        {  
+                            $showMapoutDate = substr($showMapoutList[$i]->getDateTime(), 0, 10);
+                                
+                            if($showMapoutDate == $date && $showMapoutList[$i]->getIdMovie() == $movie->getId())
+                            {  
+                                array_push($availableMovieList, $movie);
+                            }  
+                        }
+                    }
+                }
+    
+                $movieList = $availableMovieList;
+
+                $this->showFilterMovieDashboard($movieList, $date);
+            }
+            else
+            {
+                $errorMessage = "No ingreso fecha a filtrar";
+                $this->showMovieDashboard($errorMessage);
+            }
         }
 
         public function returnGenresAvailabe ()

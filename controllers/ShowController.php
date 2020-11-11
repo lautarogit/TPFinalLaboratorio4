@@ -3,7 +3,6 @@
 
     use Models\Show as Show;
     use DAO\ShowDAO as ShowDAO;
-    use Models\Cinema as Cinema;
     use DAO\CinemaDAO as CinemaDAO;
     use Models\Room as Room;
     use DAO\RoomDAO as RoomDAO;
@@ -11,7 +10,6 @@
     use DAO\MovieDAO as MovieDAO;
     use DAO\GenreDAO as GenreDAO;
     use Controllers\iValidation as iValidation;
-    use Controllers\RoomController as RoomController;
     use DateTime;
 
     class ShowController implements iValidation
@@ -20,7 +18,6 @@
         private $roomDAO;
         private $showDAO;
         private $movieDAO;
-        private $roomController;
 
         public function __construct ()
         {
@@ -29,7 +26,6 @@
             $this->roomDAO = new RoomDAO();
             $this->movieDAO = new MovieDAO();
             $this->genreDAO = new GenreDAO();
-            $this->roomController = new RoomController();
         }
 
         public function actionDisabled ($idShow)
@@ -63,16 +59,46 @@
             $idMovie = $showMapout->getIdMovie();
             $movie = new Movie();
             $movie = $this->movieDAO->getMovieByID($idMovie);
-            $dateTime = $showMapout->getDateTime();
+            $newDateTime = $showMapout->getDateTime();
             $remainingTickets = $showMapout->getRemainingTickets();
 
             $show->setId($id);
             $show->setRoom($room);
             $show->setMovie($movie);
-            $show->setDateTime($dateTime);
+            $show->setDateTime($newDateTime);
             $show->setRemainingTickets($remainingTickets);
 
             require_once(VIEWS_PATH."Shows/show-data.php");
+        }
+
+        public function showRoomDashboard ($idCinema, $errorMessage = '')
+        {
+            if(!empty($_SESSION['loggedUser']))
+            {
+                $rolId = $_SESSION['loggedUser']->getRolId();
+            }
+            
+            $cinemaDAO = new CinemaDAO();
+            $showDAO = new ShowDAO();
+            $cinema = $cinemaDAO->getCinemaById($idCinema);
+            $idCinema = intval($idCinema);
+            $roomList = $this->roomDAO->getRoomListByIdCinema($idCinema);
+            $newShowList = array();
+            
+            if(!empty($roomList))
+            {
+                foreach($roomList as $room)
+                {
+                    $showList = $this->showDAO->getShowListByIdRoom($room->getId());
+    
+                    array_push($newShowList, $showList);
+                }
+            }
+            
+            $showList = $newShowList;
+            $roomsXshows = $this->showDAO->getRoomsXshows();
+            
+            require_once(VIEWS_PATH."Rooms/room-dashboard.php");  
         }
 
         public function minutesToTimeFormat ($minutesToConvert)
@@ -114,11 +140,13 @@
             return $minutesToConvert;
         }
 
-        public function addHourToTime ($time, $hourToAdd)
+        public function addHourToTime ($stringTime, $hourToAdd)
         {
             $hours = substr($hourToAdd, 0, 2);
             $minutes = substr($hourToAdd, 3, 2);
             $seconds = substr($hourToAdd, 6, 2);
+
+            $time = new DateTime($stringTime);
             
             $time->modify('+'.$hours.' hours'); 
             $time->modify('+'.$minutes.' minute');
@@ -127,185 +155,102 @@
             return $time;
         }
 
-        public function validateDateTime ($idCinema, $newDateTime)
+        public function updateShowStatus ($showId, $movieId, $idCinema = '')
         {
-            $result = false;
-            $previousMovieList = $this->movieDAO->getMovieListByIdCinema($idCinema);
-            
-            if(!empty($previousMovieList))
+            $isValid = false; 
+
+            $movie = $this->movieDAO->getMovieById($movieId);
+            $showMapout = $this->showDAO->getShowById($showId);
+
+            $show = new Show();
+            $show->setId($showMapout->getId());
+            $show->setMovie($movie);
+            $show->setDateTime($showMapout->getDateTime());
+
+            $showDateTime = $show->getDateTime();
+        
+            $newDateTime = new DateTime($showDateTime);
+            date_default_timezone_set('America/Argentina/Buenos_Aires');
+            $actualDate = new DateTime();
+        
+            $diff = date_diff($actualDate, $newDateTime);
+  
+            if($diff->invert == 1)
             {
-                $previousMovieListSize = count($previousMovieList);
-                $previousMovie = new Movie();
+                $isValid = true;
+            }      
+            
+            if($isValid)
+            {
+                $show->setStatus(false);
 
-                for($i = 0; $i < $previousMovieListSize ; $i++)
+                $this->showDAO->changeStatus($show);
+            }
+             
+            $this->showRoomDashboard($idCinema);
+        }  
+
+        public function validateDateTime (Show $show, Show $newShow)
+        {
+            $isValid = true;
+
+            $movie = $show->getMovie();
+            $newMovie = $newShow->getMovie();
+
+            $stringOldDate = substr($show->getDateTime(), 0, 10);
+            $stringNewDate = substr($newShow->getDateTime(), 0, 10);
+            $stringOldTime = substr($show->getDateTime(), 11, 5);
+            $stringNewTime = substr($newShow->getDateTime(), 11, 8);
+            
+            $oldDate = new DateTime($stringOldDate);
+            $newDate = new DateTime($stringNewDate);
+            $oldTime = new DateTime($stringOldTime); 
+            $newTime = new DateTime($stringNewTime); 
+        
+            $diff = $newDate->diff($oldDate);
+            $dayDiff =  $diff->days; 
+
+            if($dayDiff <= 1)
+            {
+                $diff = $oldTime->diff($newTime); 
+                $result = ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
+                $runtime = 0;
+                
+                if($oldTime > $newTime) # 22:00  >   21:30(termina 21:42)
                 {
-                    if($i == ($previousMovieListSize-1))
-                    {
-                        $previousMovie = $previousMovieList[$i];
-                    }
-                }
-
-                $showMapout = $this->showDAO->getShowByIdCinemaAndIdMovie($idCinema, $previousMovie->getId());
-
-                if(is_array($showMapout))
-                {
-                    $lastIndex = (count($showMapout)-1);
-                    $room = $this->roomDAO->getRoomByID($showMapout[$lastIndex]->getIdRoom());
-                    $movie = $this->movieDAO->getMovieById($showMapout[$lastIndex]->getIdMovie());
-    
-                    $previousShow = new Show();
-                    $previousShow->setId($showMapout[$lastIndex]->getId());
-                    $previousShow->setRoom($room);
-                    $previousShow->setMovie($movie);
-                    $previousShow->setDateTime($showMapout[$lastIndex]->getDateTime());
-                    $previousShow->setRemainingTickets($showMapout[$lastIndex]->getRemainingTickets());
+                    $runtime = $newMovie->getRuntime();
                 }
                 else
                 {
-                    $room = $this->roomDAO->getRoomByID($showMapout->getIdRoom());
-                    $movie = $this->movieDAO->getMovieById($showMapout->getIdMovie());
-
-                    $previousShow = new Show();
-                    $previousShow->setId($showMapout->getId());
-                    $previousShow->setRoom($room);
-                    $previousShow->setMovie($movie);
-                    $previousShow->setDateTime($showMapout->getDateTime());
-                    $previousShow->setRemainingTickets($showMapout->getRemainingTickets());
+                    $runtime = $movie->getRuntime();
                 }
-                
-                $showPreviousDate = substr($previousShow->getDateTime(), 0, 10);
-                $previousMovieRuntime = $previousMovie->getRuntime();
 
-                $previousMovieRuntime = $this->minutesToTimeFormat($previousMovieRuntime);
-
-                $newDateEntered = substr($newDateTime, 0, 10);
-
-                $previousShowDateTime = new DateTime($previousShow->getDateTime());
-
-                $hours = substr($previousMovieRuntime, 0, 2);
-                $minutes = substr($previousMovieRuntime, 3, 2);
-                $seconds = substr($previousMovieRuntime, 6, 2);
-                
-                $previousShowDateTime->modify('+'.$hours.' hours'); 
-                $previousShowDateTime->modify('+'.$minutes.' minute');
-                $previousShowDateTime->modify('+'.$seconds.' second');
-
-                $stringPreviousShowTime = $previousShowDateTime->format('Y-m-d H:i:s');
-                $showPreviousTime = substr($stringPreviousShowTime, 11, 8);
-    
-                $newTimeEntered = substr($newDateTime, 11, 8);
-                $newTimeEntered .= ':00';
-                
-                $previousDateTime = $showPreviousDate." ".$showPreviousTime;
-                $newDateTime = $newDateEntered." ".$newTimeEntered;
-
-                $dateTime1 = new DateTime($previousDateTime);
-                $dateTime2 = new DateTime($newDateTime);
-
-                $diff = $dateTime1->diff($dateTime2);
-                $diff->format('%Y:%m:%d:%H:%i:%s');
-            
-                $year = substr($newDateTime, 0, 4);
-                $month = substr($newDateTime, 5, 2);
-                $day = substr($newDateTime, 8, 2);
-                $hours = $diff->format('%H');
-                $minutes = $diff->format('%i');
-
-                $actualDate = new DateTime();
-                date_default_timezone_set('America/Argentina/Buenos_Aires');
-
-                $actualYear = $actualDate->format('%Y');
-                $actualMonth = $actualDate->format('%m');
-                $actualDay = $actualDate->format('%d');
-
-                if(($year >= $actualYear) && ($month >= $actualMonth) && ($day >= $actualDay))
+                if($result < $runtime + 15 && $dayDiff == 0)
                 {
-                    if($diff->invert == 0)
+                    $isValid = false;
+                }
+
+                if($result >= 1425 - $runtime && $dayDiff == 1)
+                {
+                    if($oldDate < $newDate && $oldTime < $newTime) 
+                    {   
+                        $isValid = true;                             
+                    }
+                    else if($oldDate > $newDate && $oldTime > $newTime)
                     {
-                        if($hours > 0)
-                        {
-                            $result = true;
-                        }
-                        else
-                        {
-                            if($minutes >= 15)
-                            {
-                                $result = true;
-                            }
-                            else
-                            {
-                                $result = false;
-                            }
-                        }
+                        $isValid = true; 
                     }
                     else
                     {
-                        $result = false;
+                        $isValid = false;
                     }
-                }
-                else
-                {
-                    $result = false;
-                }  
+                }   
             }
-            else
-            {
-                $year = substr($newDateTime, 0, 4);
-                $month = substr($newDateTime, 5, 2);
-                $day = substr($newDateTime, 8, 2);
-                $hours = substr($newDateTime, 11, 2);
-                $minutes = substr($newDateTime, 14, 2);
-
-                date_default_timezone_set('America/Argentina/Buenos_Aires');
-                $actualDate = new DateTime();
-
-                $actualYear = $actualDate->format('%Y');
-                $actualMonth = $actualDate->format('%m');
-                $actualDay = $actualDate->format('%d');
-                $actualHours = $actualDate->format('%H');
-                $actualMinutes = $actualDate->format('%i');
-
-                $actualYear = substr($actualYear, 1, 4);
-                $actualMonth = substr($actualMonth, 1, 2);
-                $actualDay = substr($actualDay, 1, 2);
-                $actualHours = substr($actualHours, 1, 2);
-                $actualMinutes = substr($actualMinutes, 1, 2);
-        
-                if(($year >= $actualYear) && ($month >= $actualMonth) && ($day >= $actualDay))
-                {
-                    if($day == $actualDay)
-                    {
-                        if($hours >= $actualHours)
-                        {
-                            $result = true;
-                        }
-                        else if($hours == $actualHours)
-                        {
-                            if($minutes >= $actualMinutes)
-                            {
-                                $result = true;
-                            }
-                            else
-                            {
-                                $result = false;
-                            }
-                        }
-                    }
-                    else if($day > $actualDay)
-                    {
-                        $result = true;
-                    }  
-                }
-                else
-                {
-                    $result = false;
-                }
-            } 
-            
-            return $result;
+         
+            return $isValid;
         }
     
-        public function searchMovie ($idMovie, $idCinema, $dateTime)
+        public function searchMovie ($idMovie, $idCinema, $newDateTime)
         {
             $flag = false;
             $i = 0;
@@ -340,9 +285,9 @@
                             if(($showList[$i]->getMovie()->getId() == $idMovie) && ($showList[$i]->getRoom()->getId() == $cinema->getId()))
                             {
                                 $showDay = substr($showList[$i]->getDateTime(), 8, 2);
-                                $dateTimeDay = substr($dateTime, 8, 2);
+                                $newDateTimeDay = substr($newDateTime, 8, 2);
 
-                                if($showDay == $dateTimeDay)
+                                if($showDay == $newDateTimeDay)
                                 {
                                     $flag = true;
                                     break;
@@ -366,17 +311,63 @@
             return $flag;
         }
 
-        public function validateShow ($idCinema, $idMovie, $dateTime, $remainingTickets)
+        public function validateShow ($idCinema, $idRoom, $idMovie, Show $newShow, $remainingTickets)
         {
             $flag = false;
 
-            if(!empty($idCinema) && !empty($idMovie) && !empty($dateTime) && !empty($remainingTickets))
+            if(!empty($idCinema) && !empty($idMovie) && !empty($newShow) && !empty($remainingTickets))
             {
                 $validateIdMovie = $this->validateFormField($idMovie);
                 $validateRemainingTickets = $this->validateFormField($remainingTickets);
-                $movieFinded = $this->searchMovie($idMovie, $idCinema, $dateTime);
+                $validateDateTime = false;
+                $showMapoutList = $this->showDAO->getAll();
+                $showList = array();
 
-                if($validateIdMovie && !empty($dateTime) && $validateRemainingTickets && !$movieFinded)
+                if(!empty($showMapoutList))
+                {
+                    foreach($showMapoutList as $showMapout)
+                    {
+                        $movie = new Movie();
+                        $movie = $this->movieDAO->getMovieById($showMapout->getIdMovie());
+                        $room = new Room();
+                        $room = $this->roomDAO->getRoomByID($showMapout->getIdRoom());
+
+                        $show = new Show();
+                        $show->setId($showMapout->getId());
+                        $show->setRoom($room);
+                        $show->setMovie($movie);
+                        $show->setDateTime($showMapout->getDateTime());
+                        $show->setStatus($showMapout->getStatus());
+
+                        if(($show->getRoom()->getId() == $idRoom) && ($show->getStatus()))
+                        {
+                            array_push($showList, $show);
+                        }  
+                    }
+                }
+
+                if(!empty($showList))
+                {
+                    foreach($showList as $showValue)
+                    {
+                        $validateDateTime = $this->validateDateTime($showValue, $newShow);
+
+                        if(!$validateDateTime)
+                        {
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    $validateDateTime = true;
+                }
+
+                $newDateTime = $newShow->getDateTime();
+                
+                $movieFinded = $this->searchMovie($idMovie, $idCinema, $newDateTime);
+
+                if($validateIdMovie && $validateDateTime && $validateRemainingTickets && !$movieFinded)
                 {  
                     $flag = true; 
                 }
@@ -389,29 +380,23 @@
             return $flag;
         }
 
-        public function validateShowDate (Show $show)
-        {
-            #funcion  de traer un array de shows del mismo room
-
-            #verificar que ese show no coincida con otro el mismo dia
-
-            #si coinciden el tiempo antes de ese show con el mas cercano
-        }
-
-        public function addShow ($idRoom = '', $idMovie = '', $dateTime = 0, $remainingTickets = '')
+        public function addShow ($idRoom = '', $idMovie = '', $newDateTime = 0, $remainingTickets = '')
         {
             $room = new Room();
             $movie = new Movie();
             $show = new Show();
-            #$auxShow = new Show();
 
             $room = $this->roomDAO->getRoomByID($idRoom);
             $movie = $this->movieDAO->getMovieById($idMovie);
             $idCinema = $room->getIdCinema();
 
-            if(!empty($idMovie))
+            if(!empty($idMovie) && !empty($newDateTime))
             {
-                $validateShow = $this->validateShow($idCinema, $idMovie, $dateTime, $remainingTickets);
+                $show->setRoom($room);
+                $show->setMovie($movie);
+                $show->setDateTime($newDateTime);
+                $show->setRemainingTickets($remainingTickets);
+                $validateShow = $this->validateShow($idCinema, $idRoom, $idMovie, $show, $remainingTickets);
             }  
             else
             {
@@ -420,17 +405,12 @@
             
             if($validateShow)
             {
-                $show->setRoom($room);
-                $show->setMovie($movie);
-                $show->setDateTime($dateTime);
-                $show->setRemainingTickets($remainingTickets);
-    
                 $this->showDAO->add($show);
                 $idCinema = $show->getRoom()->getIdCinema();
 
                 $this->roomDAO->edit($room);
                     
-                $this->roomController->showRoomDashboard($idCinema);
+                $this->showRoomDashboard($idCinema);
             }
             else
             {

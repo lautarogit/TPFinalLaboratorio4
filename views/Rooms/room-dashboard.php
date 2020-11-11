@@ -79,8 +79,8 @@
                                              }      
                                         ?>
                                                   <td> 
-                                                       <div class="dropdown" style="display: inline;">
-                                                            <button class="btn btn-dark dropdown-toggle m-1" style="color: crimson; border-radius: 2px 2px 10px 2px;" 
+                                                       <div class="dropright" style="display: inline;">
+                                                            <button class="btn btn-dark dropdown-toggle m-1" style="color: crimson;" 
                                                             type="button" id="selectShowDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                  Seleccionar show
                                                             </button>
@@ -88,24 +88,32 @@
                                                                  <?php 
                                                                       $var = array();
                                                                       
-                                                                      foreach($showList as $showArray)
+                                                                      if(!empty($showList))
                                                                       {
-                                                                           foreach($showArray as $show)
-                                                                           {     
-                                                                                $var = $show;
+                                                                           foreach($showList as $showArray)
+                                                                           {
+                                                                                foreach($showArray as $showValue)
+                                                                                {     
+                                                                                     $show = $showValue;
 
-                                                                                if($show['roomId'] == $roomValue->getId()) 
-                                                                                {                       
+                                                                                     if(($showValue['roomId'] == $roomValue->getId()) && $showValue['showStatus'] == true) 
+                                                                                     {                       
                                                                  ?>
-                                                                           <form action="<?= FRONT_ROOT."Show/showDataView"?>" method="POST">
-                                                                           <button class="dropdown-item btn btn-dark" style="color: crimson; border-radius: 15px 15px 15px 15px;" 
-                                                                           type="submit" name="dateTime" value="<?= $var['showId'];?>">
-                                                                                <?= $var['movieTitle'].": ".$var['showDateTime'];?>
-                                                                           </button>
-                                                                           </form> 
+                                                                                          <form action="<?= FRONT_ROOT."Show/showDataView"?>" method="POST">
+                                                                                               <button class="dropdown-item btn btn-dark" style="color: crimson; border-radius: 15px 15px 15px 15px;" 
+                                                                                               type="submit" name="dateTime" value="<?= $show['showId'];?>">
+                                                                                                    <?php
+                                                                                                         $date = substr($show['showDateTime'], 0, 10);
+                                                                                                         $time = substr($show['showDateTime'], 11, 5);
+                                                                                                    ?>
+
+                                                                                                    <p class="d-inline" style="color: crimson"><?= $show['movieTitle'].": ";?></p>
+                                                                                                    <p class="d-inline" style="color: orange"><?= $date." a las ".$time." hs"; ?></p>
+                                                                                               </button>
+                                                                                          </form> 
                                                                  <?php
+                                                                                     }
                                                                                 }
-                                                                                
                                                                            }
                                                                       }                  
                                                                  ?>
