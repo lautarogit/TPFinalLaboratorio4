@@ -249,7 +249,7 @@
 
                             <p><?= "<strong>Fecha de lanzamiento: </strong>".substr($movieValue->getReleaseDate(), 0, 10);?></p>
                             <?php 
-                                if(isset($date))
+                                if(isset($date) && !empty($date))
                                 {
                             ?>
                                     <p><strong style="color: crimson">Fecha del show: </strong><?= $date;?></p>

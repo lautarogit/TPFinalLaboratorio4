@@ -50,8 +50,8 @@
                               { 
                     ?>
                                    <th>Agregar show</th>
-                                   <th>Editar</th>
-                                   <th>Eliminar</th>
+                                   <th>Editar Sala</th>
+                                   <th>Eliminar Sala</th>
                     <?php 
                               }  
                          }

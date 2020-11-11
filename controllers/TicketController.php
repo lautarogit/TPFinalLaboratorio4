@@ -89,7 +89,6 @@
 
                                 $newPrice = $price * $discount;
                                 $ticket->setPrice($newPrice);
-                                var_dump($newPrice);
                             }
                             
                             $this->ticketDAO->add($ticket);

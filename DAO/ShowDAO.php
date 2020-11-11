@@ -86,6 +86,32 @@
             return $finalResult;
         }
 
+        public function edit (Show $showUpdated)
+        {
+            $id = $showUpdated->getId();
+            $dateTime = $showUpdated->getDateTime();
+            $remainingTickets = $showUpdated->getRemainingTickets();
+
+            $sqlQuery = "UPDATE shows 
+            SET dateTime = :dateTime, remainingTickets = :remainingTickets 
+            WHERE (id = :id)";
+
+            $parameters['id'] = $id;
+            $parameters['dateTime'] = $dateTime;
+            $parameters['remainingTickets'] = $remainingTickets;
+
+            try
+            {
+                $this->connection = Connection::getInstance();
+
+                return $this->connection->executeNonQuery($sqlQuery, $parameters);
+            }
+            catch(PDOException $ex)
+            {
+                throw $ex;
+            }
+        }
+
         public function getShowByIdRoom ($idRoom)
         {
             $sqlQuery = "SELECT * 
@@ -312,38 +338,6 @@
                 $this->connection = Connection::getInstance();
             
                 return  $result = $this->connection->execute($sqlQuery);
-            }
-            catch(PDOException $ex)
-            {
-                throw $ex;
-            }
-        }
-
-        public function edit (Show $showUpdated)
-        {
-            $id = $showUpdated->getId();
-            $idRoom = $showUpdated->getRoom()->getId();
-            $idMovie = $showUpdated->getMovie()->getId();
-            $dateTime = $showUpdated->getDateTime();
-            $remainingTickets = $showUpdated->getRemainingTickets();
-            $status = $showUpdated->getStatus();
-
-            $sqlQuery = "UPDATE shows 
-            SET idRoom = :idRoom, idMovie = :idMovie, dateTime = :dateTime, remainingTickets = :remainingTickets, status = :status 
-            WHERE (id = :id)";
-
-            $parameters['id'] = $id;
-            $parameters['idRoom'] = $idRoom;
-            $parameters['idMovie'] = $idMovie;
-            $parameters['dateTime'] = $dateTime;
-            $parameters['remainingTickets'] = $remainingTickets;
-            $parameters['status'] = $status;
-
-            try
-            {
-                $this->connection = Connection::getInstance();
-
-                return $this->connection->executeNonQuery($sqlQuery, $parameters);
             }
             catch(PDOException $ex)
             {

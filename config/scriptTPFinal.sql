@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS shows (
 	idMovie INT NOT NULL,
 	`dateTime` DATETIME,
     remainingTickets INT NOT NULL,
+	`status` BOOLEAN,
     CONSTRAINT PK_id PRIMARY KEY (id)
 );
 

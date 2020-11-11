@@ -419,6 +419,49 @@
             } 
         }
 
+        public function editShow ($dateTime, $remainingTickets, $idShow)
+        {
+            $errorMessage = false;
+
+            if(isset($dateTime) && isset($remainingTickets) && isset($idShow))
+            {
+                $showMapout = $this->showDAO->getShowById($idShow);
+
+                $show = new Show();
+                $show->setId($showMapout->getId());
+                $room = $this->roomDAO->getRoomByID($showMapout->getIdRoom());
+                $show->setRoom($room);
+                $movie = $this->movieDAO->getMovieById($showMapout->getIdMovie());
+                $show->setMovie($movie);
+                $show->setDateTime($dateTime);
+                $show->setRemainingTickets($remainingTickets);
+                $idCinema = $show->getRoom()->getIdCinema();
+                $idRoom = $show->getRoom()->getId();
+                $idMovie = $show->getMovie()->getId();
+
+                $validateShow = $this->validateShow($idCinema, $idRoom, $idMovie, $show, $remainingTickets);
+                
+                if($validateShow)
+                {
+                    $this->showDAO->edit($show);
+                    $idCinema = $show->getRoom()->getIdCinema();
+                        
+                    $this->showDataView($idShow);
+                }
+                else
+                {
+                    $errorMessage = "Los datos ingresados son inválidos"; 
+                    $this->showDataView($idShow, $errorMessage);
+                } 
+            } 
+            else
+            {
+                $errorMessage = "Los datos ingresados son inválidos";
+            }   
+
+            $this->showDataView($idShow, $errorMessage);
+        }
+
         public function validateFormField ($paramName, $minLength = '', $maxLength = '') 
         {
             if(!empty(trim($paramName)))
