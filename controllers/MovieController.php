@@ -50,24 +50,27 @@
             $movieList = $this->movieDAO->getAll();
             $availableMovieList = array();
 
-            foreach($movieList as $movieValue)
-            {  
-                $idMovie = $movieValue->getId();
-                $showMapout = $this->showDAO->getShowByIdMovie($idMovie);
+            if(!empty($movieList))
+            {
+                foreach($movieList as $movieValue)
+                {  
+                    $idMovie = $movieValue->getId();
+                    $showMapout = $this->showDAO->getShowByIdMovie($idMovie);
 
-                if(!empty($showMapout))
-                {
-                    array_push($availableMovieList, $movieValue);
+                    if(!empty($showMapout))
+                    {
+                        array_push($availableMovieList, $movieValue);
+                    }
                 }
+
+                $movieList = $availableMovieList;
+
+                $moviesXgenres = $this->moviesXGenresDAOAPI->getAll();
+                $genreDAO = $this->genreDAO;
+                $showDAO = $this->showDAO;
+                
+                $topRatedMovieList = $this->filterTopRated($movieList);
             }
-
-            $movieList = $availableMovieList;
-
-            $moviesXgenres = $this->moviesXGenresDAOAPI->getAll();
-            $genreDAO = $this->genreDAO;
-            $showDAO = $this->showDAO;
-            
-            $topRatedMovieList = $this->filterTopRated($movieList);
             
             require_once(VIEWS_PATH."Movies/movie-dashboard.php");
         }
@@ -266,52 +269,56 @@
             $filterMovieList = array();
             $popularityList = array();
 
-            foreach($movieList as $movie)
+            if(!empty($movieList))
             {
-                $popularity = $movie->getPopularity();
-                settype($popularity, "float");
-
-                array_push($popularityList, $popularity);
-            }
-
-            sort($popularityList);
-
-            $topRatedPopularityList = array();
-            $popularityListSize = (count($popularityList)-1);
-
-            for($i = $popularityListSize; $i >= 0 ; $i--)
-            {
-                if($i == ($popularityListSize-5))
+                foreach($movieList as $movie)
                 {
-                    break;
-                }
-                else
-                {
-                    array_push($topRatedPopularityList, $popularityList[$i]);
-                }
-            }
-
-            foreach($movieList as $movieValue)
-            {
-                foreach($topRatedPopularityList as $popularityValue)
-                {
-                    if($movieValue->getPopularity() == $popularityValue)
-                    {
-                        $filterMovie = $movieValue;
-                        array_push($filterMovieList, $filterMovie); 
-                    }
-                }   
-            }
-
-            $topRatedMovieList = array();
-            $filterMovieListSize = (count($filterMovieList)-1);
-
-            for($i = $filterMovieListSize; $i >= 0 ; $i--)
-            {
-                array_push($topRatedMovieList, $filterMovieList[$i]);
-            }
+                    $popularity = $movie->getPopularity();
+                    settype($popularity, "float");
+    
+                    array_push($popularityList, $popularity);
+                }    
             
-            return $topRatedMovieList;
+            
+                sort($popularityList);
+
+                $topRatedPopularityList = array();
+                $popularityListSize = (count($popularityList)-1);
+
+                for($i = $popularityListSize; $i >= 0 ; $i--)
+                {
+                    if($i == ($popularityListSize-5))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        array_push($topRatedPopularityList, $popularityList[$i]);
+                    }
+                }
+
+                foreach($movieList as $movieValue)
+                {
+                    foreach($topRatedPopularityList as $popularityValue)
+                    {
+                        if($movieValue->getPopularity() == $popularityValue)
+                        {
+                            $filterMovie = $movieValue;
+                            array_push($filterMovieList, $filterMovie); 
+                        }
+                    }   
+                }
+
+                $topRatedMovieList = array();
+                $filterMovieListSize = (count($filterMovieList)-1);
+
+                for($i = $filterMovieListSize; $i >= 0 ; $i--)
+                {
+                    array_push($topRatedMovieList, $filterMovieList[$i]);
+                }
+
+                return $topRatedMovieList;
+            } 
         }
     }
 ?>

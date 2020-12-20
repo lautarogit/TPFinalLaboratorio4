@@ -93,22 +93,25 @@
             <?php
                 $i = 0;
 
-                foreach($topRatedMovieList as $movieValue)
+                if(!empty($topRatedMovieList))
                 {
-                    if($i == 0)
+                    foreach($topRatedMovieList as $movieValue)
                     {
+                        if($i == 0)
+                        {
             ?>
-                        <li data-target="#carouselIndicator" data-slide-to="<?= $i; ?>" class="active"></li>
+                            <li data-target="#carouselIndicator" data-slide-to="<?= $i; ?>" class="active"></li>
             <?php
-                    }
-                    else
-                    {
+                        }
+                        else
+                        {
             ?>
-                        <li data-target="#carouselIndicator" data-slide-to="<?= $i; ?>"></li>
+                            <li data-target="#carouselIndicator" data-slide-to="<?= $i; ?>"></li>
             <?php
+                        }
+                        
+                        $i++;
                     }
-                    
-                    $i++;
                 }
             ?>
         </ol>
@@ -117,36 +120,37 @@
             
             <?php
                 $i = 0;
-
-                foreach($topRatedMovieList as $movieValue)
+                if(!empty($topRatedMovieList))
                 {
-                    if($i == 0)
+                    foreach($topRatedMovieList as $movieValue)
                     {
+                        if($i == 0)
+                        {
             ?>
-                        <div class="carousel-item active">
-                            <img class="w-100" src='<?= TMDB_IMG_PATH.$movieValue->getPosterPath(); ?>' alt="<?= $i; ?>">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h2 class="text-info text-shadow"><?= "<strong>Top ".($i+1)." -</strong> ".$movieValue->getTitle(); ?></h2>
+                            <div class="carousel-item active">
+                                <img class="w-100" src='<?= TMDB_IMG_PATH.$movieValue->getPosterPath(); ?>' alt="<?= $i; ?>">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h2 class="text-info text-shadow"><?= "<strong>Top ".($i+1)." -</strong> ".$movieValue->getTitle(); ?></h2>
+                                </div>
                             </div>
-                        </div>
             <?php
-                    }
-                    else
-                    {
+                        }
+                        else
+                        {
             ?>
-                        <div class="carousel-item">
-                            <img class="w-100" src='<?= TMDB_IMG_PATH.$movieValue->getPosterPath(); ?>' alt="<?= $i; ?>">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h2 class="text-info text-shadow"><?= "<strong>Top ".($i+1)." -</strong> ".$movieValue->getTitle(); ?></h2>
+                            <div class="carousel-item">
+                                <img class="w-100" src='<?= TMDB_IMG_PATH.$movieValue->getPosterPath(); ?>' alt="<?= $i; ?>">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h2 class="text-info text-shadow"><?= "<strong>Top ".($i+1)." -</strong> ".$movieValue->getTitle(); ?></h2>
+                                </div>
                             </div>
-                        </div>
             <?php
+                        }
+                        
+                        $i++;
                     }
-                    
-                    $i++;
                 }
             ?>
-            
         </div>
 
         <a class="carousel-control-prev" href="#carouselIndicator" role="button" data-slide="prev">

@@ -224,43 +224,6 @@
             return $finalResult;
         }
 
-    /*    private function setRuntime ($id)
-        {
-            $moviedb = file_get_contents(API_HOST.'/movie/'.$id.'?api_key='.TMDB_API_KEY.'&language='.LANG);
-            $movie = json_decode($moviedb, TRUE);
-
-            $runtime = $movie['runtime'];
-
-            intval($runtime);
-
-            return $runtime;
-        }
-
-        public function retrieveDataFromAPI ()
-        {
-            $moviedb = file_get_contents(API_HOST.'/movie/now_playing?api_key='.TMDB_API_KEY.'&language='.LANG);
-            $movieList = ($moviedb) ? json_decode($moviedb, true)['results'] : array();
-
-            foreach ($movieList as $movie) 
-            {  
-                $id = $movie['id'];
-                $title = $movie['title'];
-                $overview = $movie['overview'];
-                $adult = $movie['adult'];
-                $originalLanguage = $movie['original_language'];
-                $popularity = $movie['popularity'];
-                $posterPath = $movie['poster_path'];
-                $releaseDate = $movie['release_date'];
-                $status = 0;
-                $runtime = $this->setRuntime($id);
-
-                $newMovie = new Movie($id, $title, $overview, $adult, 
-                $originalLanguage, $popularity, $posterPath, $releaseDate, $status, $runtime);
-       
-                $this->add($newMovie);
-            }
-        }*/
-
         public function mapout ($value)
         {
             $value = is_array($value) ? $value : [];
